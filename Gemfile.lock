@@ -39,6 +39,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (7.1.4)
+    bson (4.2.1)
     builder (3.2.3)
     byebug (9.0.6)
     concurrent-ruby (1.0.5)
@@ -60,6 +61,11 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
+    mongo (2.4.1)
+      bson (>= 4.2.1, < 5.0.0)
+    mongoid (6.0.3)
+      activemodel (~> 5.0)
+      mongo (~> 2.3)
     nio4r (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
@@ -120,11 +126,11 @@ PLATFORMS
 DEPENDENCIES
   byebug
   listen (~> 3.0.5)
+  mongoid (~> 6.0.1)
   puma (~> 3.0)
   rails (~> 5.0.2)
   spring
   spring-watcher-listen (~> 2.0.0)
-  tzinfo-data
 
 BUNDLED WITH
    1.14.4
