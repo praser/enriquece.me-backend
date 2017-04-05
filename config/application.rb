@@ -36,5 +36,8 @@ module EnriqueceMeBackend
 				resource '*', :headers => :any, :methods => [:get, :post, :options]
 			end
 		end
+
+		# Rack middleware for blocking & throttling
+		config.middleware.use Rack::Attack
 	end
 end
