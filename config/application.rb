@@ -17,14 +17,24 @@ require "rails/test_unit/railtie"
 Bundler.require(*Rails.groups)
 
 module EnriqueceMeBackend
-  class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+	class Application < Rails::Application
+		# Settings in config/environments/* take precedence over those specified here.
+		# Application configuration should go into files in config/initializers
+		# -- all .rb files in that directory are automatically loaded.
 
-    # Only loads a smaller set of middleware suitable for API only apps.
-    # Middleware like session, flash, cookies can be added back manually.
-    # Skip views, helpers and assets when generating a new resource.
-    config.api_only = true
-  end
+		# Only loads a smaller set of middleware suitable for API only apps.
+		# Middleware like session, flash, cookies can be added back manually.
+		# Skip views, helpers and assets when generating a new resource.
+		config.api_only = true
+
+		# OPTIMIZE: This configuration allow any application to request data from API. Is important discuss how and for who we will serve data and modify the configuration bellow.
+		# Enable Cross Orgin Request in the API
+		# For more detailed configuration options please see the gem documentation: https://github.com/cyu/rack-cors
+		config.middleware.insert_before 0, "Rack::Cors" do
+			allow do
+				origins '*'
+				resource '*', :headers => :any, :methods => [:get, :post, :options]
+			end
+		end
+	end
 end
