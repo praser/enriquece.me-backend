@@ -9,6 +9,7 @@ end
 gem 'rails', '~> 5.0.2'
 gem 'puma', '~> 3.0'
 gem 'mongoid', '~> 6.0.1'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug', platform: :mri # Call 'byebug' anywhere in the code to stop execution and get a debugger console
