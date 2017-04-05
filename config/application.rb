@@ -30,7 +30,7 @@ module EnriqueceMeBackend
 		# OPTIMIZE: This configuration allow any application to request data from API. Is important discuss how and for who we will serve data and modify the configuration bellow.
 		# Enable Cross Orgin Request in the API
 		# For more detailed configuration options please see the gem documentation: https://github.com/cyu/rack-cors
-		config.middleware.insert_before 0, "Rack::Cors" do
+		config.middleware.insert_before 0, Rack::Cors do
 			allow do
 				origins '*'
 				resource '*', :headers => :any, :methods => [:get, :post, :options]
