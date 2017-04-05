@@ -13,6 +13,7 @@ gem 'active_model_serializers'
 gem 'rack-cors'
 gem 'versionist'
 gem 'rack-attack'
+gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   gem 'byebug', platform: :mri # Call 'byebug' anywhere in the code to stop execution and get a debugger console

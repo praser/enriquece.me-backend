@@ -46,6 +46,7 @@ GEM
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
+    bcrypt (3.1.11)
     bson (4.2.1)
     builder (3.2.3)
     byebug (9.0.6)
@@ -197,6 +198,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  bcrypt (~> 3.1.7)
   byebug
   cucumber-rails
   database_cleaner
