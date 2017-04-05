@@ -23,6 +23,7 @@ group :development, :test do
   gem 'cucumber-rails', require: false
   gem 'cucumber-api-steps', require: false
   gem 'database_cleaner'
+  gem 'faker'
 end
 
 group :development do
