@@ -1,5 +1,6 @@
 class V1::UsersController < V1::BaseController
   before_action :set_user, only: [:show, :update, :destroy]
+  skip_before_action :authenticate_request, only: [:create]
 
   # GET /users
   def index

@@ -39,5 +39,7 @@ module EnriqueceMeBackend
 
 		# Rack middleware for blocking & throttling
 		config.middleware.use Rack::Attack
+
+		config.autoload_paths << Rails.root.join('lib')
 	end
 end
