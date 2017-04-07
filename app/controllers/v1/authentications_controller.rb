@@ -3,18 +3,27 @@ class V1::AuthenticationsController < ApplicationController
 
   # POST /v1/authentications
   def create
-    command = AuthenticateUser.call(authentication_params)
+    begin
+      command = AuthenticateUser.call(authentication_params)
 
-    if command.success?
-      render json: {token: command.result}
-    else
-      render json: {error: command.errors}, status: :unauthorized
+      if command.success?
+        render json: {data: { attributes: {token: command.result } } }
+      else
+        resource = User.new
+        resource.errors.add(:credentials, command.errors)
+        render json: resource, status: :unauthorized, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
+      end
+    rescue => e
+      resource = User.new
+      resource.errors.add(:credentials, 'Could not find any user with the credentials provided')
+      render json: resource, status: :unauthorized, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
     end
+
   end
 
   private
     # Only allow a trusted parameter "white list" through.
     def authentication_params
-      params.require(:data).require(:attributes).permit(:email, :password)
+      params.permit(:email, :password)
     end
 end
