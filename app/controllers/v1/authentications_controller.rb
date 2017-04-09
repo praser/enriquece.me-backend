@@ -9,9 +9,9 @@ class V1::AuthenticationsController < ApplicationController
       if command.success?
         render json: {data: { attributes: {token: command.result } } }
       else
-        resource = User.new
-        resource.errors.add(:credentials, command.errors)
-        render json: resource, status: :unauthorized, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
+        @user = User.new
+        @user.errors.add(:credentials, command.errors)
+        render json: @user, status: :unauthorized, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     rescue => e
       resource = User.new

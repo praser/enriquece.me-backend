@@ -19,7 +19,7 @@ class V1::UsersController < V1::BaseController
     if @user.save
       render json: @user, status: :created, location: v1_user_path(@user)
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
     end
   end
 
@@ -28,7 +28,7 @@ class V1::UsersController < V1::BaseController
     if @user.update(user_params)
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
     end
   end
 
