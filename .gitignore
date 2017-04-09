@@ -39,3 +39,7 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
+
+#Ignore RVM default enviroment files.
+.ruby-gemset
+.ruby-version
