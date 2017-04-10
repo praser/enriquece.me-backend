@@ -1,6 +1,6 @@
-Dado(/^o cadastro de novo usuário com os dados:$/) do |table|
+Dado(/^a existência dos usuários abaixo no sistema:$/) do |table|
   table.hashes.each do |data|
-  	@user_attributes = FactoryGirl.attributes_for(:user, {
+  	FactoryGirl.create(:user,{
   		name: data['nome'],
   		email: data['email'],
   		password: data['senha']
@@ -8,25 +8,34 @@ Dado(/^o cadastro de novo usuário com os dados:$/) do |table|
   end
 end
 
-Dado(/^a existência de um usuário cadastrado anteriormente com o mesmo email$/) do
-  FactoryGirl.create(:user, {email: @user_attributes[:email]})
-end
-
-Quando(/^o backend receber uma requisição para "([^"]*)" através do método "([^"]*)"$/) do |path, method|
-  case method.upcase
-  when 'POST'
-  	post path, @user_attributes, headers: { 'Content-Type' => 'application/vnd.api+json' }
+Dado(/^o cadastro de novo usuário com os dados:$/) do |table|
+  table.hashes.each do |data|
+  	@attributes = FactoryGirl.attributes_for(:user, {
+  		name: data['nome'],
+  		email: data['email'],
+  		password: data['senha']
+  	}).to_json
   end
 end
 
-Então(/^a resposta deve possuir status "([^"]*)"$/) do |status|
-  expect(last_response.status).to eq status.to_i
+Dado(/^a existência de um usuário cadastrado anteriormente com o mesmo email$/) do
+  FactoryGirl.create(:user, {email: JSON.parse(@attributes)['email']})
 end
 
-Então(/^a resposta deve possuir o content\/type "([^"]*)"$/) do |content_type|
-  expect(last_response.header["Content-Type"]).to eq content_type
+Dado(/^que o backend não permite que o email do usuário seja alterado$/) do
 end
 
-Então(/^o corpo da resposta deve possuir o formato abaixo:$/) do |schema|
-  JSON::Validator.validate(schema, JSON.parse(last_response.body))
+
+Então(/^o "([^"]*)" do usuário deve ser "([^"]*)"$/) do |field, value|
+	body = JSON.parse(last_response.body)
+	
+	expect(body["data"]["type"]).to eq("users")
+
+  case field.downcase
+  when "nome"	
+  	expect(body["data"]["attributes"]["name"]).to eq(value)
+  when "email"	
+  	expect(body["data"]["attributes"]["email"]).to eq(value)
+  else raise "Unknow field '#{field}' for User in step definitions"
+  end
 end

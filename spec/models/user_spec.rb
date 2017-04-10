@@ -10,5 +10,6 @@ RSpec.describe User, type: :model do
   it {is_expected.to validate_format_of(:email).to_allow(Faker::Internet.email).not_to_allow("'invalid email'")}
   
   it {is_expected.to respond_to :password}
-  it {is_expected.to validate_presence_of :password}
+  it {is_expected.to validate_presence_of(:password).on(:create)}
+  it {is_expected.to validate_length_of(:password).within(6..20)}
 end

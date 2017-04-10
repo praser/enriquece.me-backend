@@ -2,12 +2,7 @@ class V1::UsersController < V1::BaseController
   before_action :set_user, only: [:show, :update, :destroy]
   skip_before_action :authenticate_request, only: [:create]
 
-  # GET /users
-  def index
-    render json: User.all
-  end
-
-  # GET /users/1
+  # GET /user
   def show
     render json: @user
   end
@@ -23,9 +18,12 @@ class V1::UsersController < V1::BaseController
     end
   end
 
-  # PATCH/PUT /users/1
+  # PATCH/PUT /user
   def update
-    if @user.update(user_params)
+    @user.name = user_params[:name] || @user.name
+    @user.password = user_params[:password] || @user.password
+
+    if @user.update
       render json: @user
     else
       render json: @user, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
@@ -39,7 +37,7 @@ class V1::UsersController < V1::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = current_user
     end
 
     # Only allow a trusted parameter "white list" through.

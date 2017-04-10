@@ -12,19 +12,19 @@ Funcionalidade: Cadastrar usuário
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
 		E o corpo da resposta deve possuir o formato abaixo:
 		"""
-			{
-				"data": {
-					"id": "string",
-					"type": "string",
-					"attributes": {
-						"name": "string",
-						"email": "string"
-					}
+		{
+			"data": {
+				"id": "string",
+				"type": "string",
+				"attributes": {
+					"name": "string",
+					"email": "string"
 				}
 			}
+		}
 		"""
-
-	Cenário: Dexiando de informar o nome
+	
+	Cenário: Deixando de informar o nome
 		Dado o cadastro de novo usuário com os dados:
 		| nome     | email               | senha  |
 		|          | johndoe@exemplo.com | 123456 |
@@ -33,19 +33,20 @@ Funcionalidade: Cadastrar usuário
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
 		E o corpo da resposta deve possuir o formato abaixo:
 		"""
-			{
-				"errors": [
-					{
-						"source": {
-							"pointer": "string"
-						},
-						"detail": "string"
-					}
-				]
-			}
+		{
+			"errors": [
+				{
+					"source": {
+						"pointer": "string"
+					},
+					"detail": "string"
+				}
+			]
+		}
 		"""
-
-	Cenário: Dexiando de informar o email
+		E o corpo da resposta deve conter uma mensagem informando que o campo "nome" "deve ser informado" 
+	
+	Cenário: Deixando de informar o email
 		Dado o cadastro de novo usuário com os dados:
 		| nome     | email               | senha  |
 		| John Doe |                     | 123456 |
@@ -54,19 +55,20 @@ Funcionalidade: Cadastrar usuário
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
 		E o corpo da resposta deve possuir o formato abaixo:
 		"""
-			{
-				"errors": [
-					{
-						"source": {
-							"pointer": "string"
-						},
-						"detail": "string"
-					}
-				]
-			}
+		{
+			"errors": [
+				{
+					"source": {
+						"pointer": "string"
+					},
+					"detail": "string"
+				}
+			]
+		}
 		"""
+		E o corpo da resposta deve conter uma mensagem informando que o campo "email" "deve ser informado" 
 	
-	Cenário: Dexiando de informar a senha
+	Cenário: Deixando de informar a senha
 		Dado o cadastro de novo usuário com os dados:
 		| nome     | email               | senha  |
 		| John Doe | johndoe@exemplo.com |        |
@@ -75,19 +77,20 @@ Funcionalidade: Cadastrar usuário
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
 		E o corpo da resposta deve possuir o formato abaixo:
 		"""
-			{
-				"errors": [
-					{
-						"source": {
-							"pointer": "string"
-						},
-						"detail": "string"
-					}
-				]
-			}
+		{
+			"errors": [
+				{
+					"source": {
+						"pointer": "string"
+					},
+					"detail": "string"
+				}
+			]
+		}
 		"""
-
-	Cenário: Usando um e-mail repetido
+		E o corpo da resposta deve conter uma mensagem informando que o campo "senha" "deve ser informado" 
+	
+	Cenário: Usando um email repetido
 		Dado o cadastro de novo usuário com os dados:
 		| nome     | email               | senha  |
 		| John Doe | johndoe@exemplo.com | 123456 |
@@ -97,14 +100,15 @@ Funcionalidade: Cadastrar usuário
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
 		E o corpo da resposta deve possuir o formato abaixo:
 		"""
-			{
-				"errors": [
-					{
-						"source": {
-							"pointer": "string"
-						},
-						"detail": "string"
-					}
-				]
-			}
-		"""		
+		{
+			"errors": [
+				{
+					"source": {
+						"pointer": "string"
+					},
+					"detail": "string"
+				}
+			]
+		}
+		"""	
+		E o corpo da resposta deve conter uma mensagem informando que o campo "email" "já está em uso" 
