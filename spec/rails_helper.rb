@@ -5,7 +5,7 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
-require 'shoulda/matchers'
+require 'mongoid-rspec'
 require 'support/database_cleaner'
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -46,7 +46,6 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  #Include Should matchers
-  config.include(Shoulda::Matchers::ActiveModel, type: :model)
-  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
+  #Include MongoId matchers
+  config.include Mongoid::Matchers, type: :model
 end

@@ -2,12 +2,13 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it {is_expected.to respond_to :name}
-  it {is_expected.to respond_to :email}
-  it {is_expected.to respond_to :password}
   it {is_expected.to validate_presence_of :name}
+  
+  it {is_expected.to respond_to :email}
   it {is_expected.to validate_presence_of :email}
+  it {is_expected.to validate_uniqueness_of :email}
+  it {is_expected.to validate_format_of(:email).to_allow(Faker::Internet.email).not_to_allow("'invalid email'")}
+  
+  it {is_expected.to respond_to :password}
   it {is_expected.to validate_presence_of :password}
-  it {is_expected.to have_secure_password}
-  it {is_expected.to_not allow_value('invalidemail').for(:email)}
-  it {is_expected.to allow_value(Faker::Internet.email).for(:email)}
 end
