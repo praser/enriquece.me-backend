@@ -16,7 +16,7 @@ Quando(/^o backend receber uma requisição autenticada para "([^"]*)" através 
 
   case method.upcase
   when 'GET'
-  	get v1_user_path
+  	get path
   else raise "HTTP method unknown in step definions"  	
   end
 end

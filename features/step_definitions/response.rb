@@ -6,8 +6,9 @@ Então(/^a resposta deve possuir o content\/type "([^"]*)"$/) do |content_type|
   expect(last_response.header["Content-Type"]).to eq content_type
 end
 
-Então(/^o corpo da resposta deve possuir o formato abaixo:$/) do |schema|
-  JSON::Validator.validate(schema, JSON.parse(last_response.body))
+Então(/^o corpo da resposta deve corresponder ao formato JSON API$/) do
+  schema = JSON.parse(File.read(Rails.root.join('public', 'api-schema.json').to_s))
+  JSON::Validator.validate!(schema, JSON.parse(last_response.body))
 end
 
 Então(/^o corpo da resposta deve conter uma mensagem informando que o acesso foi negado$/) do

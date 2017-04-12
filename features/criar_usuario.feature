@@ -10,19 +10,7 @@ Funcionalidade: Cadastrar usuário
 		Quando o backend receber uma requisição para "/users" através do método "POST"
 		Então a resposta deve possuir status "201"
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
-		E o corpo da resposta deve possuir o formato abaixo:
-		"""
-		{
-			"data": {
-				"id": "string",
-				"type": "string",
-				"attributes": {
-					"name": "string",
-					"email": "string"
-				}
-			}
-		}
-		"""
+		E o corpo da resposta deve corresponder ao formato JSON API
 	
 	Cenário: Deixando de informar o nome
 		Dado o cadastro de novo usuário com os dados:
@@ -31,19 +19,7 @@ Funcionalidade: Cadastrar usuário
 		Quando o backend receber uma requisição para "/users" através do método "POST"
 		Então a resposta deve possuir status "422"
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
-		E o corpo da resposta deve possuir o formato abaixo:
-		"""
-		{
-			"errors": [
-				{
-					"source": {
-						"pointer": "string"
-					},
-					"detail": "string"
-				}
-			]
-		}
-		"""
+		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o campo "nome" "deve ser informado" 
 	
 	Cenário: Deixando de informar o email
@@ -53,19 +29,7 @@ Funcionalidade: Cadastrar usuário
 		Quando o backend receber uma requisição para "/users" através do método "POST"
 		Então a resposta deve possuir status "422"
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
-		E o corpo da resposta deve possuir o formato abaixo:
-		"""
-		{
-			"errors": [
-				{
-					"source": {
-						"pointer": "string"
-					},
-					"detail": "string"
-				}
-			]
-		}
-		"""
+		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o campo "email" "deve ser informado" 
 	
 	Cenário: Deixando de informar a senha
@@ -75,19 +39,7 @@ Funcionalidade: Cadastrar usuário
 		Quando o backend receber uma requisição para "/users" através do método "POST"
 		Então a resposta deve possuir status "422"
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
-		E o corpo da resposta deve possuir o formato abaixo:
-		"""
-		{
-			"errors": [
-				{
-					"source": {
-						"pointer": "string"
-					},
-					"detail": "string"
-				}
-			]
-		}
-		"""
+		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o campo "senha" "deve ser informado" 
 	
 	Cenário: Usando um email repetido
@@ -99,16 +51,5 @@ Funcionalidade: Cadastrar usuário
 		Então a resposta deve possuir status "422"
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
 		E o corpo da resposta deve possuir o formato abaixo:
-		"""
-		{
-			"errors": [
-				{
-					"source": {
-						"pointer": "string"
-					},
-					"detail": "string"
-				}
-			]
-		}
-		"""	
+		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o campo "email" "já está em uso" 

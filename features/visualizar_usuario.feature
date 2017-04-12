@@ -15,19 +15,7 @@ Funcionalidade: Visualizar dados do usuário
 		Quando o backend receber uma requisição autenticada para "/user" através do método "GET"
 		Então a resposta deve possuir status "200"
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
-		E o corpo da resposta deve possuir o formato abaixo:
-		"""
-		{
-			"data": {
-				"id": "string",
-				"type": "string",
-				"attributes": {
-					"name": "string",
-					"email": "string"
-				}
-			}
-		}
-		"""
+		E o corpo da resposta deve corresponder ao formato JSON API
 		E o "nome" do usuário deve ser "John Doe"
 		E o "email" do usuário deve ser "johndoe@exemplo.com"
 	
@@ -35,17 +23,5 @@ Funcionalidade: Visualizar dados do usuário
 		Quando o backend receber uma requisição não autenticada para "/user" através do método "GET"
 		Então a resposta deve possuir status "401"
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
-		E o corpo da resposta deve possuir o formato abaixo:
-		"""
-		{
-			"errors": [
-				{
-					"source": {
-						"pointer": "string"
-					},
-					"detail": "string"
-				}
-			]
-		}
-		"""
+		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado
