@@ -8,5 +8,7 @@ Rails.application.routes.draw do
     	put 'user', to: 'users#update'
     	patch 'user', to: 'users#update'
     	delete 'user', to: 'users#destroy'
+
+    	get 'banks', to: 'banks#index'
 	end
 end
