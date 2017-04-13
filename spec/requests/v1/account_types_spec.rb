@@ -11,7 +11,7 @@ RSpec.describe "V1::AccountTypes", type: :request do
 		end
 
 		describe "GET /v1/account_types" do
-			it "returns http_status 200" do
+			it "returns http status 200" do
 				get v1_account_types_path, headers: @headers
 				expect(response).to have_http_status(200)
 			end
@@ -24,8 +24,7 @@ RSpec.describe "V1::AccountTypes", type: :request do
 		end
 
 		describe "GET /v1/account_types" do
-			
-			it "returns http 401" do
+			it "returns http status 401" do
 				get v1_account_types_path, headers: @headers
 				expect(response).to have_http_status :unauthorized
 			end

@@ -11,14 +11,10 @@ class V1::UsersController < V1::BaseController
   def create
     @user = User.new(user_params)
     
-    if current_user == nil
-      if @user.save
-        render json: @user, status: :created, location: v1_user_path(@user)
-      else
-        render json: @user, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
-      end
+    if @user.save
+      render json: @user, status: :created, location: v1_user_path(@user)
     else
-      render json: @user, status: :unauthorized, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
+      render json: @user, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
     end
   end
 

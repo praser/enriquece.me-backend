@@ -20,14 +20,14 @@ RSpec.describe "V1::Authentications", type: :request do
 	
 	describe "GET /v1/authenticate" do
 		context "with valid credentials" do
-			it "must return http status 200" do
+			it "returns http status 200" do
 				post v1_authenticate_path, params: valid_credentials.to_json, headers: @headers
 				expect(response).to have_http_status(200)
 			end
 		end
 
 		context	"with invalid credentials" do
-			it "must return http status 401" do
+			it "returns http status 401" do
 				post v1_authenticate_path, params: invalid_credentials.to_json, headers: @headers
 				expect(response).to have_http_status(401)
 			end
