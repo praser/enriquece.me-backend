@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     	delete 'user', to: 'users#destroy'
 
     	get 'banks', to: 'banks#index'
+
+        get 'account_types', to: 'account_types#index'
 	end
 end
