@@ -55,3 +55,9 @@ Bank.create([
 "Banco Cruzeiro do Sul S.A." -> Falido em 2015
 "HSBC Bank Brasil S.A. - Banco Múltiplo" -> Incorporado ao Bradesco em 2016
 =end
+
+AccountType.create([
+	{name: "Conta corrente"},
+	{name: "Conta poupança"},
+	{name: "Conta salário"}
+])
