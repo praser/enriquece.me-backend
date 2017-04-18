@@ -1,4 +1,5 @@
 #language: pt
+@tipo_conta @listar_tipo_conta
 Funcionalidade: Listar todas as instituições financeiras
 	O backend deve fornecer uma lista com todas as instituições financeiras cadastradas
 
@@ -12,7 +13,7 @@ Funcionalidade: Listar todas as instituições financeiras
 		| nome				|
 		| Conta corrente 	|
 		| Conta poupança	|
-		| Conta salário		|	
+		| Conta salário	|	
 	
 	Cenário: Quando um usuário autenticado solicita a lista dos tipos de contas
 		Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"

@@ -6,6 +6,8 @@ class User
 	field :email, type: String
 	field :password_digest, type: String
 
+	has_many :accounts
+
 	has_secure_password validations: false
 
 	validates :name, presence: true

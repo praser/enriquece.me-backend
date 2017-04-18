@@ -29,7 +29,7 @@ end
 Então(/^o "([^"]*)" do usuário deve ser "([^"]*)"$/) do |field, value|
 	body = JSON.parse(last_response.body)
 	
-	expect(body["data"]["type"]).to eq("users")
+	expect(body["data"]["type"]).to eq("user")
 
   case field.downcase
   when "nome"	

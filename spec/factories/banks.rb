@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :bank do
-    name Faker::Bank.name
-    code Faker::Number.number(4)
+    sequence(:name) {|n| Faker::Lorem.sentence(n) }
+    sequence(:code) {|n| Faker::Number.number(4).to_i + n}
   end
 end

@@ -4,11 +4,8 @@ class Bank
   field :name, type: String
   field :code, type: Integer
 
-  validates :name, presence: true
-  validates :name, uniqueness: true
+  has_many :accounts
 
-  validates :code, presence: true
-  validates :code, uniqueness: true
-  validates :code, numericality: true
-  validates :code, length: {in: 1..4}
+  validates :name, presence: true, uniqueness: true
+  validates :code, presence: true, uniqueness: true, numericality: true, length: {in: 1..4}
 end

@@ -10,4 +10,6 @@ RSpec.describe Bank, type: :model do
   it {is_expected.to validate_numericality_of :code}
   it {is_expected.to validate_uniqueness_of :code}
   it {is_expected.to validate_length_of(:code).within(1..4)}
+
+  it {is_expected.to have_many :accounts}
 end

@@ -1,4 +1,5 @@
 #language: pt
+@usuario @criar_usuario
 Funcionalidade: Cadastrar usuário
 	Para gerenciar suas finanças
 	Os usuários devem se cadastrar no sistema

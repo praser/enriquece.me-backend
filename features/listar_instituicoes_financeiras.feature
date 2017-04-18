@@ -1,4 +1,5 @@
 #language: pt
+@bancos @listar_bancos
 Funcionalidade: Listar todas as instituições financeiras
 	O backend deve fornecer uma lista com todas as instituições financeiras cadastradas
 
@@ -9,8 +10,8 @@ Funcionalidade: Listar todas as instituições financeiras
 		| Mike Tyson | miketyson@exemplo.com | 123456 |
 		| Rob Stark  | robstark@exemplo.com  | 123456 |
 		E a existência das instituições financeiras abaixo no sistema:
-		| nome 						| código |
-		| Caixa Ecônomica Federal 	| 104	 |
+		| nome 					| código |
+		| Caixa Econômica Federal 	| 104	 |
 		| Banco do Brasil 			| 1		 |
 		| Itaú						| 341	 |	
 	

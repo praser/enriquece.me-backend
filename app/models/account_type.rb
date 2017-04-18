@@ -2,6 +2,7 @@ class AccountType
   include Mongoid::Document
   field :name, type: String
 
-  validates :name, presence: true
-  validates :name, uniqueness: true
+  has_many :accounts
+
+  validates :name, presence: true, uniqueness: true
 end

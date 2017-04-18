@@ -1,14 +1,15 @@
 #language: pt
+@usuario @visualizar_usuario
 Funcionalidade: Visualizar dados do usuário
 	Para gerenciar sua conta na aplicação
 	Os usuários devem visualizar os dados das suas contas
 
 	Contexto:
 		Dado a existência dos usuários abaixo no sistema:
-		| nome       | email                 | senha  |
-		| John Doe   | johndoe@exemplo.com   | 123456 |
-		| Mike Tyson | miketyson@exemplo.com | 123456 |
-		| Rob Stark  | robstark@exemplo.com  | 123456 |
+		| id | nome       | email                 | senha  |
+		| 1  | John Doe   | johndoe@exemplo.com   | 123456 |
+		| 2  | Mike Tyson | miketyson@exemplo.com | 123456 |
+		| 3  | Rob Stark  | robstark@exemplo.com  | 123456 |
 
 	Cenário: Quando um usuário solicita acesso aos seus próprios dados
 		Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"

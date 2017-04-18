@@ -28,6 +28,8 @@ Quando(/^o backend receber uma requisição autenticada para "([^"]*)" através 
   case method.upcase
   when "PUT"
   	put path, params
+  when "POST"
+    post path, params
   else raise "HTTP method unknown in step definions"  	
   end
 end

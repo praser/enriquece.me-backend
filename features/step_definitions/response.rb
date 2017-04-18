@@ -18,15 +18,25 @@ end
 
 Então(/^o corpo da resposta deve conter uma mensagem informando que o campo "([^"]*)" "([^"]*)"$/) do |field, message|
   body = JSON.parse(last_response.body)
+  json_node = "/data/attributes/"
+
   
-  case field.downcase
+  field = case field.downcase
   when "nome"
-  	field = "/data/attributes/name"
+  	"name"
 	when "email"
-  	field = "/data/attributes/email"
+  	"email"
   when "senha"
-  	field = "/data/attributes/password"
+  	"password"
+  when "banco"
+    "bank"
+  when "saldo inicial"
+    "initial-balance"
+  when "tipo de conta"
+    "account-type"
   end
+
+  field = "#{json_node}#{field}"
 
   case message.downcase
 	when "deve ser informado"
@@ -35,6 +45,6 @@ Então(/^o corpo da resposta deve conter uma mensagem informando que o campo "([
 		message = "is already taken"
 	end
 
-	expect(body["errors"][0]["source"]["pointer"]).to eq field
-	expect(body["errors"][0]["detail"]).to eq message
+  expect(body["errors"].map {|el| el['source']['pointer']}).to include(field)
+  expect(body["errors"].map {|el| el['detail']}[body["errors"].map {|el| el['source']['pointer']}.index field]).to include(message)
 end
