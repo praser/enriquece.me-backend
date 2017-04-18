@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.4.0"
+ruby "2.4.1"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -23,7 +23,7 @@ group :development, :test do
   gem 'byebug', platform: :mri # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
-  gem 'mongoid-rspec'
+  gem 'mongoid-rspec', github: 'mongoid-rspec/mongoid-rspec'
   gem 'cucumber-rails', require: false
   gem 'cucumber-api-steps', require: false
   gem 'database_cleaner'
