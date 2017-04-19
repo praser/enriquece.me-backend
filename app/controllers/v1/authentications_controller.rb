@@ -11,12 +11,12 @@ class V1::AuthenticationsController < ApplicationController
       else
         @user = User.new
         @user.errors.add(:credentials, command.errors)
-        render json: @user, status: :unauthorized, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
+        render_json_api_error(@user, :unauthorized)
       end
     rescue => e
       resource = User.new
       resource.errors.add(:credentials, 'Could not find any user with the credentials provided')
-      render json: resource, status: :unauthorized, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
+      render_json_api_error(resource, :unauthorized)
     end
 
   end

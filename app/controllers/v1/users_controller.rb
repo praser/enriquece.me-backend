@@ -12,9 +12,9 @@ class V1::UsersController < V1::BaseController
     @user = User.new(user_params)
     
     if @user.save
-      render json: @user, status: :created, location: v1_user_path(@user)
+      render_json_api(@user, {status: :created, location: v1_user_path(@user)})
     else
-      render json: @user, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
+      render_json_api_error(@user)
     end
   end
 
@@ -24,9 +24,9 @@ class V1::UsersController < V1::BaseController
     @user.password = user_params[:password] || @user.password
 
     if @user.update
-      render json: @user
+      render_json_api(@user)
     else
-      render json: @user, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
+      render_json_api_error(@user)
     end
   end
 
