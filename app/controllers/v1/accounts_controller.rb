@@ -31,7 +31,7 @@ class V1::AccountsController < ApplicationController
   end
 
   def destroy
-    @v1_account.destroy
+    @account.destroy
   end
 
   private

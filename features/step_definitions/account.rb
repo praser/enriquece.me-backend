@@ -27,6 +27,14 @@ Quando(/^o backend receber uma requisição autenticada para exibir dados da con
   get default_account_path(account)
 end
 
+Quando(/^o backend receber uma requisição autenticada para remover a conta "([^"]*)"$/) do |account_name|
+  header "Content-Type", "application/vnd.api+json"
+  header "Authorization", "Bearer #{@token}"
+
+  account = Account.find_by(name: account_name)
+  delete default_account_path(account)
+end
+
 Quando(/^o backend receber uma requisição não autenticada para alterar a conta "([^"]*)"$/) do |account_name|
   header "Content-Type", "application/vnd.api+json"
 
@@ -39,6 +47,13 @@ Quando(/^o backend receber uma requisição não autenticada para exibir dados d
 
   account = Account.find_by(name: account_name)
   get default_account_path(account)
+end
+
+Quando(/^o backend receber uma requisição não autenticada para remover a conta "([^"]*)"$/) do |account_name|
+  header "Content-Type", "application/vnd.api+json"
+
+  account = Account.find_by(name: account_name)
+  delete default_account_path(account)
 end
 
 Quando(/^o backend receber uma requisição autenticada para o cadastramento de uma conta "([^"]*)" no banco "([^"]*)" com os parâmetros$/) do |account_type, bank, params|

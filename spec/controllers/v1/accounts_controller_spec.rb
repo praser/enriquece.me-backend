@@ -87,17 +87,11 @@ RSpec.describe V1::AccountsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    xit "destroys the requested v1_account" do
-      account = V1::Account.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: account.to_param}, session: valid_session
-      }.to change(V1::Account, :count).by(-1)
-    end
+    let(:account) {FactoryGirl.create(:account, {user: user})}
 
-    xit "redirects to the v1_accounts list" do
-      account = V1::Account.create! valid_attributes
-      delete :destroy, params: {id: account.to_param}, session: valid_session
-      expect(response).to redirect_to(v1_accounts_url)
+    it "destroys the requested account" do
+      delete :destroy, params: {id: account.id}
+      expect(Account.all.to_a).to_not include account
     end
   end
 
