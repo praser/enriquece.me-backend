@@ -11,7 +11,7 @@ Funcionalidade: Editar conta
 		| Mike Tyson | miketyson@exemplo.com | 123456 |
 		| Rob Stark  | robstark@exemplo.com  | 123456 |
 		E a existência das instituições financeiras abaixo no sistema:
-		| nome 					| código |
+		| nome 						| código |
 		| Caixa Econômica Federal 	| 104	 |
 		| Banco do Brasil 			| 1		 |
 		| Itaú						| 341	 |
@@ -19,7 +19,7 @@ Funcionalidade: Editar conta
 		| nome				|
 		| Conta corrente 	|
 		| Conta poupança	|
-		| Conta salário	|
+		| Conta salário		|
 		E a existência das contas abaixo no sistema:
 		| nome		| saldo_inicial | banco						| tipo				| usuario				|
 		| Conta 1	| 100.0			| Banco do Brasil			| Conta corrente	| johndoe@exemplo.com	|

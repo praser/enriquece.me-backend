@@ -3,9 +3,9 @@ class V1::AccountsController < ApplicationController
 
   # GET /v1/accounts
   def index
-    @v1_accounts = V1::Account.all
+    @accounts = Account.where(user: current_user.id)
 
-    render json: @v1_accounts
+    render_json_api(@accounts)
   end
 
   # GET /v1/accounts/1
@@ -19,7 +19,7 @@ class V1::AccountsController < ApplicationController
     attach_user
 
     if @account.save
-      render json: @account, status: :created, location: v1_accounts_path(@account), include: [:bank, :account_type]
+      render_json_api(@account, {status: :created, location: v1_accounts_path(@ccount)})
     else
       render json: @account, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
     end
@@ -28,7 +28,7 @@ class V1::AccountsController < ApplicationController
   # PATCH/PUT /v1/accounts/1
   def update
       if @account.update(account_params)
-        render json: @account
+        render_json_api(@account)
       else
         render json: @account, status: :unprocessable_entity, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
       end
@@ -58,5 +58,10 @@ class V1::AccountsController < ApplicationController
     # Attach the current_user to account
     def attach_user
        @account.user = current_user   
+    end
+
+    # Render response in JSON API format
+    def render_json_api(object, options={status: :ok, location: nil})
+      render json: object, status: options[:status], location: options[:location], include: [:bank, :account_type]
     end
 end

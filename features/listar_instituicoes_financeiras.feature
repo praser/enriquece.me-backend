@@ -10,7 +10,7 @@ Funcionalidade: Listar todas as instituições financeiras
 		| Mike Tyson | miketyson@exemplo.com | 123456 |
 		| Rob Stark  | robstark@exemplo.com  | 123456 |
 		E a existência das instituições financeiras abaixo no sistema:
-		| nome 					| código |
+		| nome 						| código |
 		| Caixa Econômica Federal 	| 104	 |
 		| Banco do Brasil 			| 1		 |
 		| Itaú						| 341	 |	

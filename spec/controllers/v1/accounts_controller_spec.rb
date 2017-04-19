@@ -8,10 +8,16 @@ RSpec.describe V1::AccountsController, type: :controller do
   let(:user) {FactoryGirl.create(:user)}
 
   describe "GET #index" do
-    xit "assigns all v1_accounts as @v1_accounts" do
-      account = V1::Account.create! valid_attributes
-      get :index, params: {}, session: valid_session
-      expect(assigns(:v1_accounts)).to eq([account])
+    before(:each) do
+      5.times do
+        FactoryGirl.create(:account)
+        FactoryGirl.create(:account, {user: user})
+      end
+    end
+
+    it "assigns all users accounts as @accounts" do
+      get :index
+      expect(assigns(:accounts)).to eq(Account.where(user: user.id))
     end
   end
 

@@ -48,3 +48,18 @@ Então(/^o corpo da resposta deve conter uma mensagem informando que o campo "([
   expect(body["errors"].map {|el| el['source']['pointer']}).to include(field)
   expect(body["errors"].map {|el| el['detail']}[body["errors"].map {|el| el['source']['pointer']}.index field]).to include(message)
 end
+
+Então(/^o a lista deve conter "([^"]*)" "([^"]*)"$/) do |amount, type|
+  amount = amount.to_i
+
+  type = case type
+  when "contas"
+    "account"
+  end
+
+  body = JSON.parse(last_response.body)
+  
+  expect(body['data'].map {|el| el['type']}.uniq.size).to eq 1
+  expect(body['data'].map {|el| el['type']}.uniq[0]).to eq type
+  expect(body['data'].map {|el| el['attributes']}.size).to eq amount
+end
