@@ -35,7 +35,7 @@ Funcionalidade: Remover conta
 		Então a resposta deve possuir status "401"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado
-	@wip
+	
 	Cenário: Um usuário autenticado tenta remover uma conta que não é sua
 		Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
 		Quando o backend receber uma requisição autenticada para remover a conta "Conta 3"
