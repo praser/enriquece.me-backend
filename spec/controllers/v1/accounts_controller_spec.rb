@@ -22,10 +22,18 @@ RSpec.describe V1::AccountsController, type: :controller do
   end
 
   describe "GET #show" do
-    xit "assigns the requested v1_account as @v1_account" do
-      account = V1::Account.create! valid_attributes
-      get :show, params: {id: account.to_param}, session: valid_session
-      expect(assigns(:v1_account)).to eq(account)
+    let(:account) {FactoryGirl.create(:account, {user: user})}
+
+    it "assigns the requested account as @account" do
+      get :show, params: {id: account.id}
+      expect(assigns(:account)).to eq(account)
+    end
+
+    it "does not assings another's user account as @account" do
+      anothers_account = FactoryGirl.create(:account)
+      
+      get :show, params: {id: anothers_account.id}
+      expect(assigns(:account)).to be_nil
     end
   end
 

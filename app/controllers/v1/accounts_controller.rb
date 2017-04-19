@@ -8,7 +8,7 @@ class V1::AccountsController < ApplicationController
   end
 
   def show
-    render json: @v1_account
+    render_json_api @account
   end
 
   def create

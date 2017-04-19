@@ -19,11 +19,26 @@ Quando(/^o backend receber uma requisição autenticada para alterar a conta "([
   put default_account_path(account), params
 end
 
+Quando(/^o backend receber uma requisição autenticada para exibir dados da conta "([^"]*)"$/) do |account_name|
+  header "Content-Type", "application/vnd.api+json"
+  header "Authorization", "Bearer #{@token}"
+
+  account = Account.find_by(name: account_name)
+  get default_account_path(account)
+end
+
 Quando(/^o backend receber uma requisição não autenticada para alterar a conta "([^"]*)"$/) do |account_name|
   header "Content-Type", "application/vnd.api+json"
 
   account = Account.find_by(name: account_name)
   put default_account_path(account)
+end
+
+Quando(/^o backend receber uma requisição não autenticada para exibir dados da conta "([^"]*)"$/) do |account_name|
+  header "Content-Type", "application/vnd.api+json"
+
+  account = Account.find_by(name: account_name)
+  get default_account_path(account)
 end
 
 Quando(/^o backend receber uma requisição autenticada para o cadastramento de uma conta "([^"]*)" no banco "([^"]*)" com os parâmetros$/) do |account_type, bank, params|

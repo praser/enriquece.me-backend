@@ -1,5 +1,5 @@
 #language: pt
-@bancos @listar_bancos
+@banco @listar_bancos
 Funcionalidade: Listar todas as instituições financeiras
 	O backend deve fornecer uma lista com todas as instituições financeiras cadastradas
 
