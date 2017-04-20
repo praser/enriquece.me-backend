@@ -14,4 +14,5 @@ RSpec.describe User, type: :model do
   it {is_expected.to validate_length_of(:password).within(6..20)}
 
   it {is_expected.to have_many(:accounts)}
+  it {is_expected.to have_many(:categories)}
 end

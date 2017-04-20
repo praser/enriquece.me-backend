@@ -7,6 +7,7 @@ class User
 	field :password_digest, type: String
 
 	has_many :accounts
+	has_many :categories
 
 	has_secure_password validations: false
 
