@@ -3,7 +3,7 @@ class V1::CategoriesController < ApplicationController
 
   # GET /v1/categories
   def index
-    @v1_categories = V1::Category.all
+    @categories = Category.find_by(user_id: current_user.id)
 
     render json: @v1_categories
   end

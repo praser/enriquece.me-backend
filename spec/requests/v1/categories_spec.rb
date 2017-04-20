@@ -12,10 +12,33 @@ RSpec.describe "V1::Categories", type: :request do
 			@headers = {"Content-Type" => "application/vnd.api+json", "Authorization" => "Bearer #{token}"}
 		end
 
-		describe "POST /v1_categories" do
+		let(:category) {FactoryGirl.create(:category, {user: @current_user})}
+
+		describe "POST /v1/categories" do
 			it "returns http status 201" do
 				post v1_categories_path, params: category_params.to_json, headers: @headers
 				expect(response).to have_http_status :created
+			end
+		end
+
+		describe "PUT /v1/categories/:id" do
+			it "returns http status 200" do
+				put v1_category_path(category), params: category_params.to_json, headers: @headers
+				expect(response).to have_http_status :ok
+			end
+		end
+
+		describe "PATCH /v1/categories/:id" do
+			it "returns http status 200" do
+				patch v1_category_path(category), params: category_params.to_json, headers: @headers
+				expect(response).to have_http_status :ok
+			end
+		end
+
+		describe "GET /v1/categories" do
+			it "returns http status 200" do
+				get v1_categories_path, headers: @headers
+				expect(response).to have_http_status :ok
 			end
 		end
 	end
@@ -25,9 +48,32 @@ RSpec.describe "V1::Categories", type: :request do
 			@headers = {"Content-Type" => "application/vnd.api+json"}
 		end
 
-		describe "POST /v1_categories" do
+		let(:category) {FactoryGirl.create(:category)}
+
+		describe "POST /v1/categories" do
 			it "returns http status 401" do
 				post v1_categories_path, params: category_params.to_json, headers: @headers
+				expect(response).to have_http_status :unauthorized
+			end
+		end
+
+		describe "PUT /v1/categories/:id" do
+			it "returns http status 401" do
+				put v1_category_path(category), headers: @headers
+				expect(response).to have_http_status :unauthorized
+			end
+		end
+
+		describe "PATCH /v1/categories/:id" do
+			it "returns http status 401" do
+				patch v1_category_path(category), headers: @headers
+				expect(response).to have_http_status :unauthorized
+			end
+		end
+
+		describe "GET /v1/categories/:id" do
+			it "returns http status 401" do
+				get v1_categories_path, headers: @headers
 				expect(response).to have_http_status :unauthorized
 			end
 		end
