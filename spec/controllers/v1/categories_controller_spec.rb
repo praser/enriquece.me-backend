@@ -1,10 +1,11 @@
 require 'rails_helper'
 RSpec.describe V1::CategoriesController, type: :controller do
   before (:each) do
-    user = FactoryGirl.create(:user)
     allow(controller).to receive(:authenticate_request).and_return(user)
     allow(controller).to receive(:current_user).and_return(user)  
   end
+
+  let(:user) {FactoryGirl.create(:user)}
 
   let(:valid_attributes) {
     FactoryGirl.attributes_for(:category)
@@ -60,42 +61,48 @@ RSpec.describe V1::CategoriesController, type: :controller do
   end
 
   describe "PUT #update" do
+    let(:category) {FactoryGirl.create(:category, {user: user})}
+
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:update_params) {FactoryGirl.attributes_for(:category, {id: category.id})}
 
-      xit "updates the requested v1_category" do
-        category = V1::Category.create! valid_attributes
-        put :update, params: {id: category.to_param, v1_category: new_attributes}, session: valid_session
+      before(:each) do
+        put :update, params: update_params
+      end
+
+      it "updates the requested category" do
         category.reload
-        skip("Add assertions for updated state")
+        expect(category.name).to eq update_params[:name]
       end
 
-      xit "assigns the requested v1_category as @v1_category" do
-        category = V1::Category.create! valid_attributes
-        put :update, params: {id: category.to_param, v1_category: valid_attributes}, session: valid_session
-        expect(assigns(:v1_category)).to eq(category)
-      end
-
-      xit "redirects to the v1_category" do
-        category = V1::Category.create! valid_attributes
-        put :update, params: {id: category.to_param, v1_category: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(category)
+      it "assigns the requested category as @category" do
+        expect(assigns(:category)).to eq(category)
       end
     end
 
     context "with invalid params" do
-      xit "assigns the v1_category as @v1_category" do
-        category = V1::Category.create! valid_attributes
-        put :update, params: {id: category.to_param, v1_category: invalid_attributes}, session: valid_session
-        expect(assigns(:v1_category)).to eq(category)
+      let(:update_params) {FactoryGirl.attributes_for(:category, {id: category.id, name: nil})}
+
+      before(:each) do
+        put :update, params: update_params
       end
 
-      xit "re-renders the 'edit' template" do
-        category = V1::Category.create! valid_attributes
-        put :update, params: {id: category.to_param, v1_category: invalid_attributes}, session: valid_session
-        expect(response).to render_template("edit")
+      it "assigns the category as @category" do
+        expect(assigns(:category)).to eq(category)
+      end
+
+      it "add validation errors to @category" do
+        expect(assigns(:category).errors).to_not be_empty
+      end
+    end
+
+    context "anothers user categori" do
+      let(:another_user_category) {FactoryGirl.create(:category)}
+      let(:update_params) {FactoryGirl.attributes_for(:category, {id: another_user_category.id})}
+
+      it "does not assign another_user_category as @category" do
+        put :update, params: update_params
+        expect(assigns(:category)).to be_nil
       end
     end
   end

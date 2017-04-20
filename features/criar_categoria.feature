@@ -10,21 +10,6 @@ Funcionalidade: Criar categoria
 		| John Doe   | johndoe@exemplo.com   | 123456 |
 		| Mike Tyson | miketyson@exemplo.com | 123456 |
 		| Rob Stark  | robstark@exemplo.com  | 123456 |
-		E a existência das instituições financeiras abaixo no sistema:
-		| nome 						| código |
-		| Caixa Econômica Federal 	| 104	 |
-		| Banco do Brasil 			| 1		 |
-		| Itaú						| 341	 |
-		E a existência dos tipos de conta abaixo no sistema:
-		| nome				|
-		| Conta corrente  	|
-		| Conta salário		|
-		| Conta poupança	|
-		E a existência das contas abaixo no sistema:
-		| nome		| saldo_inicial | banco						| tipo				| usuario				|
-		| Conta 1	| 100.0			| Banco do Brasil			| Conta corrente	| johndoe@exemplo.com	|
-		| Conta 2	| 50.0			| Caixa Econômica Federal	| Conta poupança 	| johndoe@exemplo.com	|
-		| Conta 3	| 30.0			| Itaú						| Conta corrente 	| miketyson@exemplo.com	|
 	
 	Cenário: Um usuário autenticado solicita o cadastramento de uma nova categoria com dados válidos
 		Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
