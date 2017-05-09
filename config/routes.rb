@@ -13,9 +13,14 @@ Rails.application.routes.draw do
 
 		get '/account_types', to: 'account_types#index'
 
+		#resources without new and edit routes
 		with_options(except: [:new, :edit]) do |opt|
 			opt.resources :accounts
 			opt.resources :categories
+		end
+
+		#resources without new, edit and index routes
+		with_options(except: [:new, :edit, :index]) do |opt|
 			opt.resources :subcategories
 		end
 	end

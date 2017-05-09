@@ -4,10 +4,6 @@ RSpec.describe V1::SubcategoriesController, type: :routing do
   describe "routing" do
     let(:default_version) {"v1"}
 
-    it "routes to #index" do
-      expect(:get => "/subcategories").to route_to("#{default_version}/subcategories#index", format: "json")
-    end
-
     it "routes to #create" do
       expect(:post => "/subcategories").to route_to("#{default_version}/subcategories#create", format: "json")
     end

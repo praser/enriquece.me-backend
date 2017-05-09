@@ -3,10 +3,6 @@ require "rails_helper"
 RSpec.describe V1::UsersController, :type => :routing do
   describe "routing" do
 
-    it "routes to #index" do
-      expect(:get => "/v1/subcategories").to route_to("v1/subcategories#index", format: "json")
-    end
-
     it "routes to #create" do
       expect(:post => "/v1/subcategories").to route_to("v1/subcategories#create", format: "json")
     end
