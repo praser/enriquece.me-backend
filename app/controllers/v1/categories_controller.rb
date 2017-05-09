@@ -3,14 +3,9 @@ class V1::CategoriesController < ApplicationController
 
   # GET /v1/categories
   def index
-    @categories = Category.find_by(user_id: current_user.id)
+    @categories = Category.where(user_id: current_user.id)
 
-    render json: @v1_categories
-  end
-
-  # GET /v1/categories/1
-  def show
-    render json: @v1_category
+    render_json_api(@categories)
   end
 
   # POST /v1/categories
@@ -36,7 +31,7 @@ class V1::CategoriesController < ApplicationController
 
   # DELETE /v1/categories/1
   def destroy
-    @v1_category.destroy
+    @category.destroy
   end
 
   private

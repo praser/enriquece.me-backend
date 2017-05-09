@@ -7,10 +7,6 @@ RSpec.describe V1::CategoriesController, type: :routing do
       expect(:get => "/v1/categories").to route_to("v1/categories#index", format: "json")
     end
 
-    it "routes to #show" do
-      expect(:get => "/v1/categories/1").to route_to("v1/categories#show", id: "1", format: "json")
-    end
-
     it "routes to #create" do
       expect(:post => "/v1/categories").to route_to("v1/categories#create", format: "json")
     end

@@ -41,6 +41,13 @@ RSpec.describe "V1::Categories", type: :request do
 				expect(response).to have_http_status :ok
 			end
 		end
+
+		describe "DELETE /v1/categories/:id" do
+			it "returns http status 401" do |variable|
+				delete v1_category_path(category), headers: @headers
+				expect(response).to have_http_status :no_content
+			end
+		end
 	end
 
 	context "without authentication token" do
@@ -74,6 +81,13 @@ RSpec.describe "V1::Categories", type: :request do
 		describe "GET /v1/categories/:id" do
 			it "returns http status 401" do
 				get v1_categories_path, headers: @headers
+				expect(response).to have_http_status :unauthorized
+			end
+		end
+
+		describe "DELETE /v1/categories/:id" do
+			it "returns http status 401" do |variable|
+				delete v1_category_path(category), headers: @headers
 				expect(response).to have_http_status :unauthorized
 			end
 		end

@@ -16,15 +16,7 @@ RSpec.describe V1::CategoriesController, type: :controller do
 			5.times {FactoryGirl.create(:category, {user: user})}
 			
 			get :index
-			expect(assigns(:categories)).to eq(Category.find_by(user_id: user.id))
-		end
-	end
-
-	describe "GET #show" do
-		xit "assigns the requested v1_category as @v1_category" do
-			category = V1::Category.create! valid_attributes
-			get :show, params: {id: category.to_param}, session: valid_session
-			expect(assigns(:v1_category)).to eq(category)
+			expect(assigns(:categories)).to eq(Category.where(user_id: user.id))
 		end
 	end
 
@@ -112,17 +104,11 @@ RSpec.describe V1::CategoriesController, type: :controller do
 	end
 
 	describe "DELETE #destroy" do
-		xit "destroys the requested v1_category" do
-			category = V1::Category.create! valid_attributes
+		it "destroys the requested category" do
+			category = FactoryGirl.create(:category, {user: user})
 			expect {
-				delete :destroy, params: {id: category.to_param}, session: valid_session
-			}.to change(V1::Category, :count).by(-1)
-		end
-
-		xit "redirects to the v1_categories list" do
-			category = V1::Category.create! valid_attributes
-			delete :destroy, params: {id: category.to_param}, session: valid_session
-			expect(response).to redirect_to(v1_categories_url)
+				delete :destroy, params: {id: category.id}
+			}.to change(Category, :count).by(-1)
 		end
 	end
 

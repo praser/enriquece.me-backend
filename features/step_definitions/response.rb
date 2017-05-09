@@ -55,6 +55,8 @@ Então(/^o a lista deve conter "([^"]*)" "([^"]*)"$/) do |amount, type|
   type = case type
   when "contas"
     "account"
+  when "categorias"
+    "category"
   end
 
   body = JSON.parse(last_response.body)

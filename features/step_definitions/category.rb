@@ -8,18 +8,33 @@ Dado(/^a existência das categorais abaixo no sistma:$/) do |table|
 end
 
 Quando(/^o backend receber uma requisição autenticada para alterar a categoria "([^"]*)" com os parâmetros$/) do |category_name, params|
-  header "Content-Type", "application/vnd.api+json"
-  header "Authorization", "Bearer #{@token}"
+	header "Content-Type", "application/vnd.api+json"
+	header "Authorization", "Bearer #{@token}"
 
-  category = Category.find_by(name: category_name)
-  put default_category_path(category), params
+	category = Category.find_by(name: category_name)
+	put default_category_path(category), params
 end
 
 Quando(/^o backend receber uma requisição não autenticada para alterar a categoria "([^"]*)"$/) do |category_name|
+	header "Content-Type", "application/vnd.api+json"
+
+	category = Category.find_by(name: category_name)
+	put default_category_path(category)
+end
+
+Quando(/^o backend receber uma requisição autenticada para remover a categoria "([^"]*)"$/) do |category_name|
+	header "Content-Type", "application/vnd.api+json"
+	header "Authorization", "Bearer #{@token}"
+
+	category = Category.find_by(name: category_name)
+	delete default_category_path(category)
+end
+
+Quando(/^o backend receber uma requisição não autenticada para remover a categoria "([^"]*)"$/) do |category_name|
   header "Content-Type", "application/vnd.api+json"
 
-  category = Category.find_by(name: category_name)
-  put default_category_path(category)
+	category = Category.find_by(name: category_name)
+	delete default_category_path(category)
 end
 
 Então(/^a categoria "([^"]*)" deve ser cadastrada$/) do |category_name|
@@ -30,4 +45,8 @@ Então(/^a categoria "([^"]*)" deve estar presente na resposta\.$/) do |category
 	body = JSON.parse(last_response.body)
 	category = Category.find_by(name: category_name)
 	expect(body['data']['attributes']['name']).to eq category.name
+end
+
+Então(/^a categoria "([^"]*)" deverá ter sido removida$/) do |category_name|
+  expect(Category.find_by(name: category_name)).to be_nil
 end
