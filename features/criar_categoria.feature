@@ -32,7 +32,7 @@ Funcionalidade: Criar categoria
 		{
 		}
 		"""
-		E a resposta deve possuir status "422"
+		Então a resposta deve possuir status "422"
 		E a resposta deve possuir o content/type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o campo "nome" "deve ser informado"
