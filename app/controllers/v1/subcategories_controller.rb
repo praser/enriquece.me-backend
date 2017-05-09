@@ -27,9 +27,9 @@ class V1::SubcategoriesController < V1::BaseController
   # PATCH/PUT /v1/subcategories/1
   def update
     if @subcategory.update(subcategory_params)
-      render json: @subcategory
+      render_json_api(@subcategory)
     else
-      render json: @subcategory.errors, status: :unprocessable_entity
+      render_json_api_error(@subcategory)
     end
   end
 
@@ -42,6 +42,16 @@ class V1::SubcategoriesController < V1::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_subcategory
       @subcategory = Subcategory.find(params[:id])
+    end
+
+    def set_subcategory
+      @subcategory = Subcategory.find(params[:id])
+      @subcategory = nil if @subcategory.category.user != current_user
+
+      if @subcategory.nil?
+        current_user.errors.add :authorization, 'Not Authorized'
+        render_json_api_error(current_user, :unauthorized)
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -1,3 +1,12 @@
+Dado(/^a existência das subcategorias abaixo no sistema:$/) do |table|
+  table.hashes.each do |data|
+    FactoryGirl.create(:subcategory, {
+      name: data['nome'],
+      category: Category.find_by(name: data['categoria'])
+    })
+  end
+end
+
 Quando(/^o backend receber uma requisição autenticada para o cadastramento de uma subcategoria de "([^"]*)" com os parâmetros$/) do |category_name, params|
   header "Content-Type", "application/vnd.api+json"
   header "Authorization", "Bearer #{@token}"
@@ -7,6 +16,25 @@ Quando(/^o backend receber uma requisição autenticada para o cadastramento de 
   params['category_id'] = category.id.to_s
 
   post default_subcategories_path, params.to_json.to_s
+end
+
+Quando(/^o backend receber uma requisição autenticada para alterar a subcategoria "([^"]*)" com os parâmetros$/) do |subcategory_name, params|
+  header "Content-Type", "application/vnd.api+json"
+  header "Authorization", "Bearer #{@token}"
+  
+  subcategory = Subcategory.find_by(name: subcategory_name)
+  params = JSON.parse(params)
+  params['subcategory_id'] = subcategory.id.to_s
+
+  put default_subcategory_path(subcategory), params.to_json.to_s
+end
+
+Quando(/^o backend receber uma requisição não autenticada para alterar a subcategoria "([^"]*)"$/) do |subcategory_name|
+  header "Content-Type", "application/vnd.api+json"
+
+  subcategory = Subcategory.find_by(name: subcategory_name)
+
+  put default_subcategory_path(subcategory)
 end
 
 Então(/^a subcategoria "([^"]*)" deve ser cadastrada$/) do |category_name|
@@ -24,4 +52,17 @@ Então(/^a subcategoria "([^"]*)" deve estar presente na resposta\.$/) do |subca
   body = JSON.parse(last_response.body)
 	subcategory = Subcategory.find_by(name: subcategory_name)
 	expect(body['data']['attributes']['name']).to eq subcategory.name
+end
+
+
+Então(/^o campo "([^"]*)" da subcategoria deve ser "([^"]*)"$/) do |field, value|
+  body = JSON.parse(last_response.body)
+
+  field = case field
+  when "nome" 
+    "name"
+  else raise "field name unknown in step definions"
+  end
+
+  expect(body['data']['attributes'][field].to_s).to eq value.to_s
 end
