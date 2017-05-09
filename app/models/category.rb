@@ -3,6 +3,7 @@ class Category
   field :name, type: String
 
   belongs_to :user
+  has_many :subcategories
 
   validates :name, presence: true
   validates :name, uniqueness: {scope: :user_id, case_sensitive: false}

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 		with_options(except: [:new, :edit]) do |opt|
 			opt.resources :accounts
 			opt.resources :categories
+			opt.resources :subcategories
 		end
 	end
 end
