@@ -1,4 +1,4 @@
-class V1::AccountsController < ApplicationController
+class V1::AccountsController < V1::BaseController
   before_action :set_account, only: [:show, :update, :destroy]
 
   def index

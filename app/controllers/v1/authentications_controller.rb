@@ -1,4 +1,4 @@
-class V1::AuthenticationsController < ApplicationController
+class V1::AuthenticationsController < V1::BaseController
   skip_before_action :authenticate_request
 
   # POST /v1/authentications

@@ -1,4 +1,4 @@
-class V1::CategoriesController < ApplicationController
+class V1::CategoriesController < V1::BaseController
   before_action :set_category, only: [:show, :update, :destroy]
 
   # GET /v1/categories
