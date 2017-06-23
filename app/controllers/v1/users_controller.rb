@@ -1,47 +1,47 @@
-class V1::UsersController < V1::BaseController
-  before_action :set_user, only: [:show, :update, :destroy]
-  skip_before_action :authenticate_request, only: [:create]
+# frozen_string_literal: true
 
-  # GET /user
-  def show
-    render json: @user
-  end
+module V1
+  # Defines actions that involve user management
+  class UsersController < V1::BaseController
+    before_action :set_user, only: %i[show update destroy]
+    skip_before_action :authenticate_request, only: :create
 
-  # POST /users
-  def create
-    @user = User.new(user_params)
-    
-    if @user.save
-      render_json_api(@user, {status: :created, location: v1_user_path(@user)})
-    else
-      render_json_api_error(@user)
+    # GET /user
+    def show
+      render json: @user
     end
-  end
 
-  # PATCH/PUT /user
-  def update
-    @user.name = user_params[:name] || @user.name
-    @user.password = user_params[:password] || @user.password
+    # POST /users
+    def create
+      @user = User.new(user_params)
 
-    if @user.update
+      return render_json_api_error(@user) unless @user.save
+      render_json_api(@user, status: :created, location: v1_user_path(@user))
+    end
+
+    # PATCH/PUT /user
+    def update
+      @user.name = user_params[:name] || @user.name
+      @user.password = user_params[:password] || @user.password
+
+      return render_json_api_error(@user) unless @user.update
       render_json_api(@user)
-    else
-      render_json_api_error(@user)
     end
-  end
 
-  def destroy
-    @user.destroy
-  end
+    def destroy
+      @user.destroy
+    end
 
-  private
+    private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = current_user
     end
 
     # Only allow a trusted parameter "white list" through.
-    def user_params      
+    def user_params
       params.permit(:name, :email, :password)
     end
+  end
 end

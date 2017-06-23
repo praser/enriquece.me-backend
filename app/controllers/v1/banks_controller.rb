@@ -1,14 +1,20 @@
-class V1::BanksController < V1::BaseController
-  # GET /v1/banks
-  def index
-    @banks = Bank.all
+# frozen_string_literal: true
 
-    render_json_api(@banks)
-  end
+module V1
+  # Defines actions that involve banks management
+  class BanksController < V1::BaseController
+    # GET /v1/banks
+    def index
+      @banks = Bank.all
 
-  private
+      render_json_api(@banks)
+    end
+
+    private
+
     # Only allow a trusted parameter "white list" through.
     def bank_params
-      params.require(:bank).permit()
+      params.require(:bank).permit
     end
+  end
 end

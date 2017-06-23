@@ -29,13 +29,13 @@ Funcionalidade: Listar todas as contas do usuário
 		Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
 		Quando o backend receber uma requisição autenticada para "/accounts" através do método "GET"
 		Então a resposta deve possuir status "200"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o a lista deve conter "2" "contas"
 		
 	Cenário: Quando um usuário não autenticado solicita a lista de contas
 		Quando o backend receber uma requisição não autenticada para "/accounts" através do método "GET"
 		Então a resposta deve possuir status "401"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado

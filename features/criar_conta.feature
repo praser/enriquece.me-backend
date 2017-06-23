@@ -31,7 +31,7 @@ Funcionalidade: Cadastrar conta
 		}
 		"""
 		Então a resposta deve possuir status "201"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 	
 	Cenário: Um usuário autenticado solicita o cadastramento de uma nova conta com dados inválidos
@@ -42,7 +42,7 @@ Funcionalidade: Cadastrar conta
 		}
 		"""
 		Então a resposta deve possuir status "422"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o campo "nome" "deve ser informado"
 		E o corpo da resposta deve conter uma mensagem informando que o campo "saldo inicial" "deve ser informado" 
@@ -52,6 +52,6 @@ Funcionalidade: Cadastrar conta
 	Cenário: Um usuário não autenticado solicita o cadastramento de uma nova conta
 		Quando o backend receber uma requisição não autenticada para "/accounts" através do método "POST"
 		Então a resposta deve possuir status "401"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado

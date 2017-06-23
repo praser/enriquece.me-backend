@@ -1,14 +1,20 @@
-class V1::AccountTypesController < V1::BaseController
-  # GET /v1/account_types
-  def index
-    @account_types = AccountType.all
+# frozen_string_literal: true
 
-    render_json_api(@account_types)
-  end
+module V1
+  # Defines actions that involve managing account types
+  class AccountTypesController < V1::BaseController
+    # GET /v1/account_types
+    def index
+      @account_types = AccountType.all
 
-  private
+      render_json_api(@account_types)
+    end
+
+    private
+
     # Only allow a trusted parameter "white list" through.
     def account_type_params
-      params.permit()
+      params.permit
     end
+  end
 end

@@ -1,29 +1,37 @@
-class V1::AuthenticationsController < V1::BaseController
-  skip_before_action :authenticate_request
+# frozen_string_literal: true
 
-  # POST /v1/authentications
-  def create
-    begin
-      command = AuthenticateUser.call(authentication_params)
+module V1
+  # Defines actions that involve managing authentication
+  class AuthenticationsController < V1::BaseController
+    skip_before_action :authenticate_request
 
-      if command.success?
-        render json: {data: { attributes: {token: command.result } } }
-      else
-        @user = User.new
-        @user.errors.add(:credentials, command.errors)
-        render_json_api_error(@user, :unauthorized)
-      end
-    rescue => e
-      resource = User.new
-      resource.errors.add(:credentials, 'Could not find any user with the credentials provided')
-      render_json_api_error(resource, :unauthorized)
+    # POST /v1/authentications
+    def create
+      command = authenticate(authentication_params)
+      return render json: result_to_json(command.result) if command.success?
+
+      @user = User.new
+      @user.errors.add(:credentials, command.errors)
+      render_json_api_error(@user, :unauthorized)
     end
 
-  end
+    private
 
-  private
     # Only allow a trusted parameter "white list" through.
     def authentication_params
       params.permit(:email, :password)
     end
+
+    def authenticate(credentials)
+      AuthenticateUser.call(credentials)
+    rescue => error
+      resource = User.new
+      resource.errors.add(:credentials, error.message)
+      render_json_api_error(resource, :unauthorized)
+    end
+
+    def result_to_json(result)
+      { data: { attributes: { token: result } } }
+    end
+  end
 end

@@ -25,7 +25,7 @@ Funcionalidade: Editar categoria
 		}
 		"""
 		Então a resposta deve possuir status "200"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o campo "nome" da conta deve ser "Supermercado"
 
@@ -38,14 +38,14 @@ Funcionalidade: Editar categoria
 		}
 		"""
 		Então a resposta deve possuir status "422"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o campo "nome" "deve ser informado"
 	
 	Cenário: Um usuário não autenticado solicita a edição de uma conta
 		Quando o backend receber uma requisição não autenticada para alterar a categoria "Saúde"
 		Então a resposta deve possuir status "401"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado
 	
@@ -58,6 +58,6 @@ Funcionalidade: Editar categoria
 		}
 		"""
 		Então a resposta deve possuir status "401"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado

@@ -1,10 +1,8 @@
-class CategorySerializer < ActiveModel::Serializer
-	type :category
-	attributes :name
-end
+# frozen_string_literal: true
 
+# Subcategory serializer
 class SubcategorySerializer < ActiveModel::Serializer
-	type :subcategory
-	attributes :name
-	belongs_to :category
+  type :subcategory
+  attributes :name
+  belongs_to :category
 end

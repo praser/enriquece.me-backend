@@ -30,7 +30,7 @@ Funcionalidade: Visualizar conta
 		Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
 		Quando o backend receber uma requisição autenticada para exibir dados da conta "Conta 1"
 		Então a resposta deve possuir status "200"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o campo "nome" da conta deve ser "Conta 1"
 		E o campo "saldo inicial" da conta deve ser "100.0"
@@ -38,7 +38,7 @@ Funcionalidade: Visualizar conta
 	Cenário: Quando um usuário não autenticado solicita acesso aos dados de uma conta
 		Quando o backend receber uma requisição não autenticada para exibir dados da conta "Conta 1"
 		Então a resposta deve possuir status "401"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado
 	
@@ -46,6 +46,6 @@ Funcionalidade: Visualizar conta
 		Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
 		Quando o backend receber uma requisição autenticada para exibir dados da conta "Conta 3"
 		Então a resposta deve possuir status "401"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado

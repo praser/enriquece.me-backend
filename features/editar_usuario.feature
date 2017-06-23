@@ -21,7 +21,7 @@ Funcionalidade: Editar dados do usuário
 		}
 		"""
 		Então a resposta deve possuir status "200"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o "nome" do usuário deve ser "John Doe Exemplo"
 		E o "email" do usuário deve ser "johndoe@exemplo.com"
@@ -36,7 +36,7 @@ Funcionalidade: Editar dados do usuário
 		}
 		"""
 		Então a resposta deve possuir status "422"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 
 	Cenário: Quando um usuário tenta alterar aos seus próprios dados sem estar autenticado
@@ -49,7 +49,7 @@ Funcionalidade: Editar dados do usuário
 		}
 		"""
 		Então a resposta deve possuir status "401"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado
 		
@@ -62,6 +62,6 @@ Funcionalidade: Editar dados do usuário
 		}
 		"""
 		Então a resposta deve possuir status "200"
-		E a resposta deve possuir o content/type "application/json; charset=utf-8"
+		E a resposta deve possuir o content type "application/json; charset=utf-8"
 		E o corpo da resposta deve corresponder ao formato JSON API
 		E o "email" do usuário deve ser "johndoe@exemplo.com"

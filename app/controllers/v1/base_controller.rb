@@ -1,2 +1,6 @@
-class V1::BaseController < ApplicationController
+# frozen_string_literal: true
+
+module V1
+  class BaseController < ApplicationController
+  end
 end

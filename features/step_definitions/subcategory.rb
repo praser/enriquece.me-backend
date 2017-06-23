@@ -1,15 +1,18 @@
+# frozen_string_literal: true
+
 Dado(/^a existência das subcategorias abaixo no sistema:$/) do |table|
   table.hashes.each do |data|
-    FactoryGirl.create(:subcategory, {
+    FactoryGirl.create(
+      :subcategory,
       name: data['nome'],
       category: Category.find_by(name: data['categoria'])
-    })
+    )
   end
 end
 
 Quando(/^o backend receber uma requisição autenticada para o cadastramento de uma subcategoria de "([^"]*)" com os parâmetros$/) do |category_name, params|
-  header "Content-Type", "application/vnd.api+json"
-  header "Authorization", "Bearer #{@token}"
+  header 'Content-Type', 'application/vnd.api+json'
+  header 'Authorization', "Bearer #{@token}"
 
   category = Category.find_by(name: category_name)
   params = JSON.parse(params)
@@ -19,9 +22,9 @@ Quando(/^o backend receber uma requisição autenticada para o cadastramento de 
 end
 
 Quando(/^o backend receber uma requisição autenticada para alterar a subcategoria "([^"]*)" com os parâmetros$/) do |subcategory_name, params|
-  header "Content-Type", "application/vnd.api+json"
-  header "Authorization", "Bearer #{@token}"
-  
+  header 'Content-Type', 'application/vnd.api+json'
+  header 'Authorization', "Bearer #{@token}"
+
   subcategory = Subcategory.find_by(name: subcategory_name)
   params = JSON.parse(params)
   params['subcategory_id'] = subcategory.id.to_s
@@ -30,8 +33,8 @@ Quando(/^o backend receber uma requisição autenticada para alterar a subcatego
 end
 
 Quando(/^o backend receber uma requisição autenticada para remover a subcategoria "([^"]*)"$/) do |subcategory_name|
-  header "Content-Type", "application/vnd.api+json"
-  header "Authorization", "Bearer #{@token}"
+  header 'Content-Type', 'application/vnd.api+json'
+  header 'Authorization', "Bearer #{@token}"
 
   subcategory = Subcategory.find_by(name: subcategory_name)
 
@@ -39,7 +42,7 @@ Quando(/^o backend receber uma requisição autenticada para remover a subcatego
 end
 
 Quando(/^o backend receber uma requisição não autenticada para alterar a subcategoria "([^"]*)"$/) do |subcategory_name|
-  header "Content-Type", "application/vnd.api+json"
+  header 'Content-Type', 'application/vnd.api+json'
 
   subcategory = Subcategory.find_by(name: subcategory_name)
 
@@ -47,7 +50,7 @@ Quando(/^o backend receber uma requisição não autenticada para alterar a subc
 end
 
 Quando(/^o backend receber uma requisição não autenticada para remover a subcategoria "([^"]*)"$/) do |subcategory_name|
-  header "Content-Type", "application/vnd.api+json"
+  header 'Content-Type', 'application/vnd.api+json'
 
   subcategory = Subcategory.find_by(name: subcategory_name)
 
@@ -59,26 +62,24 @@ Então(/^a subcategoria "([^"]*)" deve ser cadastrada$/) do |category_name|
 end
 
 Então(/^a subcategoria "([^"]*)" deve estar relacionada a "([^"]*)"$/) do |subcategory_name, category_name|
-	subcategory = Subcategory.find_by(name: subcategory_name)
-	category = Category.find_by(name: category_name)
+  subcategory = Subcategory.find_by(name: subcategory_name)
+  category = Category.find_by(name: category_name)
 
-	expect(subcategory.category).to eq category
+  expect(subcategory.category).to eq category
 end
 
 Então(/^a subcategoria "([^"]*)" deve estar presente na resposta\.$/) do |subcategory_name|
   body = JSON.parse(last_response.body)
-	subcategory = Subcategory.find_by(name: subcategory_name)
-	expect(body['data']['attributes']['name']).to eq subcategory.name
+  subcategory = Subcategory.find_by(name: subcategory_name)
+  expect(body['data']['attributes']['name']).to eq subcategory.name
 end
-
 
 Então(/^o campo "([^"]*)" da subcategoria deve ser "([^"]*)"$/) do |field, value|
   body = JSON.parse(last_response.body)
 
-  field = case field
-  when "nome" 
-    "name"
-  else raise "field name unknown in step definions"
+  case field
+  when 'nome' then field = 'name'
+  else raise 'field name unknown in step definions'
   end
 
   expect(body['data']['attributes'][field].to_s).to eq value.to_s

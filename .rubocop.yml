@@ -1,0 +1,24 @@
+AllCops:
+  Exclude:
+    - 'lib/**/*'
+
+Metrics/BlockLength:
+  CountComments: false
+  Max: 30
+
+Metrics/LineLength:
+  Max: 80
+  Exclude:
+    - 'features/**/*'
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'features/**/*'
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/SymbolArray:
+  EnforcedStyle: percent
+  MinSize: 2

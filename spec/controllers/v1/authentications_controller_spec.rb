@@ -1,42 +1,45 @@
+# rubocop:disable Metrics/BlockLength
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe V1::AuthenticationsController, type: :controller do
-  before(:all){ @headers = { 'Content-Type': 'application/vnd.api+json' } }
+  before(:all) { @headers = { 'Content-Type': 'application/vnd.api+json' } }
   before(:each) { @user = FactoryGirl.create(:user) }
 
-  let(:valid_credentials) {
+  let(:valid_credentials) do
     {
       email: @user.email,
       password: @user.password
     }
-  }
+  end
 
-  let(:invalid_credentials) {
+  let(:invalid_credentials) do
     {
       email: Faker::Internet.email,
       password: Faker::Internet.password
     }
-  }
+  end
 
-  describe "POST #create" do
-    context "with valid params" do
+  describe 'POST #create' do
+    context 'with valid params' do
       before(:each) do
         post :create, params: valid_credentials, headers: @headers
         @body = JSON.parse(response.body)
       end
-      
-      it "response must contain a token" do
+
+      it 'response must contain a token' do
         expect(@body['data']['attributes'].keys).to include 'token'
       end
     end
 
-    context "with invalid params" do
+    context 'with invalid params' do
       before(:each) do
         post :create, params: invalid_credentials, headers: @headers
         @body = JSON.parse(response.body)
       end
 
-      it "response must contain an error" do
+      it 'response must contain an error' do
         expect(@body.keys).to include 'errors'
       end
     end

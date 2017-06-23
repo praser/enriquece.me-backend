@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Category model
 class Category
   include Mongoid::Document
   field :name, type: String
@@ -6,6 +9,6 @@ class Category
   has_many :subcategories
 
   validates :name, presence: true
-  validates :name, uniqueness: {scope: :user_id, case_sensitive: false}
+  validates :name, uniqueness: { scope: :user_id, case_sensitive: false }
   validates :user_id, presence: true
 end

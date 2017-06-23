@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-vendored_cucumber_bin = Dir["#{File.dirname(__FILE__)}/../vendor/{gems,plugins}/cucumber*/bin/cucumber"].first
+self_dir = File.dirname(__FILE__)
+bin = "#{self_dir}/../vendor/{gems,plugins}/cucumber*/bin/cucumber"
+vendored_cucumber_bin = Dir[bin].first
+
 if vendored_cucumber_bin
   load File.expand_path(vendored_cucumber_bin)
 else

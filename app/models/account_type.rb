@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# AccountType model
 class AccountType
   include Mongoid::Document
   field :name, type: String
