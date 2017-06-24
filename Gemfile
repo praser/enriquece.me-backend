@@ -11,11 +11,11 @@ end
 gem 'active_model_serializers'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
-gem 'mongoid', '~> 6.0.1'
+gem 'mongoid', '~> 6.2.0'
 gem 'puma', '~> 3.0'
 gem 'rack-attack'
 gem 'rack-cors'
-gem 'rails', '~> 5.0.2'
+gem 'rails', '~> 5.1.1'
 gem 'simple_command'
 gem 'versionist'
 
@@ -33,7 +33,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.0.5'
+  gem 'listen', '~> 3.1.5'
   gem 'rubocop', '~> 0.49.1', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'

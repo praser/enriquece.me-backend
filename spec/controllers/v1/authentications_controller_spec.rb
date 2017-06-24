@@ -4,7 +4,6 @@
 require 'rails_helper'
 
 RSpec.describe V1::AuthenticationsController, type: :controller do
-  before(:all) { @headers = { 'Content-Type': 'application/vnd.api+json' } }
   before(:each) { @user = FactoryGirl.create(:user) }
 
   let(:valid_credentials) do
@@ -24,7 +23,7 @@ RSpec.describe V1::AuthenticationsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       before(:each) do
-        post :create, params: valid_credentials, headers: @headers
+        post :create, params: valid_credentials, format: :json
         @body = JSON.parse(response.body)
       end
 
@@ -35,7 +34,7 @@ RSpec.describe V1::AuthenticationsController, type: :controller do
 
     context 'with invalid params' do
       before(:each) do
-        post :create, params: invalid_credentials, headers: @headers
+        post :create, params: invalid_credentials, format: :json
         @body = JSON.parse(response.body)
       end
 
