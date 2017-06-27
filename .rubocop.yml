@@ -2,6 +2,10 @@ AllCops:
   Exclude:
     - 'lib/**/*'
 
+Lint/Void:
+  Exclude:
+    - 'features/**/*'
+
 Metrics/BlockLength:
   CountComments: false
   Max: 30
@@ -10,6 +14,9 @@ Metrics/LineLength:
   Max: 80
   Exclude:
     - 'features/**/*'
+
+Metrics/CyclomaticComplexity:
+  Max: 10
 
 Style/Documentation:
   Exclude:
@@ -22,3 +29,7 @@ Style/FrozenStringLiteralComment:
 Style/SymbolArray:
   EnforcedStyle: percent
   MinSize: 2
+
+Style/ClassVars:
+  Exclude:
+    - 'features/**/*'
