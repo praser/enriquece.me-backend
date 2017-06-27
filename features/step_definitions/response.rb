@@ -9,37 +9,20 @@ Então(/^a resposta deve possuir o content type "([^"]*)"$/) do |content_type|
 end
 
 Então(/^o corpo da resposta deve corresponder ao formato JSON API$/) do
-  schema = JSON.parse(File.read(Rails.root.join('public', 'api-schema.json').to_s))
-  JSON::Validator.validate!(schema, JSON.parse(last_response.body))
+  expect(response_is_valid?).to be_truthy
 end
 
 Então(/^o corpo da resposta deve conter uma mensagem informando que o acesso foi negado$/) do
-  body = JSON.parse(last_response.body)
-  expect(body['errors'][0]['detail']).to eq 'Not Authorized'
+  expect(response_errors[0]['detail']).to eq 'Not Authorized'
 end
 
 Então(/^o corpo da resposta deve conter uma mensagem informando que o campo "([^"]*)" "([^"]*)"$/) do |field, message|
   body = JSON.parse(last_response.body)
-  json_node = '/data/attributes/'
+  attribute = "/data/attributes/#{response_attribute_name_parser field}"
+  text = response_attribute_message_parser message
 
-  case field.downcase
-  when 'nome' then field = 'name'
-  when 'email' then field = 'email'
-  when 'senha' then field = 'password'
-  when 'banco' then field = 'bank'
-  when 'saldo inicial' then field = 'initial-balance'
-  when 'tipo de conta' then field = 'account-type'
-  end
-
-  field = "#{json_node}#{field}"
-
-  case message.downcase
-  when 'deve ser informado' then message = "can't be blank"
-  when 'já está em uso' then message = 'is already taken'
-  end
-
-  expect(body['errors'].map { |el| el['source']['pointer'] }).to include(field)
-  expect(body['errors'].map { |el| el['detail'] }[body['errors'].map { |el| el['source']['pointer'] }.index field]).to include(message)
+  expect(body['errors'].map { |el| el['source']['pointer'] }).to include(attribute)
+  expect(body['errors'].map { |el| el['detail'] }[body['errors'].map { |el| el['source']['pointer'] }.index attribute]).to include(text)
 end
 
 Então(/^o a lista deve conter "([^"]*)" "([^"]*)"$/) do |amount, type|

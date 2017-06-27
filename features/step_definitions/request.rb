@@ -1,53 +1,21 @@
 # frozen_string_literal: true
 
-Quando(/^o backend receber uma requisição para "([^"]*)" através do método "([^"]*)"$/) do |path, method|
-  header 'Content-Type', 'application/vnd.api+json'
-
-  case method.upcase
-  when 'POST' then post path, @attributes
-  when 'GET' then get path
-  else raise 'HTTP method unknown in step definions'
-  end
-end
-
 Quando(/^o backend receber uma requisição autenticada para "([^"]*)" através do método "([^"]*)"$/) do |path, method|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
-
-  case method.upcase
-  when 'GET' then get path
-  else raise 'HTTP method unknown in step definions'
-  end
+  request method.to_sym, path, nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição autenticada para "([^"]*)" através do método "([^"]*)" com os parâmetros$/) do |path, method, params|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
+  request method.to_sym, path, params, auth_token
+end
 
-  case method.upcase
-  when 'PUT' then put path, params
-  when 'POST' then post path, params
-  else raise 'HTTP method unknown in step definions'
-  end
+Quando(/^o backend receber uma requisição não autenticada para "([^"]*)" através do método "([^"]*)" com os parâmetros:$/) do |path, method, params|
+  request method.to_sym, path, params
 end
 
 Quando(/^o backend receber uma requisição não autenticada para "([^"]*)" através do método "([^"]*)"$/) do |path, method|
-  header 'Content-Type', 'application/vnd.api+json'
-
-  case method.upcase
-  when 'POST' then post path, @attributes
-  when 'GET' then get path
-  else raise 'HTTP method unknown in step definions'
-  end
+  request method.to_sym, path
 end
 
-Dado(/^que o usuário está autenticado no sistema através do email "([^"]*)" e da senha "([^"]*)"$/) do |email, senha|
-  credentials = {
-    email: email,
-    password: senha
-  }.to_json
-
-  header 'Content-Type', 'application/vnd.api+json'
-  post default_authenticate_path, credentials
-  @token = JSON.parse(last_response.body)['data']['attributes']['token']
+Dado(/^que o usuário está autenticado no sistema através do email "([^"]*)" e da senha "([^"]*)"$/) do |email, password|
+  authenticate(email, password)
 end

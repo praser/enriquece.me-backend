@@ -1,85 +1,47 @@
 # frozen_string_literal: true
 
 Dado(/^a existência das contas abaixo no sistema:$/) do |table|
-  table.hashes.each do |data|
-    FactoryGirl.create(
-      :account,
-      name: data['nome'],
-      initial_balance: data['saldo_inicial'],
-      bank: Bank.find_by(name: data['banco']),
-      account_type: AccountType.find_by(name: data['tipo']),
-      user: User.find_by(email: data['usuario'])
-    )
-  end
+  table.hashes.each { |data| create_account data }
 end
 
 Quando(/^o backend receber uma requisição autenticada para alterar a conta "([^"]*)" com os parâmetros$/) do |account_name, params|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
-
-  account = Account.find_by(name: account_name)
-  put default_account_path(account), params
+  account = find_account(name: account_name)
+  request :put, default_account_path(account), params, auth_token
 end
 
 Quando(/^o backend receber uma requisição autenticada para exibir dados da conta "([^"]*)"$/) do |account_name|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
-
-  account = Account.find_by(name: account_name)
-  get default_account_path(account)
+  account = find_account(name: account_name)
+  request :get, default_account_path(account), nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição autenticada para remover a conta "([^"]*)"$/) do |account_name|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
-
-  account = Account.find_by(name: account_name)
-  delete default_account_path(account)
+  account = find_account(name: account_name)
+  request :delete, default_account_path(account), nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição não autenticada para alterar a conta "([^"]*)"$/) do |account_name|
-  header 'Content-Type', 'application/vnd.api+json'
-
-  account = Account.find_by(name: account_name)
-  put default_account_path(account)
+  account = find_account(name: account_name)
+  request :put, default_account_path(account), nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição não autenticada para exibir dados da conta "([^"]*)"$/) do |account_name|
-  header 'Content-Type', 'application/vnd.api+json'
-
-  account = Account.find_by(name: account_name)
-  get default_account_path(account)
+  account = find_account(name: account_name)
+  request :get, default_account_path(account)
 end
 
 Quando(/^o backend receber uma requisição não autenticada para remover a conta "([^"]*)"$/) do |account_name|
-  header 'Content-Type', 'application/vnd.api+json'
-
-  account = Account.find_by(name: account_name)
-  delete default_account_path(account)
+  account = find_account(name: account_name)
+  request :delete, default_account_path(account)
 end
 
 Quando(/^o backend receber uma requisição autenticada para o cadastramento de uma conta "([^"]*)" no banco "([^"]*)" com os parâmetros$/) do |account_type, bank, params|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
-
-  account_type = AccountType.find_by(name: account_type)
-  bank = Bank.find_by(name: bank)
-  params = JSON.parse(params)
-  params['account_type_id'] = account_type.id.to_s
-  params['bank_id'] = bank.id.to_s
-
-  post default_accounts_path, params.to_json.to_s
+  account_type = find_account_type(name: account_type)
+  bank = find_bank(name: bank)
+  attributes = attributes_for_account(account_type, bank, params)
+  request :post, default_accounts_path, attributes, auth_token
 end
 
-Então(/^o campo "([^"]*)" da conta deve ser "([^"]*)"$/) do |field, value|
-  body = JSON.parse(last_response.body)
-
-  case field
-  when 'nome' then field = 'name'
-  when 'descricao' then field = 'description'
-  when 'saldo inicial' then field = 'initial-balance'
-  else raise 'field name unknown in step definions'
-  end
-
-  expect(body['data']['attributes'][field].to_s).to eq value.to_s
+Então(/^o campo "([^"]*)" da conta deve ser "([^"]*)"$/) do |attribute, value|
+  field = account_attribute_name_parser(attribute)
+  expect(response_attributes[field].to_s).to eq value.to_s
 end

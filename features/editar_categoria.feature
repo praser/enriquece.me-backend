@@ -10,7 +10,7 @@ Funcionalidade: Editar categoria
 		| John Doe   | johndoe@exemplo.com   | 123456 |
 		| Mike Tyson | miketyson@exemplo.com | 123456 |
 		| Rob Stark  | robstark@exemplo.com  | 123456 |
-		E a existência das categorais abaixo no sistma:
+		E a existência das categorias abaixo no sistma:
 		| nome			| usuario				|
 		| Alimentação	| johndoe@exemplo.com	|
 		| Saúde			| johndoe@exemplo.com	|

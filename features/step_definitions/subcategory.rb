@@ -2,89 +2,68 @@
 
 Dado(/^a existência das subcategorias abaixo no sistema:$/) do |table|
   table.hashes.each do |data|
-    FactoryGirl.create(
-      :subcategory,
-      name: data['nome'],
-      category: Category.find_by(name: data['categoria'])
-    )
+    category = find_category name: data['categoria']
+    create_subcategory category, data
   end
 end
 
 Quando(/^o backend receber uma requisição autenticada para o cadastramento de uma subcategoria de "([^"]*)" com os parâmetros$/) do |category_name, params|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
-
-  category = Category.find_by(name: category_name)
-  params = JSON.parse(params)
-  params['category_id'] = category.id.to_s
-
-  post default_subcategories_path, params.to_json.to_s
+  category = find_category(name: category_name)
+  request(
+    :post,
+    default_subcategories_path,
+    attributes_for_subcategory(category, params),
+    auth_token
+  )
 end
 
 Quando(/^o backend receber uma requisição autenticada para alterar a subcategoria "([^"]*)" com os parâmetros$/) do |subcategory_name, params|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
-
-  subcategory = Subcategory.find_by(name: subcategory_name)
-  params = JSON.parse(params)
-  params['subcategory_id'] = subcategory.id.to_s
-
-  put default_subcategory_path(subcategory), params.to_json.to_s
+  subcategory = find_subcategory(name: subcategory_name)
+  subcategory.assign_attributes(JSON.parse(params))
+  request(
+    :put,
+    default_subcategory_path(subcategory),
+    subcategory.to_json,
+    auth_token
+  )
 end
 
 Quando(/^o backend receber uma requisição autenticada para remover a subcategoria "([^"]*)"$/) do |subcategory_name|
-  header 'Content-Type', 'application/vnd.api+json'
-  header 'Authorization', "Bearer #{@token}"
-
-  subcategory = Subcategory.find_by(name: subcategory_name)
-
-  delete default_subcategory_path(subcategory)
+  subcategory = find_subcategory(name: subcategory_name)
+  request :delete, default_subcategory_path(subcategory), nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição não autenticada para alterar a subcategoria "([^"]*)"$/) do |subcategory_name|
-  header 'Content-Type', 'application/vnd.api+json'
-
-  subcategory = Subcategory.find_by(name: subcategory_name)
-
-  put default_subcategory_path(subcategory)
+  subcategory = find_subcategory(name: subcategory_name)
+  request :put, default_subcategory_path(subcategory)
 end
 
 Quando(/^o backend receber uma requisição não autenticada para remover a subcategoria "([^"]*)"$/) do |subcategory_name|
-  header 'Content-Type', 'application/vnd.api+json'
-
-  subcategory = Subcategory.find_by(name: subcategory_name)
-
-  delete default_subcategory_path(subcategory)
+  subcategory = find_subcategory(name: subcategory_name)
+  request :delete, default_subcategory_path(subcategory)
 end
 
 Então(/^a subcategoria "([^"]*)" deve ser cadastrada$/) do |category_name|
-  expect(Subcategory.find_by(name: category_name)).to_not be_nil
+  expect(find_subcategory(name: category_name)).to_not be_nil
 end
 
 Então(/^a subcategoria "([^"]*)" deve estar relacionada a "([^"]*)"$/) do |subcategory_name, category_name|
-  subcategory = Subcategory.find_by(name: subcategory_name)
-  category = Category.find_by(name: category_name)
+  subcategory = find_subcategory(name: subcategory_name)
+  category = find_category(name: category_name)
 
   expect(subcategory.category).to eq category
 end
 
 Então(/^a subcategoria "([^"]*)" deve estar presente na resposta\.$/) do |subcategory_name|
-  body = JSON.parse(last_response.body)
-  subcategory = Subcategory.find_by(name: subcategory_name)
-  expect(body['data']['attributes']['name']).to eq subcategory.name
+  subcategory = find_subcategory(name: subcategory_name)
+  expect(response_attributes['name']).to eq subcategory.name
 end
 
 Então(/^o campo "([^"]*)" da subcategoria deve ser "([^"]*)"$/) do |field, value|
-  body = JSON.parse(last_response.body)
-
-  case field
-  when 'nome' then field = 'name'
-  else raise 'field name unknown in step definions'
-  end
-
-  expect(body['data']['attributes'][field].to_s).to eq value.to_s
+  field = response_attribute_name_parser(field)
+  expect(response_attributes[field].to_s).to eq value.to_s
 end
 
 Então(/^a subcategoria "([^"]*)" deverá ter sido removida$/) do |subcategory_name|
-  expect(Subcategory.find_by(name: subcategory_name)).to be_nil
+  expect(find_subcategory(name: subcategory_name)).to be_nil
 end
