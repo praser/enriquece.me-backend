@@ -9,6 +9,8 @@ Lint/Void:
 Metrics/BlockLength:
   CountComments: false
   Max: 30
+  Exclude:
+    - 'spec/**/*'
 
 Metrics/LineLength:
   Max: 80
