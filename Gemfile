@@ -26,10 +26,12 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'guard-rspec', require: false
   gem 'json-schema'
   gem 'mongoid-rspec', github: 'mongoid-rspec/mongoid-rspec'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.5'
+  gem 'terminal-notifier-guard'
 end
 
 group :development do
