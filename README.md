@@ -10,15 +10,17 @@ Estas instruções irão te fornecer uma cópia do projeto instalado e rodando n
 
 Os seguintes softwares devem estar instalados e configurados para que seja possível executar o projeto:
 
-* MongoDB v3.4.3
-* Ruby v2.4.1
 * Git
+* MongoDB v3.4.3
+* Redis v3.2.9
+* Ruby v2.4.1
 
 Orientações para a instação dos softwares listados acima podem ser encontrados nos seus respectivos websites
 
-* [MongoDB](https://www.mongodb.com/)
-* [Ruby](https://www.ruby-lang.org)
 * [Git](https://git-scm.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [Redis](https://redis.io/)
+* [Ruby](https://www.ruby-lang.org)
 
 ### Instalação
 
@@ -89,9 +91,10 @@ Atualmente o backend ainda não está em produção. A versão de desenvolviment
 
 ## Construído com:
 
-* [Ruby](https://www.ruby-lang.org/) - O melhor amigo do programador
-* [Rails](http://rubyonrails.org/) - A web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.
 * [MongoDB](https://www.mongodb.com/) - For GIANT ideas
+* [Rails](http://rubyonrails.org/) - A web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.
+* [Redis](https://redis.io/) - Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
+* [Ruby](https://www.ruby-lang.org/) - O melhor amigo do programador
 
 ## Contribuindo
 
