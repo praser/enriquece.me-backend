@@ -44,5 +44,9 @@ module EnriqueceMeBackend
     # Rack middleware for blocking & throttling
     config.middleware.use Rack::Attack
     config.autoload_paths << Rails.root.join('lib')
+
+    config.active_job.queue_adapter = :sidekiq
+
+    config.time_zone = 'Brasilia'
   end
 end

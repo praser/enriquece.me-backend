@@ -46,3 +46,6 @@ bower.json
 
 # Ignore VSCode configuratioms
 .vscode/
+
+#ignore Redis Dump file
+dump.rdb

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
   api_version(
     module: 'v1',
     path: { value: 'v1' },
@@ -23,6 +26,7 @@ Rails.application.routes.draw do
     with_options(except: %i[new edit]) do |opt|
       opt.resources :accounts
       opt.resources :categories
+      opt.resources :financial_transactions
     end
 
     # resources without new, edit and index routes

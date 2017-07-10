@@ -18,11 +18,16 @@ module ResponseHelper
 
   def response_attribute_name_parser(attribute)
     case attribute.downcase
-    when 'nome' then 'name'
-    when 'email' then 'email'
-    when 'senha' then 'password'
     when 'banco' then 'bank'
+    when 'categoria' then 'category'
+    when 'conta' then 'account'
+    when 'descrição' then 'description'
+    when 'data' then 'date'
+    when 'email' then 'email'
+    when 'nome' then 'name'
+    when 'preço' then 'price'
     when 'saldo inicial' then 'initial-balance'
+    when 'senha' then 'password'
     when 'tipo de conta' then 'account-type'
     else raise 'attribute name unknown in response'
     end

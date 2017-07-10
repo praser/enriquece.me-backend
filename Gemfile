@@ -16,6 +16,8 @@ gem 'puma', '~> 3.0'
 gem 'rack-attack'
 gem 'rack-cors'
 gem 'rails', '~> 5.1.1'
+gem 'recurrence', require: 'recurrence/namespace'
+gem 'sidekiq'
 gem 'simple_command'
 gem 'versionist'
 
@@ -26,17 +28,18 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'guard-rspec', require: false
   gem 'json-schema'
   gem 'mongoid-rspec', github: 'mongoid-rspec/mongoid-rspec'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.5'
-  gem 'terminal-notifier-guard'
 end
 
 group :development do
+  gem 'awesome_print'
+  gem 'guard-rspec', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rubocop', '~> 0.49.1', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'terminal-notifier-guard'
 end

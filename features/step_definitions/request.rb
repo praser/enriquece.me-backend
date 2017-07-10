@@ -15,7 +15,3 @@ end
 Quando(/^o backend receber uma requisição não autenticada para "([^"]*)" através do método "([^"]*)"$/) do |path, method|
   request method.to_sym, path
 end
-
-Dado(/^que o usuário está autenticado no sistema através do email "([^"]*)" e da senha "([^"]*)"$/) do |email, password|
-  authenticate(email, password)
-end
