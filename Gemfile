@@ -36,6 +36,7 @@ end
 
 group :development do
   gem 'awesome_print'
+  gem 'cucumber_lint'
   gem 'guard-rspec', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rubocop', '~> 0.49.1', require: false

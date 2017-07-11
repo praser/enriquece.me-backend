@@ -8,35 +8,35 @@ Funcionalidade: Criar movimentações simples
 
   Contexto:
     Dado a existência dos usuários abaixo no sistema:
-    | nome       | email                 | senha  |
-    | John Doe   | johndoe@exemplo.com   | 123456 |
-    | Rob Stark  | robstark@exemplo.com  | 123456 |
+    | nome      | email                | senha  |
+    | John Doe  | johndoe@exemplo.com  | 123456 |
+    | Rob Stark | robstark@exemplo.com | 123456 |
     E a existência das instituições financeiras abaixo no sistema:
-    | nome 						| código |
-    |Caixa Econômica Federal 	| 104	 |
-    |Banco do Brasil 			| 1		 |
-    |Itaú						| 341	 |
+    | nome                    | código |
+    | Caixa Econômica Federal | 104    |
+    | Banco do Brasil         | 1      |
+    | Itaú                    | 341    |
     E a existência dos tipos de conta abaixo no sistema:
-    |nome				|
-    |Conta corrente  	|
-    |Conta salário		|
+    | nome           |
+    | Conta corrente |
+    | Conta salário  |
     E a existência das contas abaixo no sistema:
-    |nome| descricao | saldo_inicial| tipo | banco | usuario |
-    |Conta corrente principal    | Principal conta de John Doe    | 0 | Conta corrente | Itaú | johndoe@exemplo.com      |
-    |Conta corrente secundária  | Conta secundária de John Doe   | 0 | Conta corrente | Itaú | johndoe@exemplo.com      |
-    |Conta corrente legal    | Principal conta de Rob Stark   | 0 | Conta corrente | Itaú | robstark@exemplo.com     |
-    |Conta corrente maneira  | Conta secundária de Rob Stark  | 0 | Conta corrente | Itaú | robstark@exemplo.com     |
+    | nome                      | descricao                     | saldo_inicial | tipo           | banco | usuario              |
+    | Conta corrente principal  | Principal conta de John Doe   | 0             | Conta corrente | Itaú  | johndoe@exemplo.com  |
+    | Conta corrente secundária | Conta secundária de John Doe  | 0             | Conta corrente | Itaú  | johndoe@exemplo.com  |
+    | Conta corrente legal      | Principal conta de Rob Stark  | 0             | Conta corrente | Itaú  | robstark@exemplo.com |
+    | Conta corrente maneira    | Conta secundária de Rob Stark | 0             | Conta corrente | Itaú  | robstark@exemplo.com |
     E a existência das categorias abaixo no sistma:
-    | nome        | usuario               |
-    | Alimentação	| johndoe@exemplo.com   |
-    | Saúde       | johndoe@exemplo.com   |
-    | Outros      | johndoe@exemplo.com   |
-    | Transporte	| robstark@exemplo.com  |
+    | nome        | usuario              |
+    | Alimentação | johndoe@exemplo.com  |
+    | Saúde       | johndoe@exemplo.com  |
+    | Outros      | johndoe@exemplo.com  |
+    | Transporte  | robstark@exemplo.com |
     E a existência das subcategorias abaixo no sistema:
-    | nome          | categoria     |
-    | Supermercado  | Alimentação   |
-    | Remédios      | Saúde         |
-    | Combustível   | Transporte    |
+    | nome         | categoria   |
+    | Supermercado | Alimentação |
+    | Remédios     | Saúde       |
+    | Combustível  | Transporte  |
   
   Cenário: Quando um usuário autenticado solicita o cadastramento de uma movimentação financeira com dados válidos
     Dado que o usuário se autenticou com a credencial:
