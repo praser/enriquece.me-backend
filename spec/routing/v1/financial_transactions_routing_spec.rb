@@ -24,19 +24,21 @@ RSpec.describe V1::FinancialTransactionsController, type: :routing do
       )
     end
 
-    # it 'routes to #update via PUT' do
-    #   expect(put: '/v1/financial_transactions/1').to route_to(
-    #     'v1/financial_transactions#update',
-    #     id: '1'
-    #   )
-    # end
+    it 'routes to #update via PUT' do
+      expect(put: '/v1/financial_transactions/1').to route_to(
+        'v1/financial_transactions#update',
+        id: '1',
+        format: 'json'
+      )
+    end
 
-    # it 'routes to #update via PATCH' do
-    #   expect(patch: '/v1/financial_transactions/1').to route_to(
-    #     'v1/financial_transactions#update',
-    #     id: '1'
-    #   )
-    # end
+    it 'routes to #update via PATCH' do
+      expect(patch: '/v1/financial_transactions/1').to route_to(
+        'v1/financial_transactions#update',
+        id: '1',
+        format: 'json'
+      )
+    end
 
     # it 'routes to #destroy' do
     #   expect(delete: '/v1/financial_transactions/1').to route_to(

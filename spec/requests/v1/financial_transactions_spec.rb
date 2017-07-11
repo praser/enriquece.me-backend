@@ -44,5 +44,63 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
         expect(response).to have_http_status :created
       end
     end
+
+    describe 'PUT /v1/financial_transctions/:id' do
+      before(:each) do
+        put(
+          v1_financial_transaction_path(financial_transaction),
+          params: financial_transaction_params.to_json,
+          headers: @headers
+        )
+      end
+
+      let(:financial_transaction_params) do
+        f = FactoryGirl.build(:financial_transaction)
+
+        FactoryGirl.attributes_for(
+          :financial_transaction,
+          category_id: f.category_id.to_s,
+          subcategory_id: f.subcategory_id.to_s,
+          account_id: f.account_id.to_s
+        )
+      end
+
+      let(:financial_transaction) do
+        FactoryGirl.create(:financial_transaction, user: @current_user)
+      end
+
+      it 'returns http status 200' do
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    describe 'PATCH /v1/financial_transctions/:id' do
+      before(:each) do
+        patch(
+          v1_financial_transaction_path(financial_transaction),
+          params: financial_transaction_params.to_json,
+          headers: @headers
+        )
+      end
+
+      let(:financial_transaction_params) do
+        f = FactoryGirl.build(:financial_transaction)
+
+        FactoryGirl.attributes_for(
+          :financial_transaction,
+          category_id: f.category_id.to_s,
+          subcategory_id: f.subcategory_id.to_s,
+          account_id: f.account_id.to_s
+        )
+      end
+
+      let(:financial_transaction) do
+        FactoryGirl.create(:financial_transaction, user: @current_user)
+      end
+
+      it 'returns http status 200' do
+        expect(response).to have_http_status :ok
+      end
+    end
   end
 end

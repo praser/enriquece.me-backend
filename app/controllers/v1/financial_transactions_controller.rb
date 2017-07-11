@@ -34,17 +34,14 @@ module V1
       render_json_api @fin_transaction, props
     end
 
-    # # PATCH/PUT /v1/financial_transactions/1
-    # def update
-    #   if financial_transaction.update(financial_transaction_params)
-    #     render json: financial_transaction
-    #   else
-    #     render(
-    #        json: financial_transaction.errors,
-    #        status: :unprocessable_entity
-    #     )
-    #   end
-    # end
+    # PATCH/PUT /v1/financial_transactions/1
+    def update
+      unless @fin_transaction.update(financial_transaction_params)
+        return render_json_api_error @fin_transaction
+      end
+
+      render_json_api(@fin_transaction)
+    end
 
     # # DELETE /v1/financial_transactions/1
     # def destroy
@@ -55,7 +52,14 @@ module V1
 
     # Use callbacks to share common setup or constraints between actions.
     def set_financial_transaction
-      @fin_transaction = FinancialTransaction.find(params[:id])
+      @fin_transaction = FinancialTransaction.find_by(
+        id: params[:id],
+        user_id: current_user.id
+      )
+
+      return unless @fin_transaction.nil?
+      current_user.errors.add :authorization, 'Not Authorized'
+      render_json_api_error(current_user, :unauthorized)
     end
 
     # Attach the current_user to account

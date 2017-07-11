@@ -29,6 +29,7 @@ module ResponseHelper
     when 'saldo inicial' then 'initial-balance'
     when 'senha' then 'password'
     when 'tipo de conta' then 'account-type'
+    when 'valor' then 'price'
     else raise 'attribute name unknown in response'
     end
   end

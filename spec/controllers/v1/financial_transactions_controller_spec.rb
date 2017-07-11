@@ -89,48 +89,69 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
     end
   end
 
-  # describe 'PUT #update' do
-  #   context 'with valid params' do
-  #     let(:new_attributes) {
-  #       skip('Add a hash of attributes valid for your model')
-  #     }
+  describe 'PUT #update' do
+    let(:fin_trans) { FactoryGirl.create(:financial_transaction, user: user) }
 
-  #     it 'updates the requested v1_financial_transaction' do
-  #       financial_transaction = V1::FinancialTransaction.create! valid
-  #       put :update, params: {
-  #         id: financial_transaction.to_param,
-  #         v1_financial_transaction: new_attributes
-  #       }
-  #       financial_transaction.reload
-  #       skip('Add assertions for updated state')
-  #     end
+    context 'with valid params' do
+      let(:update_params) do
+        FactoryGirl.attributes_for(
+          :financial_transaction,
+          id: fin_trans.id
+        )
+      end
 
-  #     it 'renders a JSON response with the v1_financial_transaction' do
-  #       financial_transaction = V1::FinancialTransaction.create! valid
+      it 'updates the requested financial_transaction' do
+        put :update, params: update_params
+        fin_trans.reload
+        expect(fin_trans.description).to eq(fin_trans.description)
+      end
 
-  #       put :update, params: {
-  #         id: financial_transaction.to_param,
-  #         v1_financial_transaction: valid
-  #       }
+      it 'renders a JSON response with the financial_transaction' do
+        put :update, params: update_params
 
-  #       expect(response).to have_http_status(:ok)
-  #       expect(response.content_type).to eq('application/json')
-  #     end
-  #   end
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq('application/json')
+      end
+    end
 
-  #   context 'with invalid params' do
-  #     it 'renders a JSON response with errors' do
-  #       financial_transaction = V1::FinancialTransaction.create! valid
+    context 'with invalid params' do
+      let(:update_params) do
+        FactoryGirl.attributes_for(
+          :financial_transaction,
+          :invalid,
+          id: fin_trans.id
+        )
+      end
 
-  #       put :update, params: {
-  #         id: financial_transaction.to_param,
-  #         v1_financial_transaction: invalid
-  #       }
-  #       expect(response).to have_http_status(:unprocessable_entity)
-  #       expect(response.content_type).to eq('application/json')
-  #     end
-  #   end
-  # end
+      it 'renders a JSON response with errors' do
+        put :update, params: update_params
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.content_type).to eq('application/json')
+      end
+    end
+
+    context 'anothers user financial transaction' do
+      let(:fin_trans) do
+        FactoryGirl.create(
+          :financial_transaction,
+          user: FactoryGirl.create(:user)
+        )
+      end
+
+      let(:update_params) do
+        FactoryGirl.attributes_for(
+          :financial_transaction,
+          id: fin_trans.id
+        )
+      end
+
+      it 'renders a JSON response with errors' do
+        put :update, params: update_params
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.content_type).to eq('application/json')
+      end
+    end
+  end
 
   # describe 'DELETE #destroy' do
   #   it 'destroys the requested v1_financial_transaction' do
