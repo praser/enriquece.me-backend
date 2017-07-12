@@ -69,7 +69,7 @@ RSpec.describe 'V1::Categories', type: :request do
     end
 
     describe 'DELETE /v1/categories/:id' do
-      it 'returns http status 401' do
+      it 'returns http status 204' do
         delete v1_category_path(category), headers: @headers
         expect(response).to have_http_status :no_content
       end
