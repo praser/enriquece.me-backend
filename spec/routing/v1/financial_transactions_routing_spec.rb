@@ -40,11 +40,12 @@ RSpec.describe V1::FinancialTransactionsController, type: :routing do
       )
     end
 
-    # it 'routes to #destroy' do
-    #   expect(delete: '/v1/financial_transactions/1').to route_to(
-    #     'v1/financial_transactions#destroy',
-    #     id: '1'
-    #   )
-    # end
+    it 'routes to #destroy' do
+      expect(delete: '/v1/financial_transactions/1').to route_to(
+        'v1/financial_transactions#destroy',
+        id: '1',
+        format: 'json'
+      )
+    end
   end
 end

@@ -53,3 +53,21 @@ Quando(/^o backend receber uma requisição não autenticada para a edição da 
     nil
   )
 end
+
+Quando(/^o backend receber uma requisição autenticada para remover a movimentação financeira "([^"]*)"$/) do |description|
+  financial_transaction = find_financial_transaction(description: description)
+  request :delete, default_financial_transaction_path(financial_transaction), nil, auth_token
+end
+
+Quando(/^o backend receber uma requisição não autenticada para remover a movimentação financeira "([^"]*)"$/) do |description|
+  financial_transaction = find_financial_transaction(description: description)
+  request :delete, default_financial_transaction_path(financial_transaction), nil, nil
+end
+
+Então(/^a movimentação financeira "([^"]*)" deverá ter sido removida$/) do |description|
+  expect(find_financial_transaction(description: description)).to be_nil
+end
+
+Então(/^a movimentação financeira "([^"]*)" não deverá ter sido removida$/) do |description|
+  expect(find_financial_transaction(description: description)).to_not be_nil
+end

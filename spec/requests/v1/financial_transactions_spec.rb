@@ -3,12 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'V1::FinancialTransactions', type: :request do
+  let(:current_user) { FactoryGirl.create(:user) }
+
+  let(:financial_transaction) do
+    FactoryGirl.create(:financial_transaction, user: current_user)
+  end
+
   context 'with authentication token' do
     before(:each) do
-      @current_user = FactoryGirl.create(:user)
       credentials = {
-        email: @current_user.email,
-        password: @current_user.password
+        email: current_user.email,
+        password: current_user.password
       }
 
       headers = { 'Content-Type': 'application/vnd.api+json' }
@@ -65,10 +70,6 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
         )
       end
 
-      let(:financial_transaction) do
-        FactoryGirl.create(:financial_transaction, user: @current_user)
-      end
-
       it 'returns http status 200' do
         expect(response).to have_http_status :ok
       end
@@ -95,11 +96,74 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
 
       let(:financial_transaction) do
-        FactoryGirl.create(:financial_transaction, user: @current_user)
+        FactoryGirl.create(:financial_transaction, user: current_user)
       end
 
       it 'returns http status 200' do
         expect(response).to have_http_status :ok
+      end
+    end
+
+    describe 'DELETE /v1/financial_transactions/:id' do
+      before(:each) do
+        delete(
+          v1_financial_transaction_path(financial_transaction),
+          headers: @headers
+        )
+      end
+
+      it 'returns http status 204' do
+        expect(response).to have_http_status :no_content
+      end
+    end
+  end
+
+  context 'without authentication token' do
+    before(:each) do
+      @headers = { 'Content-Type' => 'application/vnd.api+json' }
+    end
+
+    describe 'POST /v1/financial_transactions' do
+      it 'returns http status 401' do
+        post(
+          v1_financial_transactions_path,
+          headers: @headers
+        )
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    describe 'PUT /v1/financial_transactions/:id' do
+      it 'returns http status 401' do
+        put(
+          v1_financial_transaction_path(financial_transaction),
+          headers: @headers
+        )
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    describe 'PATCH /v1/financial_transactions/:id' do
+      it 'returns http status 401' do
+        patch(
+          v1_financial_transaction_path(financial_transaction),
+          headers: @headers
+        )
+
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    describe 'DELETE /v1/financial_transactions/:id' do
+      it 'returns http status 401' do
+        delete(
+          v1_financial_transaction_path(financial_transaction),
+          headers: @headers
+        )
+
+        expect(response).to have_http_status :unauthorized
       end
     end
   end

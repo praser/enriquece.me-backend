@@ -43,10 +43,10 @@ module V1
       render_json_api(@fin_transaction)
     end
 
-    # # DELETE /v1/financial_transactions/1
-    # def destroy
-    #   financial_transaction.destroy
-    # end
+    # DELETE /v1/financial_transactions/1
+    def destroy
+      @fin_transaction.destroy
+    end
 
     private
 

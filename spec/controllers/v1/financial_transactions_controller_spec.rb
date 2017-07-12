@@ -153,14 +153,30 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
     end
   end
 
-  # describe 'DELETE #destroy' do
-  #   it 'destroys the requested v1_financial_transaction' do
-  #     financial_transaction = V1::FinancialTransaction.create! valid
-  #     expect {
-  #       delete :destroy, params: {id: financial_transaction.to_param}
-  #     }.to change(V1::FinancialTransaction, :count).by(-1)
-  #   end
-  # end
+  describe 'DELETE #destroy' do
+    let!(:fin_trans) { FactoryGirl.create(:financial_transaction, user: user) }
+
+    it 'destroys the requested financial_transaction' do
+      expect do
+        delete :destroy, params: { id: fin_trans.id.to_s }
+      end.to change(FinancialTransaction, :count).by(-1)
+    end
+
+    context 'anothes user financial transaction' do
+      let!(:anothers_fin_trans) do
+        FactoryGirl.create(
+          :financial_transaction,
+          user: FactoryGirl.create(:user)
+        )
+      end
+
+      it 'does not destroy the requested financial transaction' do
+        expect do
+          delete :destroy, params: { id: anothers_fin_trans.id.to_s }
+        end.to_not change(FinancialTransaction, :count)
+      end
+    end
+  end
 
   describe 'private method fin_trans_job' do
     let(:valid) do
