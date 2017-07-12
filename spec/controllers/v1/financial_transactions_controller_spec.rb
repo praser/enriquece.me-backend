@@ -20,13 +20,29 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
   #   end
   # end
 
-  # describe 'GET #show' do
-  #   it 'returns a success response' do
-  #     financial_transaction = V1::FinancialTransaction.create! valid
-  #     get :show, params: {id: financial_transaction.to_param}
-  #     expect(response).to be_success
-  #   end
-  # end
+  describe 'GET #show' do
+    let(:fin_trans) { FactoryGirl.create(:financial_transaction, user: user) }
+
+    it 'returns a success response' do
+      get :show, params: { id: fin_trans.id.to_s }
+      expect(response).to be_success
+    end
+
+    context 'anothes user financial transaction' do
+      let(:anothers_fin_trans) do
+        FactoryGirl.create(
+          :financial_transaction,
+          user: FactoryGirl.create(:user)
+        )
+      end
+
+      it 'does something' do
+        get :show, params: { id: anothers_fin_trans.id.to_s }
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.content_type).to eq('application/json')
+      end
+    end
+  end
 
   describe 'POST #create' do
     let(:valid) do

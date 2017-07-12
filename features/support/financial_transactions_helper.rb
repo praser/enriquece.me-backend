@@ -7,6 +7,8 @@ module FinancialTransactionHelper
       :financial_transaction,
       description: json['description'],
       price: json['price'],
+      date: json['date'],
+      paid: json['paid'],
       note: json['note'],
       recurrence: json['recurrence'],
       subcategory_id: subcategory.nil? ? nil : subcategory.id.to_s,

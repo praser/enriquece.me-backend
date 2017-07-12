@@ -25,6 +25,17 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       }
     end
 
+    describe 'GET v1/financial_transactions/:id' do
+      it 'returns http status 200' do
+        get(
+          v1_financial_transaction_path(financial_transaction),
+          headers: @headers
+        )
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     describe 'POST v1/financial_transactions' do
       before(:each) do
         post(
@@ -121,6 +132,17 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
   context 'without authentication token' do
     before(:each) do
       @headers = { 'Content-Type' => 'application/vnd.api+json' }
+    end
+
+    describe 'GET v1/financial_transactions/:id' do
+      it 'returns http status 401' do
+        get(
+          v1_financial_transaction_path(financial_transaction),
+          headers: @headers
+        )
+
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
 
     describe 'POST /v1/financial_transactions' do

@@ -12,10 +12,10 @@ module V1
     #   render json: financial_transactions
     # end
 
-    # # GET /v1/financial_transactions/1
-    # def show
-    #   render json: financial_transaction
-    # end
+    # GET /v1/financial_transactions/1
+    def show
+      render_json_api @fin_transaction
+    end
 
     # POST /v1/financial_transactions
     def create

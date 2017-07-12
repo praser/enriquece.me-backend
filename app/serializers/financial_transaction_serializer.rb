@@ -3,7 +3,7 @@
 # Financial Transaction Serializer
 class FinancialTransactionSerializer < ActiveModel::Serializer
   type :financial_transaction
-  attributes :description, :price, :note
+  attributes :description, :price, :date, :paid, :note
 
   belongs_to :account
   belongs_to :category

@@ -25,6 +25,7 @@ module ResponseHelper
     when 'data' then 'date'
     when 'email' then 'email'
     when 'nome' then 'name'
+    when 'pago' then 'paid'
     when 'preço' then 'price'
     when 'saldo inicial' then 'initial-balance'
     when 'senha' then 'password'

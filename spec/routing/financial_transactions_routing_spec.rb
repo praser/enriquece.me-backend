@@ -12,12 +12,13 @@ RSpec.describe V1::FinancialTransactionsController, type: :routing do
     #   )
     # end
 
-    # it 'routes to #show' do
-    #   expect(get: '/v1/financial_transactions/1').to route_to(
-    #     'v1/financial_transactions#show',
-    #     id: '1'
-    #   )
-    # end
+    it 'routes to #show' do
+      expect(get: "/#{default_version}/financial_transactions/1").to route_to(
+        "#{default_version}/financial_transactions#show",
+        id: '1',
+        format: 'json'
+      )
+    end
 
     it 'routes to #create' do
       expect(post: "/#{default_version}/financial_transactions").to route_to(
