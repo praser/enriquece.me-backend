@@ -17,16 +17,6 @@ Dado(/^a exitência de um usuário cadastrados com os dados:$/) do |table|
   end
 end
 
-Dado(/^o cadastro de novo usuário com os dados:$/) do |table|
-  table.hashes.each do |data|
-    create_user(data)
-  end
-end
-
-Dado(/^a existência de um usuário cadastrado anteriormente com o email "([^"]*)"$/) do |email|
-  FactoryGirl.create(:user, email: email)
-end
-
 Então(/^o "([^"]*)" do usuário deve ser "([^"]*)"$/) do |field, value|
   body = JSON.parse(last_response.body)
 
