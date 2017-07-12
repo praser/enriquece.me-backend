@@ -8,6 +8,8 @@ Lint/Void:
 
 Metrics/AbcSize:
   Max: 16
+  Exclude:
+    - 'features/**/*'
 
 Metrics/BlockLength:
   CountComments: false
@@ -27,6 +29,8 @@ Metrics/CyclomaticComplexity:
 
 Metrics/MethodLength:
   Max: 15
+  Exclude:
+    - 'features/**/*'
 
 Style/Documentation:
   Exclude:
