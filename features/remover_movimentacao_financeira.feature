@@ -1,6 +1,6 @@
 #language: pt
 
-@movimentacao_financeira @editar_movimentacao_financeira
+@movimentacao_financeira @remover_movimentacao_financeira
 
 Funcionalidade: Remover movimentação financeira
   Para gerenciar minhas movimentações financeiras
