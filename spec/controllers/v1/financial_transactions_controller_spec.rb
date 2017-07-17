@@ -27,7 +27,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
 
     it 'load all transactions in the month when no param is provided' do
       get :index
-      t = FinancialTransaction.where(
+      fin_trans = FinancialTransaction.where(
         date: {
           :$gte => Date.today.at_beginning_of_month,
           :$lte => Date.today.at_end_of_month
@@ -37,7 +37,24 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
         }
       )
 
-      expect(assigns(:fin_trans)).to eq(t)
+      expect(assigns(:fin_trans)).to eq(fin_trans)
+    end
+
+    it 'load all transactions since a date when since param is provided' do
+      start_date = '2017-06-01'
+      get :index, params: { start: start_date }
+
+      fin_trans = FinancialTransaction.where(
+        date: {
+          :$gte => Date.parse(start_date),
+          :$lte => Date.today.at_end_of_month
+        },
+        user_id: {
+          :$eq => user.id.to_s
+        }
+      )
+
+      expect(assigns(:fin_trans)).to eq fin_trans
     end
   end
 
@@ -49,7 +66,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
       expect(response).to be_success
     end
 
-    context 'anothes user financial transaction' do
+    context 'request anothers user financial transaction' do
       let(:anothers_fin_trans) do
         FactoryGirl.create(
           :financial_transaction,
@@ -57,7 +74,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
         )
       end
 
-      it 'does something' do
+      it 'does not show ' do
         get :show, params: { id: anothers_fin_trans.id.to_s }
         expect(response).to have_http_status(:unauthorized)
         expect(response.content_type).to eq('application/json')

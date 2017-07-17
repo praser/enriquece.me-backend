@@ -32,6 +32,17 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
+    describe 'GET v1/financial_transactions/since/:date' do
+      it 'returns http status 200' do
+        get(
+          v1_financial_transactions_since_path('2017-07-01'),
+          headers: @headers
+        )
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     describe 'GET v1/financial_transactions/:id' do
       it 'returns http status 200' do
         get(
@@ -144,6 +155,17 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
     describe 'GET v1/financial_transactions' do
       it 'returns http status 401' do
         get v1_financial_transactions_path, headers: @headers
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    describe 'GET v1/financial_transactions/since/:date' do
+      it 'returns http status 401' do
+        get(
+          v1_financial_transactions_since_path('2017-06-01'),
+          headers: @headers
+        )
+
         expect(response).to have_http_status(:unauthorized)
       end
     end

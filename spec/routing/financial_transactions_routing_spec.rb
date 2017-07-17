@@ -11,6 +11,14 @@ RSpec.describe V1::FinancialTransactionsController, type: :routing do
         "#{default_version}/financial_transactions#index",
         format: 'json'
       )
+
+      expect(
+        get: "/#{default_version}/financial_transactions/since/2017-07-01"
+      ).to route_to(
+        "#{default_version}/financial_transactions#index",
+        start: '2017-07-01',
+        format: 'json'
+      )
     end
 
     it 'routes to #show' do

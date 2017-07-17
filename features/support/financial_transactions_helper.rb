@@ -33,6 +33,12 @@ module FinancialTransactionHelper
   def find_financial_transaction(field = {})
     FinancialTransaction.find_by(field)
   end
+
+  def response_fin_trans
+    JSON.parse(last_response.body)['data'].map do |item|
+      FinancialTransaction.find_by(id: item['id'])
+    end
+  end
 end
 
 World FinancialTransactionHelper

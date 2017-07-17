@@ -7,10 +7,15 @@ module V1
 
     # GET /v1/financial_transactions
     def index
+      start_date = Date.today.at_beginning_of_month
+      end_date = Date.today.at_end_of_month
+
+      start_date = Date.parse(params[:start]) unless params[:start].nil?
+
       @fin_trans = FinancialTransaction.where(
         date: {
-          :$gte => Date.today.at_beginning_of_month,
-          :$lte => Date.today.at_end_of_month
+          :$gte => start_date,
+          :$lte => end_date
         },
         user_id: {
           :$eq => current_user.id.to_s
