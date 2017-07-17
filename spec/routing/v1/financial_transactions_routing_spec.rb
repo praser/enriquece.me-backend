@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe V1::FinancialTransactionsController, type: :routing do
   describe 'routing' do
+    let(:start_date) { Faker::Date.backward(30).to_s }
+    let(:end_date) { Faker::Date.forward(30).to_s }
     it 'routes to #index' do
       expect(get: '/v1/financial_transactions').to route_to(
         'v1/financial_transactions#index',
@@ -11,10 +13,19 @@ RSpec.describe V1::FinancialTransactionsController, type: :routing do
       )
 
       expect(
-        get: '/v1/financial_transactions/since/2017-07-01'
+        get: "/v1/financial_transactions/since/#{start_date}"
       ).to route_to(
         'v1/financial_transactions#index',
-        start: '2017-07-01',
+        start: start_date,
+        format: 'json'
+      )
+
+      expect(
+        get: "/v1/financial_transactions/since/#{start_date}/until/#{end_date}"
+      ).to route_to(
+        'v1/financial_transactions#index',
+        start: start_date,
+        end: end_date,
         format: 'json'
       )
     end

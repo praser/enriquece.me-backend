@@ -7,11 +7,6 @@ module V1
 
     # GET /v1/financial_transactions
     def index
-      start_date = Date.today.at_beginning_of_month
-      end_date = Date.today.at_end_of_month
-
-      start_date = Date.parse(params[:start]) unless params[:start].nil?
-
       @fin_trans = FinancialTransaction.where(
         date: {
           :$gte => start_date,
@@ -100,6 +95,18 @@ module V1
         fin_trans.class.to_s,
         fin_trans.id.to_s
       )
+    end
+
+    # Set start date to be used in index action
+    def start_date
+      return Date.parse(params[:start]) unless params[:start].nil?
+      Date.today.at_beginning_of_month
+    end
+
+    # Set end date to be used in index action
+    def end_date
+      return Date.parse(params[:end]) unless params[:end].nil?
+      Date.today.at_end_of_month
     end
   end
 end

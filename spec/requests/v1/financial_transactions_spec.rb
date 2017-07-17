@@ -32,10 +32,26 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'GET v1/financial_transactions/since/:date' do
+    describe 'GET v1/financial_transactions/since/:start' do
+      let(:start_date) { Faker::Date.backward(30).to_s }
+
       it 'returns http status 200' do
         get(
-          v1_financial_transactions_since_path('2017-07-01'),
+          v1_financial_transactions_since_path(start_date),
+          headers: @headers
+        )
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    describe 'GET v1/financial_transactions/since/:start/until/:end' do
+      let(:start_date) { Faker::Date.backward(30).to_s }
+      let(:end_date) { Faker::Date.forward(30).to_s }
+
+      it 'returns http status 200' do
+        get(
+          v1_financial_transactions_since_until_path(start_date, end_date),
           headers: @headers
         )
 
@@ -159,10 +175,26 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'GET v1/financial_transactions/since/:date' do
+    describe 'GET v1/financial_transactions/since/:start' do
+      let(:start_date) { Faker::Date.backward(30).to_s }
+
       it 'returns http status 401' do
         get(
-          v1_financial_transactions_since_path('2017-06-01'),
+          v1_financial_transactions_since_path(start_date),
+          headers: @headers
+        )
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    describe 'GET v1/financial_transactions/since/:start/until/:end' do
+      let(:start_date) { Faker::Date.backward(30).to_s }
+      let(:end_date) { Faker::Date.forward(30).to_s }
+
+      it 'returns http status 401' do
+        get(
+          v1_financial_transactions_since_until_path(start_date, start_date),
           headers: @headers
         )
 

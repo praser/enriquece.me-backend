@@ -25,7 +25,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
       expect(response).to be_success
     end
 
-    it 'load all transactions in the month when no param is provided' do
+    it 'lists transactions in the month when no param is provided' do
       get :index
       fin_trans = FinancialTransaction.where(
         date: {
@@ -40,14 +40,33 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
       expect(assigns(:fin_trans)).to eq(fin_trans)
     end
 
-    it 'load all transactions since a date when since param is provided' do
-      start_date = '2017-06-01'
+    it 'lists transactions since a date when since param is provided' do
+      start_date = Faker::Date.backward(30)
       get :index, params: { start: start_date }
 
       fin_trans = FinancialTransaction.where(
         date: {
-          :$gte => Date.parse(start_date),
+          :$gte => start_date,
           :$lte => Date.today.at_end_of_month
+        },
+        user_id: {
+          :$eq => user.id.to_s
+        }
+      )
+
+      expect(assigns(:fin_trans)).to eq fin_trans
+    end
+
+    it 'lists transactions interval when start and end params are provided' do
+      start_date = Faker::Date.backward(30)
+      end_date = Faker::Date.forward(30)
+
+      get :index, params: { start: start_date, end: end_date }
+
+      fin_trans = FinancialTransaction.where(
+        date: {
+          :$gte => start_date,
+          :$lte => end_date
         },
         user_id: {
           :$eq => user.id.to_s

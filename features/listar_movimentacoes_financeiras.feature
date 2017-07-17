@@ -71,8 +71,23 @@ Funcionalidade: Listar movimentações financeiras
     E o corpo da resposta deve corresponder ao formato JSON API
     E a resposta deve exibir todas as minhas movimentações financeiras desde o dia "2017-06-04" até o fim do mês corrente
 
-  Cenário: Um usuário não autenticado solicita a listagem de transações financeiras
+  Cenário: Um usuário não autenticado solicita a listagem de transações financeiras começando em uma data específica
     Quando o backend receber uma requisição não autenticada para listar movimentações financeiras a partir de de "2017-06-04"
+    Então a resposta deve possuir status "401"
+    E a resposta deve possuir o content type "application/json; charset=utf-8"
+    E o corpo da resposta deve corresponder ao formato JSON API
+    E o corpo da resposta deve conter uma mensagem informando que o acesso foi negado
+
+  Cenário: Um usuário autenticado solicita a listagem de suas transações financeiras em um intervalo específico
+    Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
+    Quando o backend receber uma requisição autenticada para listar suas movimentações financeiras a partir de "2017-06-04" até "2017-08-10"
+    Então a resposta deve possuir status "200"
+    E a resposta deve possuir o content type "application/json; charset=utf-8"
+    E o corpo da resposta deve corresponder ao formato JSON API
+    E a resposta deve exibir todas as minhas movimentações financeiras desde o dia "2017-06-04" até o dia "2017-08-10"
+
+  Cenário: Um usuário não autenticado solicita a listagem de transações financeiras em um intervalo específico
+    Quando o backend receber uma requisição não autenticada para listar movimentações financeiras a partir de "2017-06-04" até "2017-08-10"
     Então a resposta deve possuir status "401"
     E a resposta deve possuir o content type "application/json; charset=utf-8"
     E o corpo da resposta deve corresponder ao formato JSON API

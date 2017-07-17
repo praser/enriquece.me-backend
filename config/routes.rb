@@ -28,11 +28,11 @@ Rails.application.routes.draw do
       as: :financial_transactions_since
     )
 
-    # get(
-    #   '/financial_transactions/since/:start/until/:end',
-    #   to: 'financial_transactions#index',
-    #   as: :financial_transactions_since_until
-    # )
+    get(
+      '/financial_transactions/since/:start/until/:end',
+      to: 'financial_transactions#index',
+      as: :financial_transactions_since_until
+    )
 
     # resources without new and edit routes
     with_options(except: %i[new edit]) do |opt|
