@@ -12,13 +12,34 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
 
   let(:user) { FactoryGirl.create(:user) }
 
-  # describe 'GET #index' do
-  #   it 'returns a success response' do
-  #     financial_transaction = V1::FinancialTransaction.create! valid
-  #     get :index, params: {}, session: valid_session
-  #     expect(response).to be_success
-  #   end
-  # end
+  describe 'GET #index' do
+    before(:each) do
+      10.times do
+        FactoryGirl.create(:financial_transaction, user: user)
+        FactoryGirl.create(:financial_transaction)
+      end
+    end
+
+    it 'returns a success response' do
+      get :index
+      expect(response).to be_success
+    end
+
+    it 'load all transactions in the month when no param is provided' do
+      get :index
+      t = FinancialTransaction.where(
+        date: {
+          :$gte => Date.today.at_beginning_of_month,
+          :$lte => Date.today.at_end_of_month
+        },
+        user_id: {
+          :$eq => user.id.to_s
+        }
+      )
+
+      expect(assigns(:fin_trans)).to eq(t)
+    end
+  end
 
   describe 'GET #show' do
     let(:fin_trans) { FactoryGirl.create(:financial_transaction, user: user) }

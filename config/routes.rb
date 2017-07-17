@@ -22,6 +22,18 @@ Rails.application.routes.draw do
 
     get '/account_types', to: 'account_types#index'
 
+    # get(
+    #   '/financial_transactions/since/:start_date',
+    #   to: 'financial_transactions#index',
+    #   as: :financial_transactions_since
+    # )
+
+    # get(
+    #   '/financial_transactions/since/:start_date/until/:end_date',
+    #   to: 'financial_transactions#index',
+    #   as: :financial_transactions_since_until
+    # )
+
     # resources without new and edit routes
     with_options(except: %i[new edit]) do |opt|
       opt.resources :accounts

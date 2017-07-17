@@ -79,6 +79,10 @@ Quando(/^o backend receber uma requisição autenticada para exibir dados da tra
   request :get, default_financial_transaction_path(financial_transaction), nil, auth_token
 end
 
+Quando(/^o backend receber uma requisição autenticada para listar suas movimentações financeiras$/) do
+  request :get, default_financial_transactions_path, nil, auth_token
+end
+
 Então(/^a movimentação financeira "([^"]*)" deverá ter sido removida$/) do |description|
   expect(find_financial_transaction(description: description)).to be_nil
 end

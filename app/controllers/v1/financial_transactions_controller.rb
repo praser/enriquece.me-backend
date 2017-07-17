@@ -5,12 +5,20 @@ module V1
   class FinancialTransactionsController < V1::BaseController
     before_action :set_financial_transaction, only: %i[show update destroy]
 
-    # # GET /v1/financial_transactions
-    # def index
-    #   financial_transactions = FinancialTransaction.all
+    # GET /v1/financial_transactions
+    def index
+      @fin_trans = FinancialTransaction.where(
+        date: {
+          :$gte => Date.today.at_beginning_of_month,
+          :$lte => Date.today.at_end_of_month
+        },
+        user_id: {
+          :$eq => current_user.id.to_s
+        }
+      )
 
-    #   render json: financial_transactions
-    # end
+      render_json_api @fin_trans
+    end
 
     # GET /v1/financial_transactions/1
     def show
