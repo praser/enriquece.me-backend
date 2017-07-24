@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Create recurrent financial transanctions recursevely
-class RecurrentFinancialTransactionJob < ApplicationJob
+class CreateRecurrencesJob < ApplicationJob
   queue_as :default
 
   def perform(obj_class, obj_id)

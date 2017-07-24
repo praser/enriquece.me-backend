@@ -40,7 +40,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
       expect(assigns(:fin_trans)).to eq(fin_trans)
     end
 
-    it 'lists transactions since a date when since param is provided' do
+    it 'lists transactions since a date when start param is provided' do
       start_date = Faker::Date.backward(30)
       get :index, params: { start: start_date }
 
@@ -122,10 +122,10 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
         end.to change(FinancialTransaction, :count).by(1)
       end
 
-      it 'assigns a newly financial transaction as @financial_transaction' do
+      it 'assigns a newly financial transaction as @fin_trans' do
         post :create, params: valid
-        expect(assigns(:fin_transaction)).to be_a(FinancialTransaction)
-        expect(assigns(:fin_transaction)).to be_persisted
+        expect(assigns(:fin_trans)).to be_a(FinancialTransaction)
+        expect(assigns(:fin_trans)).to be_persisted
       end
 
       it 'renders a JSON response with the new financial_transaction' do
@@ -139,16 +139,16 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
 
       it 'creates a new financial transaction belonging to current user' do
         post :create, params: valid
-        expect(assigns(:fin_transaction).user).to eq(user)
+        expect(assigns(:fin_trans).user).to eq(user)
       end
 
-      it 'is expected to call fin_trans_job when recurrence exists' do
-        expect(subject).to receive(:fin_trans_job)
+      it 'is expected to call create_recurrences when recurrence exists' do
+        expect(subject).to receive(:create_recurrences)
         post :create, params: valid
       end
 
-      it 'is expected to not call fin_trans_job when no recurrence exists' do
-        expect(subject).to_not receive(:fin_trans_job)
+      it 'is not expected to call create_recurrences if no recurrence exists' do
+        expect(subject).to_not receive(:create_recurrences)
         post :create, params: valid.except(:recurrence)
       end
     end
@@ -173,13 +173,13 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
         )
       end
 
-      it 'updates the requested financial_transaction' do
+      it 'updates the requested financial transaction' do
         put :update, params: update_params
         fin_trans.reload
         expect(fin_trans.description).to eq(fin_trans.description)
       end
 
-      it 'renders a JSON response with the financial_transaction' do
+      it 'renders a JSON response with the financial transaction' do
         put :update, params: update_params
 
         expect(response).to have_http_status(:ok)
@@ -229,7 +229,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
   describe 'DELETE #destroy' do
     let!(:fin_trans) { FactoryGirl.create(:financial_transaction, user: user) }
 
-    it 'destroys the requested financial_transaction' do
+    it 'destroys the requested financialtransaction' do
       expect do
         delete :destroy, params: { id: fin_trans.id.to_s }
       end.to change(FinancialTransaction, :count).by(-1)
@@ -251,7 +251,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
     end
   end
 
-  describe 'private method fin_trans_job' do
+  describe 'private method create_recurrences' do
     let(:valid) do
       params = FactoryGirl.build(
         :financial_transaction
@@ -263,11 +263,11 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
     it 'is expected to enqueue a job to generate reccurences' do
       post :create, params: valid
 
-      fin_trans = assigns(:fin_transaction)
+      fin_trans = assigns(:fin_trans)
       args = [fin_trans.class.to_s, fin_trans.id.to_s]
 
-      expect { subject.send(:fin_trans_job, fin_trans) }
-        .to have_enqueued_job(RecurrentFinancialTransactionJob)
+      expect { subject.send(:create_recurrences, fin_trans) }
+        .to have_enqueued_job(CreateRecurrencesJob)
         .with(*args)
         .on_queue('default')
     end

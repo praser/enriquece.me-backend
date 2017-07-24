@@ -22,57 +22,59 @@ module V1
 
     # GET /v1/financial_transactions/1
     def show
-      render_json_api @fin_transaction
+      render_json_api @fin_trans
     end
 
     # POST /v1/financial_transactions
     def create
-      @fin_transaction = FinancialTransaction.new(financial_transaction_params)
+      @fin_trans = FinancialTransaction.new(financial_transaction_params)
       attach_user
 
-      return render_json_api_error @fin_transaction unless @fin_transaction.save
+      return render_json_api_error @fin_trans unless @fin_trans.save
 
-      fin_trans_job(@fin_transaction) unless @fin_transaction.recurrence.nil?
+      create_recurrences(@fin_trans) unless @fin_trans.recurrence.nil?
 
       props = {
         status: :created,
-        location: v1_financial_transaction_path(@fin_transaction)
+        location: v1_financial_transaction_path(@fin_trans)
       }
 
-      render_json_api @fin_transaction, props
+      render_json_api @fin_trans, props
     end
 
     # PATCH/PUT /v1/financial_transactions/1
     def update
-      unless @fin_transaction.update(financial_transaction_params)
-        return render_json_api_error @fin_transaction
+      # TODO, Create edition of recurrences assincronously
+      unless @fin_trans.update(financial_transaction_params)
+        return render_json_api_error @fin_trans
       end
 
-      render_json_api(@fin_transaction)
+      render_json_api(@fin_trans)
     end
 
     # DELETE /v1/financial_transactions/1
     def destroy
-      @fin_transaction.destroy
+      # TODO, Create deletion of recurrences assincronously
+      @fin_trans.destroy
     end
 
     private
 
     # Use callbacks to share common setup or constraints between actions.
     def set_financial_transaction
-      @fin_transaction = FinancialTransaction.find_by(
+      @fin_trans = FinancialTransaction.find_by(
         id: params[:id],
         user_id: current_user.id
       )
 
-      return unless @fin_transaction.nil?
+      return unless @fin_trans.nil?
       current_user.errors.add :authorization, 'Not Authorized'
       render_json_api_error(current_user, :unauthorized)
     end
 
     # Attach the current_user to account
     def attach_user
-      @fin_transaction.user = current_user
+      @fin_trans.user = current_user
     end
 
     # Only allow a trusted parameter "white list" through.
@@ -90,20 +92,21 @@ module V1
       )
     end
 
-    def fin_trans_job(fin_trans)
-      RecurrentFinancialTransactionJob.perform_later(
+    # Enqueue recurrences to be createad assincronously.
+    def create_recurrences(fin_trans)
+      CreateRecurrencesJob.perform_later(
         fin_trans.class.to_s,
         fin_trans.id.to_s
       )
     end
 
-    # Set start date to be used in index action
+    # Set start date to be used in index action.
     def start_date
       return Date.parse(params[:start]) unless params[:start].nil?
       Date.today.at_beginning_of_month
     end
 
-    # Set end date to be used in index action
+    # Set end date to be used in index action.
     def end_date
       return Date.parse(params[:end]) unless params[:end].nil?
       Date.today.at_end_of_month

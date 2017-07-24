@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe RecurrentFinancialTransactionJob, type: :job do
+RSpec.describe CreateRecurrencesJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_now(*args) }
