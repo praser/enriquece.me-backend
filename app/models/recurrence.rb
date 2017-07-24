@@ -4,6 +4,7 @@
 # Recurrence Model
 class Recurrence
   include Mongoid::Document
+  include Mongoid::Timestamps
 
   EVERY = %w[day week month year].freeze
   ON = (1..31).to_a.concat %w[first second third fourth fifth].freeze

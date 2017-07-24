@@ -3,6 +3,7 @@
 # Financial Transaction Model
 class FinancialTransaction
   include Mongoid::Document
+  include Mongoid::Timestamps
 
   field :description, type: String
   field :price, type: Float

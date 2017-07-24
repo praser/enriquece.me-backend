@@ -3,6 +3,7 @@
 # User model
 class User
   include Mongoid::Document
+  include Mongoid::Timestamps
   include ActiveModel::SecurePassword
 
   field :name, type: String
