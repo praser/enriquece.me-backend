@@ -44,9 +44,18 @@ module V1
 
     # PATCH/PUT /v1/financial_transactions/1
     def update
-      # TODO, Create edition of recurrences assincronously
+      old_date = @fin_trans.date
+
       unless @fin_trans.update(financial_transaction_params)
         return render_json_api_error @fin_trans
+      end
+
+      unless financial_transaction_params[:recurrence].nil?
+        update_recurrences(
+          @fin_trans,
+          financial_transaction_params[:recurrence],
+          (@fin_trans.date - old_date).to_i
+        )
       end
 
       render_json_api(@fin_trans)
@@ -88,6 +97,7 @@ module V1
         :account_id,
         :category_id,
         :subcategory_id,
+        :recurrence,
         recurrence: %i[every on interval repeat]
       )
     end
@@ -97,6 +107,16 @@ module V1
       CreateRecurrencesJob.perform_later(
         fin_trans.class.to_s,
         fin_trans.id.to_s
+      )
+    end
+
+    # Enqueue recurrences to be updated assincronously.
+    def update_recurrences(fin_trans, modifier, days_amount)
+      UpdateRecurrencesJob.perform_later(
+        fin_trans.class.to_s,
+        fin_trans.id.to_s,
+        modifier,
+        days_amount
       )
     end
 

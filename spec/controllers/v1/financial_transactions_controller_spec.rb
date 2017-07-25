@@ -169,7 +169,8 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
       let(:update_params) do
         FactoryGirl.attributes_for(
           :financial_transaction,
-          id: fin_trans.id
+          id: fin_trans.id,
+          recurrence: :foward
         )
       end
 
@@ -184,6 +185,16 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
 
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
+      end
+
+      it 'calls update_recurrences when recurrence param is provided' do
+        expect(subject).to receive(:update_recurrences)
+        put :update, params: update_params
+      end
+
+      it 'doesnt call update_recurrences if recurrence param is not provided' do
+        expect(subject).to_not receive(:update_recurrences)
+        put :update, params: update_params.except(:recurrence)
       end
     end
 
@@ -268,6 +279,33 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
 
       expect { subject.send(:create_recurrences, fin_trans) }
         .to have_enqueued_job(CreateRecurrencesJob)
+        .with(*args)
+        .on_queue('default')
+    end
+  end
+
+  describe 'private method update_recurrences' do
+    let(:fin_trans) { FactoryGirl.create(:financial_transaction) }
+    let(:update_params) do
+      FactoryGirl.attributes_for(
+        :financial_transaction,
+        id: fin_trans.id,
+        recurrence: 'foward'
+      )
+    end
+
+    it 'is expected to enqueue a job to update reccurences' do
+      put :update, params: update_params
+
+      args = [
+        fin_trans.class.to_s,
+        fin_trans.id.to_s,
+        update_params[:recurrence],
+        4
+      ]
+
+      expect { subject.send(:update_recurrences, fin_trans, *args[2..3]) }
+        .to have_enqueued_job(UpdateRecurrencesJob)
         .with(*args)
         .on_queue('default')
     end
