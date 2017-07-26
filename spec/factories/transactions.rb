@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryGirl.define do
-  factory :financial_transaction do
+  factory :transaction do
     description Faker::Lorem.word
     price Faker::Number.decimal(2)
     date Faker::Date.between(30.days.ago, Date.today.at_end_of_month.next_month)

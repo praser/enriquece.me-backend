@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe V1::FinancialTransactionsController, type: :controller do
+RSpec.describe V1::TransactionsController, type: :controller do
   ActiveJob::Base.queue_adapter = :test
 
   before(:each) do
@@ -15,8 +15,8 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
   describe 'GET #index' do
     before(:each) do
       10.times do
-        FactoryGirl.create(:financial_transaction, user: user)
-        FactoryGirl.create(:financial_transaction)
+        FactoryGirl.create(:transaction, user: user)
+        FactoryGirl.create(:transaction)
       end
     end
 
@@ -27,7 +27,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
 
     it 'lists transactions in the month when no param is provided' do
       get :index
-      fin_trans = FinancialTransaction.where(
+      transaction = Transaction.where(
         date: {
           :$gte => Date.today.at_beginning_of_month,
           :$lte => Date.today.at_end_of_month
@@ -37,14 +37,14 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
         }
       )
 
-      expect(assigns(:fin_trans)).to eq(fin_trans)
+      expect(assigns(:transactions)).to eq(transaction)
     end
 
     it 'lists transactions since a date when start param is provided' do
       start_date = Faker::Date.backward(30)
       get :index, params: { start: start_date }
 
-      fin_trans = FinancialTransaction.where(
+      transaction = Transaction.where(
         date: {
           :$gte => start_date,
           :$lte => Date.today.at_end_of_month
@@ -54,7 +54,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
         }
       )
 
-      expect(assigns(:fin_trans)).to eq fin_trans
+      expect(assigns(:transactions)).to eq transaction
     end
 
     it 'lists transactions interval when start and end params are provided' do
@@ -63,7 +63,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
 
       get :index, params: { start: start_date, end: end_date }
 
-      fin_trans = FinancialTransaction.where(
+      transaction = Transaction.where(
         date: {
           :$gte => start_date,
           :$lte => end_date
@@ -73,28 +73,28 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
         }
       )
 
-      expect(assigns(:fin_trans)).to eq fin_trans
+      expect(assigns(:transactions)).to eq transaction
     end
   end
 
   describe 'GET #show' do
-    let(:fin_trans) { FactoryGirl.create(:financial_transaction, user: user) }
+    let(:transaction) { FactoryGirl.create(:transaction, user: user) }
 
     it 'returns a success response' do
-      get :show, params: { id: fin_trans.id.to_s }
+      get :show, params: { id: transaction.id.to_s }
       expect(response).to be_success
     end
 
     context 'request anothers user financial transaction' do
-      let(:anothers_fin_trans) do
+      let(:anothers_transaction) do
         FactoryGirl.create(
-          :financial_transaction,
+          :transaction,
           user: FactoryGirl.create(:user)
         )
       end
 
       it 'does not show ' do
-        get :show, params: { id: anothers_fin_trans.id.to_s }
+        get :show, params: { id: anothers_transaction.id.to_s }
         expect(response).to have_http_status(:unauthorized)
         expect(response.content_type).to eq('application/json')
       end
@@ -104,7 +104,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
   describe 'POST #create' do
     let(:valid) do
       params = FactoryGirl.build(
-        :financial_transaction
+        :transaction
       ).attributes
       params[:recurrence] = FactoryGirl.attributes_for(:recurrence)
 
@@ -112,20 +112,20 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
     end
 
     let(:invalid) do
-      FactoryGirl.attributes_for(:financial_transaction, :invalid)
+      FactoryGirl.attributes_for(:transaction, :invalid)
     end
 
     context 'with valid params' do
-      it 'creates a new FinancialTransaction' do
+      it 'creates a new Transaction' do
         expect do
           post :create, params: valid
-        end.to change(FinancialTransaction, :count).by(1)
+        end.to change(Transaction, :count).by(1)
       end
 
       it 'assigns a newly financial transaction as @fin_trans' do
         post :create, params: valid
-        expect(assigns(:fin_trans)).to be_a(FinancialTransaction)
-        expect(assigns(:fin_trans)).to be_persisted
+        expect(assigns(:transaction)).to be_a(Transaction)
+        expect(assigns(:transaction)).to be_persisted
       end
 
       it 'renders a JSON response with the new financial_transaction' do
@@ -133,13 +133,13 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
         expect(response.location).to(
-          eq(v1_financial_transaction_path(FinancialTransaction.last))
+          eq(v1_transaction_path(Transaction.last))
         )
       end
 
       it 'creates a new financial transaction belonging to current user' do
         post :create, params: valid
-        expect(assigns(:fin_trans).user).to eq(user)
+        expect(assigns(:transaction).user).to eq(user)
       end
 
       it 'is expected to call create_recurrences when recurrence exists' do
@@ -163,21 +163,21 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
   end
 
   describe 'PUT #update' do
-    let(:fin_trans) { FactoryGirl.create(:financial_transaction, user: user) }
+    let(:transaction) { FactoryGirl.create(:transaction, user: user) }
 
     context 'with valid params' do
       let(:update_params) do
         FactoryGirl.attributes_for(
-          :financial_transaction,
-          id: fin_trans.id,
+          :transaction,
+          id: transaction.id,
           recurrence: :foward
         )
       end
 
       it 'updates the requested financial transaction' do
         put :update, params: update_params
-        fin_trans.reload
-        expect(fin_trans.description).to eq(fin_trans.description)
+        transaction.reload
+        expect(transaction.description).to eq(transaction.description)
       end
 
       it 'renders a JSON response with the financial transaction' do
@@ -201,9 +201,9 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
     context 'with invalid params' do
       let(:update_params) do
         FactoryGirl.attributes_for(
-          :financial_transaction,
+          :transaction,
           :invalid,
-          id: fin_trans.id
+          id: transaction.id
         )
       end
 
@@ -215,22 +215,12 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
     end
 
     context 'anothers user financial transaction' do
-      let(:fin_trans) do
-        FactoryGirl.create(
-          :financial_transaction,
-          user: FactoryGirl.create(:user)
-        )
-      end
-
-      let(:update_params) do
-        FactoryGirl.attributes_for(
-          :financial_transaction,
-          id: fin_trans.id
-        )
+      let(:anothers_transaction) do
+        FactoryGirl.create(:transaction)
       end
 
       it 'renders a JSON response with errors' do
-        put :update, params: update_params
+        put :update, params: { id: anothers_transaction.id.to_s }
         expect(response).to have_http_status(:unauthorized)
         expect(response.content_type).to eq('application/json')
       end
@@ -238,26 +228,26 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:fin_trans) { FactoryGirl.create(:financial_transaction, user: user) }
+    let!(:transaction) { FactoryGirl.create(:transaction, user: user) }
 
-    it 'destroys the requested financialtransaction' do
+    it 'destroys the requested Transaction' do
       expect do
-        delete :destroy, params: { id: fin_trans.id.to_s }
-      end.to change(FinancialTransaction, :count).by(-1)
+        delete :destroy, params: { id: transaction.id.to_s }
+      end.to change(Transaction, :count).by(-1)
     end
 
     context 'anothes user financial transaction' do
-      let!(:anothers_fin_trans) do
+      let!(:anothers_transaction) do
         FactoryGirl.create(
-          :financial_transaction,
+          :transaction,
           user: FactoryGirl.create(:user)
         )
       end
 
       it 'does not destroy the requested financial transaction' do
         expect do
-          delete :destroy, params: { id: anothers_fin_trans.id.to_s }
-        end.to_not change(FinancialTransaction, :count)
+          delete :destroy, params: { id: anothers_transaction.id.to_s }
+        end.to_not change(Transaction, :count)
       end
     end
   end
@@ -265,7 +255,7 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
   describe 'private method create_recurrences' do
     let(:valid) do
       params = FactoryGirl.build(
-        :financial_transaction
+        :transaction
       ).attributes
       params[:recurrence] = FactoryGirl.attributes_for(:recurrence)
       return params
@@ -274,10 +264,10 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
     it 'is expected to enqueue a job to generate reccurences' do
       post :create, params: valid
 
-      fin_trans = assigns(:fin_trans)
-      args = [fin_trans.class.to_s, fin_trans.id.to_s]
+      transaction = assigns(:transaction)
+      args = [transaction.class.to_s, transaction.id.to_s]
 
-      expect { subject.send(:create_recurrences, fin_trans) }
+      expect { subject.send(:create_recurrences, transaction) }
         .to have_enqueued_job(CreateRecurrencesJob)
         .with(*args)
         .on_queue('default')
@@ -285,11 +275,11 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
   end
 
   describe 'private method update_recurrences' do
-    let(:fin_trans) { FactoryGirl.create(:financial_transaction) }
+    let(:transaction) { FactoryGirl.create(:transaction) }
     let(:update_params) do
       FactoryGirl.attributes_for(
-        :financial_transaction,
-        id: fin_trans.id,
+        :transaction,
+        id: transaction.id,
         recurrence: 'foward'
       )
     end
@@ -298,13 +288,13 @@ RSpec.describe V1::FinancialTransactionsController, type: :controller do
       put :update, params: update_params
 
       args = [
-        fin_trans.class.to_s,
-        fin_trans.id.to_s,
+        transaction.class.to_s,
+        transaction.id.to_s,
         update_params[:recurrence],
         4
       ]
 
-      expect { subject.send(:update_recurrences, fin_trans, *args[2..3]) }
+      expect { subject.send(:update_recurrences, transaction, *args[2..3]) }
         .to have_enqueued_job(UpdateRecurrencesJob)
         .with(*args)
         .on_queue('default')

@@ -8,6 +8,7 @@ class Subcategory
   field :name, type: String
 
   belongs_to :category
+  has_many :transactions
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :category_id, case_sensitive: false }

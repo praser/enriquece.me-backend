@@ -12,6 +12,7 @@ class Account
   belongs_to :bank
   belongs_to :account_type
   belongs_to :user
+  has_many :transactions
 
   validates :name, presence: true, length: { maximum: 100 }
   validates :description, length: { maximum: 500 }

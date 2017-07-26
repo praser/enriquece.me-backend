@@ -21,5 +21,5 @@ RSpec.describe Recurrence, type: :model do
 
   it { is_expected.to have_field(:repeat).of_type(Integer) }
 
-  it { is_expected.to have_many :financial_transactions }
+  it { is_expected.to have_many :transactions }
 end

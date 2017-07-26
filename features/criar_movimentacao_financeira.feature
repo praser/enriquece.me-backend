@@ -105,7 +105,7 @@ Funcionalidade: Criar movimentações simples
     E o corpo da resposta deve corresponder ao formato JSON API
 
   Cenário: "Quando um usuário não autenticado solicita o cadastramento de uma movimentação financeira"
-    Quando o backend receber uma requisição não autenticada para "/financial_transactions" através do método "POST"
+    Quando o backend receber uma requisição não autenticada para "/transactions" através do método "POST"
     Então a resposta deve possuir status "401"
     E a resposta deve possuir o content type "application/json; charset=utf-8"
     E o corpo da resposta deve corresponder ao formato JSON API

@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'V1::FinancialTransactions', type: :request do
+RSpec.describe 'V1::Transactions', type: :request do
   let(:current_user) { FactoryGirl.create(:user) }
 
-  let(:financial_transaction) do
-    FactoryGirl.create(:financial_transaction, user: current_user)
+  let(:transaction) do
+    FactoryGirl.create(:transaction, user: current_user)
   end
 
   context 'with authentication token' do
@@ -25,19 +25,19 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       }
     end
 
-    describe 'GET v1/financial_transactions' do
+    describe 'GET v1/transactions' do
       it 'returns http status 200' do
-        get v1_financial_transactions_path, headers: @headers
+        get v1_transactions_path, headers: @headers
         expect(response).to have_http_status(:ok)
       end
     end
 
-    describe 'GET v1/financial_transactions/since/:start' do
+    describe 'GET v1/transactions/since/:start' do
       let(:start_date) { Faker::Date.backward(30).to_s }
 
       it 'returns http status 200' do
         get(
-          v1_financial_transactions_since_path(start_date),
+          v1_transactions_since_path(start_date),
           headers: @headers
         )
 
@@ -45,13 +45,13 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'GET v1/financial_transactions/since/:start/until/:end' do
+    describe 'GET v1/transactions/since/:start/until/:end' do
       let(:start_date) { Faker::Date.backward(30).to_s }
       let(:end_date) { Faker::Date.forward(30).to_s }
 
       it 'returns http status 200' do
         get(
-          v1_financial_transactions_since_until_path(start_date, end_date),
+          v1_transactions_since_until_path(start_date, end_date),
           headers: @headers
         )
 
@@ -59,10 +59,10 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'GET v1/financial_transactions/:id' do
+    describe 'GET v1/transactions/:id' do
       it 'returns http status 200' do
         get(
-          v1_financial_transaction_path(financial_transaction),
+          v1_transaction_path(transaction),
           headers: @headers
         )
 
@@ -70,20 +70,20 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'POST v1/financial_transactions' do
+    describe 'POST v1/transactions' do
       before(:each) do
         post(
-          v1_financial_transactions_path,
-          params: financial_transaction_params.to_json,
+          v1_transactions_path,
+          params: transaction_params.to_json,
           headers: @headers
         )
       end
 
-      let(:financial_transaction_params) do
-        f = FactoryGirl.build(:financial_transaction)
+      let(:transaction_params) do
+        f = FactoryGirl.build(:transaction)
 
         FactoryGirl.attributes_for(
-          :financial_transaction,
+          :transaction,
           category_id: f.category_id.to_s,
           subcategory_id: f.subcategory_id.to_s,
           account_id: f.account_id.to_s
@@ -98,17 +98,17 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
     describe 'PUT /v1/financial_transctions/:id' do
       before(:each) do
         put(
-          v1_financial_transaction_path(financial_transaction),
-          params: financial_transaction_params.to_json,
+          v1_transaction_path(transaction),
+          params: transaction_params.to_json,
           headers: @headers
         )
       end
 
-      let(:financial_transaction_params) do
-        f = FactoryGirl.build(:financial_transaction)
+      let(:transaction_params) do
+        f = FactoryGirl.build(:transaction)
 
         FactoryGirl.attributes_for(
-          :financial_transaction,
+          :transaction,
           category_id: f.category_id.to_s,
           subcategory_id: f.subcategory_id.to_s,
           account_id: f.account_id.to_s
@@ -123,25 +123,25 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
     describe 'PATCH /v1/financial_transctions/:id' do
       before(:each) do
         patch(
-          v1_financial_transaction_path(financial_transaction),
-          params: financial_transaction_params.to_json,
+          v1_transaction_path(transaction),
+          params: transaction_params.to_json,
           headers: @headers
         )
       end
 
-      let(:financial_transaction_params) do
-        f = FactoryGirl.build(:financial_transaction)
+      let(:transaction_params) do
+        f = FactoryGirl.build(:transaction)
 
         FactoryGirl.attributes_for(
-          :financial_transaction,
+          :transaction,
           category_id: f.category_id.to_s,
           subcategory_id: f.subcategory_id.to_s,
           account_id: f.account_id.to_s
         )
       end
 
-      let(:financial_transaction) do
-        FactoryGirl.create(:financial_transaction, user: current_user)
+      let(:transaction) do
+        FactoryGirl.create(:transaction, user: current_user)
       end
 
       it 'returns http status 200' do
@@ -149,10 +149,10 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'DELETE /v1/financial_transactions/:id' do
+    describe 'DELETE /v1/transactions/:id' do
       before(:each) do
         delete(
-          v1_financial_transaction_path(financial_transaction),
+          v1_transaction_path(transaction),
           headers: @headers
         )
       end
@@ -168,19 +168,19 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       @headers = { 'Content-Type' => 'application/vnd.api+json' }
     end
 
-    describe 'GET v1/financial_transactions' do
+    describe 'GET v1/transactions' do
       it 'returns http status 401' do
-        get v1_financial_transactions_path, headers: @headers
+        get v1_transactions_path, headers: @headers
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
-    describe 'GET v1/financial_transactions/since/:start' do
+    describe 'GET v1/transactions/since/:start' do
       let(:start_date) { Faker::Date.backward(30).to_s }
 
       it 'returns http status 401' do
         get(
-          v1_financial_transactions_since_path(start_date),
+          v1_transactions_since_path(start_date),
           headers: @headers
         )
 
@@ -188,13 +188,13 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'GET v1/financial_transactions/since/:start/until/:end' do
+    describe 'GET v1/transactions/since/:start/until/:end' do
       let(:start_date) { Faker::Date.backward(30).to_s }
       let(:end_date) { Faker::Date.forward(30).to_s }
 
       it 'returns http status 401' do
         get(
-          v1_financial_transactions_since_until_path(start_date, start_date),
+          v1_transactions_since_until_path(start_date, start_date),
           headers: @headers
         )
 
@@ -202,10 +202,10 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'GET v1/financial_transactions/:id' do
+    describe 'GET v1/transactions/:id' do
       it 'returns http status 401' do
         get(
-          v1_financial_transaction_path(financial_transaction),
+          v1_transaction_path(transaction),
           headers: @headers
         )
 
@@ -213,10 +213,10 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'POST /v1/financial_transactions' do
+    describe 'POST /v1/transactions' do
       it 'returns http status 401' do
         post(
-          v1_financial_transactions_path,
+          v1_transactions_path,
           headers: @headers
         )
 
@@ -224,10 +224,10 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'PUT /v1/financial_transactions/:id' do
+    describe 'PUT /v1/transactions/:id' do
       it 'returns http status 401' do
         put(
-          v1_financial_transaction_path(financial_transaction),
+          v1_transaction_path(transaction),
           headers: @headers
         )
 
@@ -235,10 +235,10 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'PATCH /v1/financial_transactions/:id' do
+    describe 'PATCH /v1/transactions/:id' do
       it 'returns http status 401' do
         patch(
-          v1_financial_transaction_path(financial_transaction),
+          v1_transaction_path(transaction),
           headers: @headers
         )
 
@@ -246,10 +246,10 @@ RSpec.describe 'V1::FinancialTransactions', type: :request do
       end
     end
 
-    describe 'DELETE /v1/financial_transactions/:id' do
+    describe 'DELETE /v1/transactions/:id' do
       it 'returns http status 401' do
         delete(
-          v1_financial_transaction_path(financial_transaction),
+          v1_transaction_path(transaction),
           headers: @headers
         )
 

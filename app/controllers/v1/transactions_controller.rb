@@ -2,12 +2,12 @@
 
 module V1
   # Defines actions that involve financial transactions management
-  class FinancialTransactionsController < V1::BaseController
-    before_action :set_financial_transaction, only: %i[show update destroy]
+  class TransactionsController < V1::BaseController
+    before_action :set_transaction, only: %i[show update destroy]
 
     # GET /v1/financial_transactions
     def index
-      @fin_trans = FinancialTransaction.where(
+      @transactions = Transaction.where(
         date: {
           :$gte => start_date,
           :$lte => end_date
@@ -17,77 +17,77 @@ module V1
         }
       )
 
-      render_json_api @fin_trans
+      render_json_api @transactions
     end
 
     # GET /v1/financial_transactions/1
     def show
-      render_json_api @fin_trans
+      render_json_api @transaction
     end
 
     # POST /v1/financial_transactions
     def create
-      @fin_trans = FinancialTransaction.new(financial_transaction_params)
+      @transaction = Transaction.new(transaction_params)
       attach_user
 
-      return render_json_api_error @fin_trans unless @fin_trans.save
+      return render_json_api_error @transaction unless @transaction.save
 
-      create_recurrences(@fin_trans) unless @fin_trans.recurrence.nil?
+      create_recurrences(@transaction) unless @transaction.recurrence.nil?
 
       props = {
         status: :created,
-        location: v1_financial_transaction_path(@fin_trans)
+        location: v1_transaction_path(@transaction)
       }
 
-      render_json_api @fin_trans, props
+      render_json_api @transaction, props
     end
 
     # PATCH/PUT /v1/financial_transactions/1
     def update
-      old_date = @fin_trans.date
+      old_date = @transaction.date
 
-      unless @fin_trans.update(financial_transaction_params)
-        return render_json_api_error @fin_trans
+      unless @transaction.update(transaction_params)
+        return render_json_api_error @transaction
       end
 
-      unless financial_transaction_params[:recurrence].nil?
+      unless transaction_params[:recurrence].nil?
         update_recurrences(
-          @fin_trans,
-          financial_transaction_params[:recurrence],
-          (@fin_trans.date - old_date).to_i
+          @transaction,
+          transaction_params[:recurrence],
+          (@transaction.date - old_date).to_i
         )
       end
 
-      render_json_api(@fin_trans)
+      render_json_api(@transaction)
     end
 
     # DELETE /v1/financial_transactions/1
     def destroy
       # TODO, Create deletion of recurrences assincronously
-      @fin_trans.destroy
+      @transaction.destroy
     end
 
     private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_financial_transaction
-      @fin_trans = FinancialTransaction.find_by(
+    def set_transaction
+      @transaction = Transaction.find_by(
         id: params[:id],
         user_id: current_user.id
       )
 
-      return unless @fin_trans.nil?
+      return unless @transaction.nil?
       current_user.errors.add :authorization, 'Not Authorized'
       render_json_api_error(current_user, :unauthorized)
     end
 
     # Attach the current_user to account
     def attach_user
-      @fin_trans.user = current_user
+      @transaction.user = current_user
     end
 
     # Only allow a trusted parameter "white list" through.
-    def financial_transaction_params
+    def transaction_params
       params.permit(
         :description,
         :price,

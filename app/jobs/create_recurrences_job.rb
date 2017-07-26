@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-# Create recurrent financial transanctions recursevely
+# Create recurrent transanctions recursevely
 class CreateRecurrencesJob < ApplicationJob
   queue_as :default
 
   def perform(obj_class, obj_id)
-    reucurrence_attributes = fin_trans_recurrence_attributes(obj_class, obj_id)
-    dates(*reucurrence_attributes).each do |date|
-      clone_financial_transaction(fin_trans(obj_class, obj_id), date)
+    recurrence_attr = transaction_recurrence_attr(obj_class, obj_id)
+    dates(*recurrence_attr).each do |date|
+      clone_transaction(transaction(obj_class, obj_id), date)
     end
   end
 
@@ -25,22 +25,22 @@ class CreateRecurrencesJob < ApplicationJob
     dates
   end
 
-  def clone_financial_transaction(fin_trans, date)
-    FinancialTransaction.create(
-      description: fin_trans.description,
-      price: fin_trans.price,
+  def clone_transaction(transaction, date)
+    Transaction.create(
+      description: transaction.description,
+      price: transaction.price,
       date: date,
-      note: fin_trans.note,
-      account: fin_trans.account,
-      category: fin_trans.category,
-      subcategory: fin_trans.subcategory,
-      recurrence: fin_trans.recurrence,
-      user: fin_trans.user
+      note: transaction.note,
+      account: transaction.account,
+      category: transaction.category,
+      subcategory: transaction.subcategory,
+      recurrence: transaction.recurrence,
+      user: transaction.user
     )
   end
 
-  def fin_trans_recurrence_attributes(obj_class, obj_id)
-    rec = fin_trans(obj_class, obj_id).recurrence
+  def transaction_recurrence_attr(obj_class, obj_id)
+    rec = transaction(obj_class, obj_id).recurrence
 
     [
       rec.every.to_sym,
@@ -50,7 +50,7 @@ class CreateRecurrencesJob < ApplicationJob
     ]
   end
 
-  def fin_trans(obj_class, obj_id)
+  def transaction(obj_class, obj_id)
     obj_class.constantize.find(obj_id)
   end
 end

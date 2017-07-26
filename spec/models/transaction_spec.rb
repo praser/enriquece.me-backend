@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FinancialTransaction, type: :model do
+RSpec.describe Transaction, type: :model do
   it { is_expected.to have_field(:description).of_type(String) }
   it { is_expected.to validate_presence_of :description }
 

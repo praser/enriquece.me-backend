@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Financial Transaction Serializer
-class FinancialTransactionSerializer < ActiveModel::Serializer
-  type :financial_transaction
+# Transaction Serializer
+class TransactionSerializer < ActiveModel::Serializer
+  type :transaction
   attributes :description, :price, :date, :paid, :note
 
   belongs_to :account

@@ -15,7 +15,7 @@ class Recurrence
   field :interval
   field :repeat, type: Integer
 
-  has_many :financial_transactions
+  has_many :transactions
 
   validates :every, presence: true
   validates :every, inclusion: EVERY

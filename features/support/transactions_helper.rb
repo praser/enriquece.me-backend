@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module FinancialTransactionHelper
-  def attributes_for_financial_transaction(subcategory, category, account, params)
+module TransactionHelper
+  def attributes_for_transaction(subcategory, category, account, params)
     json = JSON.parse(params)
     FactoryGirl.attributes_for(
-      :financial_transaction,
+      :transaction,
       description: json['description'],
       price: json['price'],
       date: json['date'],
@@ -17,8 +17,8 @@ module FinancialTransactionHelper
     ).to_json
   end
 
-  def create_financial_transaction(data)
-    FinancialTransaction.create(
+  def create_transaction(data)
+    Transaction.create(
       description: data['descricao'],
       price: data['preco'],
       date: Date.parse(data['data']),
@@ -30,15 +30,19 @@ module FinancialTransactionHelper
     )
   end
 
-  def find_financial_transaction(field = {})
-    FinancialTransaction.find_by(field)
+  def find_transaction(field = {})
+    Transaction.find_by(field)
   end
 
-  def response_fin_trans
+  def find_transaction_where(*args)
+    Transaction.where(*args).to_a
+  end
+
+  def response_transaction
     JSON.parse(last_response.body)['data'].map do |item|
-      FinancialTransaction.find_by(id: item['id'])
+      Transaction.find_by(id: item['id'])
     end
   end
 end
 
-World FinancialTransactionHelper
+World TransactionHelper

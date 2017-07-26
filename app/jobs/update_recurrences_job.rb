@@ -5,7 +5,7 @@ class UpdateRecurrencesJob < ApplicationJob
   queue_as :default
 
   def perform(obj_class, obj_id, modifier, days_amount)
-    record = fin_trans(obj_class, obj_id)
+    record = find_transaction(obj_class, obj_id)
     recurrences = find_recurrences(record, modifier)
 
     recurrences.each do |transaction|
@@ -23,12 +23,12 @@ class UpdateRecurrencesJob < ApplicationJob
 
   private
 
-  def fin_trans(obj_class, obj_id)
+  def find_transaction(obj_class, obj_id)
     obj_class.constantize.find(obj_id)
   end
 
   def find_recurrences(transaction, modifier)
-    transactions = transaction.recurrence.financial_transactions
+    transactions = transaction.recurrence.transactions
     case modifier.downcase.to_sym
     when :all
       transactions.reject { |item| item == transaction }

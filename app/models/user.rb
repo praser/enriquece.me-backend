@@ -12,6 +12,7 @@ class User
 
   has_many :accounts
   has_many :categories
+  has_many :transactions
 
   has_secure_password validations: false
 

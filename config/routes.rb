@@ -23,22 +23,22 @@ Rails.application.routes.draw do
     get '/account_types', to: 'account_types#index'
 
     get(
-      '/financial_transactions/since/:start',
-      to: 'financial_transactions#index',
-      as: :financial_transactions_since
+      '/transactions/since/:start',
+      to: 'transactions#index',
+      as: :transactions_since
     )
 
     get(
-      '/financial_transactions/since/:start/until/:end',
-      to: 'financial_transactions#index',
-      as: :financial_transactions_since_until
+      '/transactions/since/:start/until/:end',
+      to: 'transactions#index',
+      as: :transactions_since_until
     )
 
     # resources without new and edit routes
     with_options(except: %i[new edit]) do |opt|
       opt.resources :accounts
       opt.resources :categories
-      opt.resources :financial_transactions
+      opt.resources :transactions
     end
 
     # resources without new, edit and index routes

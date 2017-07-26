@@ -1,6 +1,6 @@
 # language: pt
 
-@movimentacao_financeita @listar_movimentacao_financeira
+@movimentacao_financeira @listar_movimentacao_financeira
 
 Funcionalidade: Listar movimentações financeiras
   Para gerenciar minhas finanças
