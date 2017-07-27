@@ -139,8 +139,8 @@ end
 Então(/^a resposta deve exibir todas as minhas movimentações financeiras do mês$/) do
   my_fin_trans = find_transaction_where(
     date: {
-      :$gte => Date.today.at_beginning_of_month,
-      :$lte => Date.today.at_end_of_month
+      :$gte => Time.zone.today.at_beginning_of_month,
+      :$lte => Time.zone.today.at_end_of_month
     },
     user_id: {
       :$eq => find_user(email: 'johndoe@exemplo.com').id.to_s
@@ -154,7 +154,7 @@ Então(/^a resposta deve exibir todas as minhas movimentações financeiras desd
   my_fin_trans = find_transaction_where(
     date: {
       :$gte => Date.parse(start_date),
-      :$lte => Date.today.at_end_of_month
+      :$lte => Time.zone.today.at_end_of_month
     },
     user_id: {
       :$eq => find_user(email: 'johndoe@exemplo.com').id.to_s

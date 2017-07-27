@@ -132,13 +132,13 @@ module V1
     # Set start date to be used in index action.
     def start_date
       return Date.parse(params[:start]) unless params[:start].nil?
-      Date.today.at_beginning_of_month
+      Time.zone.today.at_beginning_of_month
     end
 
     # Set end date to be used in index action.
     def end_date
       return Date.parse(params[:end]) unless params[:end].nil?
-      Date.today.at_end_of_month
+      Time.zone.today.at_end_of_month
     end
   end
 end

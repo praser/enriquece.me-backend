@@ -4,7 +4,10 @@ FactoryGirl.define do
   factory :transaction do
     description Faker::Lorem.word
     price Faker::Number.decimal(2)
-    date Faker::Date.between(30.days.ago, Date.today.at_end_of_month.next_month)
+    date Faker::Date.between(
+      30.days.ago,
+      Time.zone.today.at_end_of_month.next_month
+    )
     paid { [true, false].sample }
     note Faker::Lorem.sentence
     association :account, factory: :account
