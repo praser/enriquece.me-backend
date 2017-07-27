@@ -68,5 +68,14 @@ RSpec.describe V1::TransactionsController, type: :routing do
         format: 'json'
       )
     end
+
+    it 'route to #destroy with modifier' do
+      expect(delete: '/v1/transactions/1/all').to route_to(
+        'v1/transactions#destroy',
+        id: '1',
+        recurrence: 'all',
+        format: 'json'
+      )
+    end
   end
 end

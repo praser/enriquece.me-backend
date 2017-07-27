@@ -34,6 +34,11 @@ Rails.application.routes.draw do
       as: :transactions_since_until
     )
 
+    delete(
+      '/transactions/:id/:recurrence',
+      to: 'transactions#destroy'
+    )
+
     # resources without new and edit routes
     with_options(except: %i[new edit]) do |opt|
       opt.resources :accounts

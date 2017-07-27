@@ -8,13 +8,8 @@ module V1
     # GET /v1/financial_transactions
     def index
       @transactions = Transaction.where(
-        date: {
-          :$gte => start_date,
-          :$lte => end_date
-        },
-        user_id: {
-          :$eq => current_user.id.to_s
-        }
+        date: { :$gte => start_date, :$lte => end_date },
+        user_id: { :$eq => current_user.id.to_s }
       )
 
       render_json_api @transactions
@@ -63,8 +58,12 @@ module V1
 
     # DELETE /v1/financial_transactions/1
     def destroy
-      # TODO, Create deletion of recurrences assincronously
+      recurrence = @transaction.recurrence
+      date = @transaction.date
+      modifier = transaction_params[:recurrence]
+
       @transaction.destroy
+      delete_recurrences(recurrence, modifier, date) unless modifier.nil?
     end
 
     private
@@ -102,21 +101,31 @@ module V1
       )
     end
 
-    # Enqueue recurrences to be createad assincronously.
-    def create_recurrences(fin_trans)
+    # Enqueue recurrences to be createad asynchronously.
+    def create_recurrences(transaction)
       CreateRecurrencesJob.perform_later(
-        fin_trans.class.to_s,
-        fin_trans.id.to_s
+        transaction.class.to_s,
+        transaction.id.to_s
       )
     end
 
-    # Enqueue recurrences to be updated assincronously.
-    def update_recurrences(fin_trans, modifier, days_amount)
+    # Enqueue recurrences to be updated asynchronously.
+    def update_recurrences(transaction, modifier, days_amount)
       UpdateRecurrencesJob.perform_later(
-        fin_trans.class.to_s,
-        fin_trans.id.to_s,
+        transaction.class.to_s,
+        transaction.id.to_s,
         modifier,
         days_amount
+      )
+    end
+
+    # Enqueue recurrences to be deleted asynchronously
+    def delete_recurrences(recurrence, modifier, date = nil)
+      DeleteRecurrencesJob.perform_later(
+        recurrence.class.to_s,
+        recurrence.id.to_s,
+        modifier,
+        date
       )
     end
 

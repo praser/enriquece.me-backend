@@ -236,6 +236,24 @@ RSpec.describe V1::TransactionsController, type: :controller do
       end.to change(Transaction, :count).by(-1)
     end
 
+    it 'calls delete_recurrences when recurrence param all is provided' do
+      expect(subject).to receive(:delete_recurrences)
+      delete :destroy, params: { id: transaction.id, recurrence: 'all' }
+    end
+
+    it 'calls delete_recurrences when recurrence param forward is provided' do
+      expect(subject).to receive(:delete_recurrences)
+      delete :destroy, params: {
+        id: transaction.id,
+        recurrence: 'forward'
+      }
+    end
+
+    it 'doesnt call delete_recurrences if recurrence param is not provided' do
+      expect(subject).to_not receive(:delete_recurrences)
+      put :update, params: { id: transaction.id }
+    end
+
     context 'anothes user financial transaction' do
       let!(:anothers_transaction) do
         FactoryGirl.create(
@@ -296,6 +314,33 @@ RSpec.describe V1::TransactionsController, type: :controller do
 
       expect { subject.send(:update_recurrences, transaction, *args[2..3]) }
         .to have_enqueued_job(UpdateRecurrencesJob)
+        .with(*args)
+        .on_queue('default')
+    end
+  end
+
+  describe 'private method delete_recurrences' do
+    let(:transaction) do
+      FactoryGirl.create(
+        :transaction,
+        recurrence: FactoryGirl.create(:recurrence)
+      )
+    end
+
+    it 'is expected to enqueue a job to update reccurences' do
+      delete :destroy, params: { id: transaction.id }
+
+      args = [
+        transaction.recurrence.class.to_s,
+        transaction.recurrence.id.to_s,
+        'forward',
+        transaction.date.to_s
+      ]
+
+      expect do
+        subject.send(:delete_recurrences, transaction.recurrence, *args[2..3])
+      end
+        .to have_enqueued_job(DeleteRecurrencesJob)
         .with(*args)
         .on_queue('default')
     end
