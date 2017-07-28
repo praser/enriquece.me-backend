@@ -1,4 +1,3 @@
 :concurrency: 9
-:pidfile: ./tmp/pids/sidekiq.pid
 :queues:
   - default
