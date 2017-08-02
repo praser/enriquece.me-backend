@@ -5,7 +5,7 @@ Funcionalidade: Cadastrar usuário
   Os usuários devem se cadastrar no sistema
 
   Cenário: Usando dados válidos
-    Quando o backend receber uma requisição não autenticada para "/users" através do método "POST" com os parâmetros:
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/users" através do método "POST" com os parâmetros:
     """
     {
       "name": "Rob Stark",
@@ -18,7 +18,7 @@ Funcionalidade: Cadastrar usuário
     E o corpo da resposta deve corresponder ao formato JSON API
   
   Cenário: Deixando de informar o nome
-    Quando o backend receber uma requisição não autenticada para "/users" através do método "POST" com os parâmetros:
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/users" através do método "POST" com os parâmetros:
     """
     {
       "email": "johndoe@exemplo.com",
@@ -31,7 +31,7 @@ Funcionalidade: Cadastrar usuário
     E o corpo da resposta deve conter uma mensagem informando que o campo "nome" "deve ser informado" 
   
   Cenário: Deixando de informar o email
-    Quando o backend receber uma requisição não autenticada para "/users" através do método "POST" com os parâmetros:
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/users" através do método "POST" com os parâmetros:
     """
     {
       "name": "John Doe",
@@ -44,7 +44,7 @@ Funcionalidade: Cadastrar usuário
     E o corpo da resposta deve conter uma mensagem informando que o campo "email" "deve ser informado" 
   
   Cenário: Deixando de informar a senha
-    Quando o backend receber uma requisição não autenticada para "/users" através do método "POST" com os parâmetros:
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/users" através do método "POST" com os parâmetros:
     """
     {
       "name": "John Doe",
@@ -60,7 +60,7 @@ Funcionalidade: Cadastrar usuário
     Dada a exitência de um usuário cadastrados com os dados:
   | nome     | email               | senha  |
   | John Doe | johndoe@exemplo.com | 123456 |
-    Quando o backend receber uma requisição não autenticada para "/users" através do método "POST" com os parâmetros:
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/users" através do método "POST" com os parâmetros:
     """
     {
       "name": "John Doe",

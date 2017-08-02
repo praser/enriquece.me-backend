@@ -18,14 +18,14 @@ Funcionalidade: Editar categoria
   
   Cenário: Quando um usuário autenticado solicita a lista das suas categorias
     Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
-    Quando o backend receber uma requisição autenticada para "/categories" através do método "GET"
+    Quando o backend receber uma requisição autenticada para "http://api.example.com/categories" através do método "GET"
     Então a resposta deve possuir status "200"
     E a resposta deve possuir o content type "application/json; charset=utf-8"
     E o corpo da resposta deve corresponder ao formato JSON API
     E o a lista deve conter "2" "categorias"
   
   Cenário: Quando um usuário não autenticado solicita a lista de categorias
-    Quando o backend receber uma requisição não autenticada para "/categories" através do método "GET"
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/categories" através do método "GET"
     Então a resposta deve possuir status "401"
     E a resposta deve possuir o content type "application/json; charset=utf-8"
     E o corpo da resposta deve corresponder ao formato JSON API

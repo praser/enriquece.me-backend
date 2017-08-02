@@ -44,7 +44,7 @@ Funcionalidade: Criar subcategoria
     E o corpo da resposta deve conter uma mensagem informando que o campo "nome" "deve ser informado"
   
   Cenário: Um usuário não autenticado solicita o cadastramento de uma nova categoria
-    Quando o backend receber uma requisição não autenticada para "/subcategories" através do método "POST"
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/subcategories" através do método "POST"
     Então a resposta deve possuir status "401"
     E a resposta deve possuir o content type "application/json; charset=utf-8"
     E o corpo da resposta deve corresponder ao formato JSON API

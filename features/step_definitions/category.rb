@@ -9,22 +9,22 @@ end
 
 Quando(/^o backend receber uma requisição autenticada para alterar a categoria "([^"]*)" com os parâmetros$/) do |category_name, params|
   category = find_category(name: category_name)
-  request :put, default_category_path(category), params, auth_token
+  request :put, default_category_url(category), params, auth_token
 end
 
 Quando(/^o backend receber uma requisição não autenticada para alterar a categoria "([^"]*)"$/) do |category_name|
   category = find_category(name: category_name)
-  request :put, default_category_path(category)
+  request :put, default_category_url(category)
 end
 
 Quando(/^o backend receber uma requisição autenticada para remover a categoria "([^"]*)"$/) do |category_name|
   category = find_category(name: category_name)
-  request :delete, default_category_path(category), nil, auth_token
+  request :delete, default_category_url(category), nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição não autenticada para remover a categoria "([^"]*)"$/) do |category_name|
   category = find_category(name: category_name)
-  request :delete, default_category_path(category)
+  request :delete, default_category_url(category)
 end
 
 Então(/^a categoria "([^"]*)" deve ser cadastrada$/) do |category_name|

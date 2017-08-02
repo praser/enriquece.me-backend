@@ -4,77 +4,101 @@ require 'rails_helper'
 
 RSpec.describe V1::TransactionsController, type: :routing do
   describe 'routing' do
-    let(:start_date) { Faker::Date.backward(30).to_s }
-    let(:end_date) { Faker::Date.forward(30).to_s }
+    let(:default_version) { 'v1' }
+
     it 'routes to #index' do
-      expect(get: '/v1/transactions').to route_to(
-        'v1/transactions#index',
+      start_date = Faker::Date.backward(30).to_s
+      end_date = Faker::Date.forward(30).to_s
+
+      expect(get: 'http://api.example.com/transactions').to route_to(
+        controller: "#{default_version}/transactions",
+        action: 'index',
+        subdomain: 'api',
         format: 'json'
       )
 
       expect(
-        get: "/v1/transactions/since/#{start_date}"
+        get: "http://api.example.com/transactions/since/#{start_date}"
       ).to route_to(
-        'v1/transactions#index',
-        start: start_date,
-        format: 'json'
+        controller: "#{default_version}/transactions",
+        action: 'index',
+        subdomain: 'api',
+        format: 'json',
+        start: start_date
       )
 
       expect(
-        get: "/v1/transactions/since/#{start_date}/until/#{end_date}"
+        get: 'http://api.example.com/transactions/'\
+             "since/#{start_date}/until/#{end_date}"
       ).to route_to(
-        'v1/transactions#index',
+        controller: "#{default_version}/transactions",
+        action: 'index',
+        subdomain: 'api',
+        format: 'json',
         start: start_date,
-        end: end_date,
-        format: 'json'
+        end: end_date
       )
     end
 
     it 'routes to #show' do
-      expect(get: '/v1/transactions/1').to route_to(
-        'v1/transactions#show',
-        id: '1',
-        format: 'json'
+      expect(get: 'http://api.example.com/transactions/1').to route_to(
+        controller: "#{default_version}/transactions",
+        action: 'show',
+        subdomain: 'api',
+        format: 'json',
+        id: '1'
       )
     end
 
     it 'routes to #create' do
-      expect(post: '/v1/transactions').to route_to(
-        'v1/transactions#create',
+      expect(post: 'http://api.example.com/transactions').to route_to(
+        controller: "#{default_version}/transactions",
+        action: 'create',
+        subdomain: 'api',
         format: 'json'
       )
     end
 
     it 'routes to #update via PUT' do
-      expect(put: '/v1/transactions/1').to route_to(
-        'v1/transactions#update',
-        id: '1',
-        format: 'json'
+      expect(put: 'http://api.example.com/transactions/1').to route_to(
+        controller: "#{default_version}/transactions",
+        action: 'update',
+        subdomain: 'api',
+        format: 'json',
+        id: '1'
       )
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: '/v1/transactions/1').to route_to(
-        'v1/transactions#update',
-        id: '1',
-        format: 'json'
+      expect(patch: 'http://api.example.com/transactions/1').to route_to(
+        controller: "#{default_version}/transactions",
+        action: 'update',
+        subdomain: 'api',
+        format: 'json',
+        id: '1'
       )
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/v1/transactions/1').to route_to(
-        'v1/transactions#destroy',
-        id: '1',
-        format: 'json'
+      expect(
+        delete: 'http://api.example.com/transactions/1'
+      ).to route_to(
+        controller: "#{default_version}/transactions",
+        action: 'destroy',
+        subdomain: 'api',
+        format: 'json',
+        id: '1'
       )
     end
 
     it 'route to #destroy with modifier' do
-      expect(delete: '/v1/transactions/1/all').to route_to(
-        'v1/transactions#destroy',
+      expect(delete: 'http://api.example.com/transactions/1/all').to route_to(
+        controller: "#{default_version}/transactions",
+        action: 'destroy',
+        subdomain: 'api',
+        format: 'json',
         id: '1',
-        recurrence: 'all',
-        format: 'json'
+        recurrence: 'all'
       )
     end
   end

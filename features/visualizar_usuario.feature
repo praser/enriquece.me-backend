@@ -13,7 +13,7 @@ Funcionalidade: Visualizar dados do usuário
 
   Cenário: Quando um usuário solicita acesso aos seus próprios dados
     Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
-    Quando o backend receber uma requisição autenticada para "/user" através do método "GET"
+    Quando o backend receber uma requisição autenticada para "http://api.example.com/user" através do método "GET"
     Então a resposta deve possuir status "200"
     E a resposta deve possuir o content type "application/json; charset=utf-8"
     E o corpo da resposta deve corresponder ao formato JSON API
@@ -21,7 +21,7 @@ Funcionalidade: Visualizar dados do usuário
     E o "email" do usuário deve ser "johndoe@exemplo.com"
   
   Cenário: Quando um usuário solicita acesso aos seus próprios dados sem estar autenticado
-    Quando o backend receber uma requisição não autenticada para "/user" através do método "GET"
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/user" através do método "GET"
     Então a resposta deve possuir status "401"
     E a resposta deve possuir o content type "application/json; charset=utf-8"
     E o corpo da resposta deve corresponder ao formato JSON API

@@ -11,7 +11,7 @@ Quando(/^o backend receber uma requisição autenticada para o cadastramento de 
   category = find_category(name: category_name)
   request(
     :post,
-    default_subcategories_path,
+    default_subcategories_url,
     attributes_for_subcategory(category, params),
     auth_token
   )
@@ -22,7 +22,7 @@ Quando(/^o backend receber uma requisição autenticada para alterar a subcatego
   subcategory.assign_attributes(JSON.parse(params))
   request(
     :put,
-    default_subcategory_path(subcategory),
+    default_subcategory_url(subcategory),
     subcategory.to_json,
     auth_token
   )
@@ -30,17 +30,17 @@ end
 
 Quando(/^o backend receber uma requisição autenticada para remover a subcategoria "([^"]*)"$/) do |subcategory_name|
   subcategory = find_subcategory(name: subcategory_name)
-  request :delete, default_subcategory_path(subcategory), nil, auth_token
+  request :delete, default_subcategory_url(subcategory), nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição não autenticada para alterar a subcategoria "([^"]*)"$/) do |subcategory_name|
   subcategory = find_subcategory(name: subcategory_name)
-  request :put, default_subcategory_path(subcategory)
+  request :put, default_subcategory_url(subcategory)
 end
 
 Quando(/^o backend receber uma requisição não autenticada para remover a subcategoria "([^"]*)"$/) do |subcategory_name|
   subcategory = find_subcategory(name: subcategory_name)
-  request :delete, default_subcategory_path(subcategory)
+  request :delete, default_subcategory_url(subcategory)
 end
 
 Então(/^a subcategoria "([^"]*)" deve ser cadastrada$/) do |category_name|

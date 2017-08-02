@@ -13,7 +13,7 @@ Funcionalidade: Editar dados do usuário
   
   Cenário: Quando o usuário altera os seus próprios dados informando dados válidos
     Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
-    Quando o backend receber uma requisição autenticada para "/user" através do método "PUT" com os parâmetros
+    Quando o backend receber uma requisição autenticada para "http://api.example.com/user" através do método "PUT" com os parâmetros
     """
     {
       "name": "John Doe Exemplo",
@@ -28,7 +28,7 @@ Funcionalidade: Editar dados do usuário
 
   Cenário: Quando o usuário altera os seus próprios dados informando dados inválidos
     Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
-    Quando o backend receber uma requisição autenticada para "/user" através do método "PUT" com os parâmetros
+    Quando o backend receber uma requisição autenticada para "http://api.example.com/user" através do método "PUT" com os parâmetros
     """
     {
       "name": "",
@@ -40,7 +40,7 @@ Funcionalidade: Editar dados do usuário
     E o corpo da resposta deve corresponder ao formato JSON API
 
   Cenário: Quando um usuário tenta alterar aos seus próprios dados sem estar autenticado
-    Quando o backend receber uma requisição autenticada para "/user" através do método "PUT" com os parâmetros
+    Quando o backend receber uma requisição autenticada para "http://api.example.com/user" através do método "PUT" com os parâmetros
     """
     {
       "name": "John Doe Exemplo",
@@ -55,7 +55,7 @@ Funcionalidade: Editar dados do usuário
     
   Cenário: Quando o usuário autenticado tenta alterar o seu email
     Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
-    Quando o backend receber uma requisição autenticada para "/user" através do método "PUT" com os parâmetros
+    Quando o backend receber uma requisição autenticada para "http://api.example.com/user" através do método "PUT" com os parâmetros
     """
     {
       "email": "novoemaildojohndoe@exemplo.com"

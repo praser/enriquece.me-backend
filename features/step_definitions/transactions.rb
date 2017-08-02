@@ -9,7 +9,7 @@ Quando(/^o backend receber uma requisição autenticada para o cadastramento de 
   account = find_account name: account_name
   request(
     :post,
-    default_transactions_path,
+    default_transactions_url,
     attributes_for_transaction(nil, category, account, params),
     auth_token
   )
@@ -18,7 +18,7 @@ end
 Quando(/^o backend receber uma requisição autenticada para o cadastramento de um movimentação financeira com parâmetros inválidos$/) do
   request(
     :post,
-    default_transactions_path,
+    default_transactions_url,
     nil,
     auth_token
   )
@@ -28,7 +28,7 @@ Quando(/^o backend receber uma requisição autenticada para a edição da movim
   financial_transaction = find_transaction description: description
   request(
     :put,
-    default_transaction_path(financial_transaction),
+    default_transaction_url(financial_transaction),
     nil,
     auth_token
   )
@@ -38,7 +38,7 @@ Quando(/^o backend receber uma requisição autenticada para a edição da movim
   financial_transaction = find_transaction description: description
   request(
     :put,
-    default_transaction_path(financial_transaction),
+    default_transaction_url(financial_transaction),
     params,
     auth_token
   )
@@ -48,7 +48,7 @@ Quando(/^o backend receber uma requisição não autenticada para a edição da 
   financial_transaction = find_transaction description: description
   request(
     :put,
-    default_transaction_path(financial_transaction),
+    default_transaction_url(financial_transaction),
     nil,
     nil
   )
@@ -58,7 +58,7 @@ Quando(/^o backend receber uma requisição não autenticada para exibir dados d
   financial_transaction = find_transaction description: description
   request(
     :get,
-    default_transaction_path(financial_transaction),
+    default_transaction_url(financial_transaction),
     nil,
     nil
   )
@@ -66,31 +66,31 @@ end
 
 Quando(/^o backend receber uma requisição autenticada para remover a movimentação financeira "([^"]*)"$/) do |description|
   financial_transaction = find_transaction(description: description)
-  request :delete, default_transaction_path(financial_transaction), nil, auth_token
+  request :delete, default_transaction_url(financial_transaction), nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição não autenticada para remover a movimentação financeira "([^"]*)"$/) do |description|
   financial_transaction = find_transaction(description: description)
-  request :delete, default_transaction_path(financial_transaction), nil, nil
+  request :delete, default_transaction_url(financial_transaction), nil, nil
 end
 
 Quando(/^o backend receber uma requisição autenticada para exibir dados da transação financeira "([^"]*)"$/) do |description|
   financial_transaction = find_transaction(description: description)
-  request :get, default_transaction_path(financial_transaction), nil, auth_token
+  request :get, default_transaction_url(financial_transaction), nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição autenticada para listar suas movimentações financeiras$/) do
-  request :get, default_transactions_path, nil, auth_token
+  request :get, default_transactions_url, nil, auth_token
 end
 
 Quando(/^o backend receber uma requisição não autenticada para listar movimentações financeiras$/) do
-  request :get, default_transactions_path, nil, nil
+  request :get, default_transactions_url, nil, nil
 end
 
 Quando(/^o backend receber uma requisição autenticada para listar suas movimentações financeiras a partir de "([^"]*)"$/) do |start_date|
   request(
     :get,
-    default_transactions_since_path(start_date),
+    default_transactions_since_url(start_date),
     nil,
     auth_token
   )
@@ -99,7 +99,7 @@ end
 Quando(/^o backend receber uma requisição não autenticada para listar movimentações financeiras a partir de de "([^"]*)"$/) do |start_date|
   request(
     :get,
-    default_transactions_since_path(start_date),
+    default_transactions_since_url(start_date),
     nil,
     nil
   )
@@ -108,7 +108,7 @@ end
 Quando(/^o backend receber uma requisição autenticada para listar suas movimentações financeiras a partir de "([^"]*)" até "([^"]*)"$/) do |start_date, end_date|
   request(
     :get,
-    default_transactions_since_until_path(start_date, end_date),
+    default_transactions_since_until_url(start_date, end_date),
     nil,
     auth_token
   )
@@ -117,7 +117,7 @@ end
 Quando(/^o backend receber uma requisição não autenticada para listar movimentações financeiras a partir de "([^"]*)" até "([^"]*)"$/) do |start_date, end_date|
   request(
     :get,
-    default_transactions_since_until_path(start_date, end_date),
+    default_transactions_since_until_url(start_date, end_date),
     nil,
     nil
   )

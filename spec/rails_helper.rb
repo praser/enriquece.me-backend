@@ -9,6 +9,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'mongoid-rspec'
 require 'support/database_cleaner'
+require 'support/request_subdomain_helpers'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -50,4 +51,6 @@ RSpec.configure do |config|
 
   # Include MongoId matchers
   config.include Mongoid::Matchers, type: :model
+
+  config.extend RequestSubdomainHelpers, type: :request
 end

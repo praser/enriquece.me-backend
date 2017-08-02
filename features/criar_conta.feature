@@ -36,7 +36,7 @@ Funcionalidade: Cadastrar conta
   
   Cenário: Um usuário autenticado solicita o cadastramento de uma nova conta com dados inválidos
     Dado que o usuário está autenticado no sistema através do email "johndoe@exemplo.com" e da senha "123456"
-    Quando o backend receber uma requisição autenticada para "/accounts" através do método "POST" com os parâmetros
+    Quando o backend receber uma requisição autenticada para "http://api.example.com/accounts" através do método "POST" com os parâmetros
     """
     {
     }
@@ -50,7 +50,7 @@ Funcionalidade: Cadastrar conta
     E o corpo da resposta deve conter uma mensagem informando que o campo "tipo de conta" "deve ser informado"
 
   Cenário: Um usuário não autenticado solicita o cadastramento de uma nova conta
-    Quando o backend receber uma requisição não autenticada para "/accounts" através do método "POST"
+    Quando o backend receber uma requisição não autenticada para "http://api.example.com/accounts" através do método "POST"
     Então a resposta deve possuir status "401"
     E a resposta deve possuir o content type "application/json; charset=utf-8"
     E o corpo da resposta deve corresponder ao formato JSON API

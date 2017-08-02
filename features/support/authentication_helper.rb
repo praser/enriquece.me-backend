@@ -23,11 +23,11 @@ module AuthenticationHelper
       password: password
     }.to_json
 
-    @@response = request :post, default_authenticate_path, credentials
+    @@response = request :post, default_authenticate_url, credentials
   end
 
   def authenticate_by_credential(credential)
-    @@response = request :post, default_authenticate_path, credential
+    @@response = request :post, default_authenticate_url, credential
   end
 end
 
