@@ -158,6 +158,7 @@ GEM
     multi_json (1.12.1)
     multi_test (0.1.2)
     nenv (0.3.0)
+    newrelic_rpm (4.3.0.335)
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
@@ -311,6 +312,7 @@ DEPENDENCIES
   listen (~> 3.1.5)
   mongoid (~> 6.2.0)
   mongoid-rspec!
+  newrelic_rpm
   puma (~> 3.0)
   rack-attack
   rack-cors
