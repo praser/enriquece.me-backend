@@ -9,12 +9,5 @@ module V1
 
       render_json_api(@banks)
     end
-
-    private
-
-    # Only allow a trusted parameter "white list" through.
-    def bank_params
-      params.require(:bank).permit
-    end
   end
 end

@@ -5,18 +5,6 @@ module V1
   class SubcategoriesController < V1::BaseController
     before_action :set_subcategory, only: %i[show update destroy]
 
-    # GET /v1/subcategories
-    def index
-      @v1_subcategories = Subcategory.all
-
-      render json: @v1_subcategories
-    end
-
-    # GET /v1/subcategories/1
-    def show
-      render json: @subcategory
-    end
-
     # POST /v1/subcategories
     def create
       @subcategory = Subcategory.new(subcategory_params)
