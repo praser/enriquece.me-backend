@@ -1,0 +1,67 @@
+{
+  "name": "enriquece.me-backend",
+  "scripts": {
+  },
+  "env": {
+    "CODESHIP_ID": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "LOADERIO_API_KEY": {
+      "required": true
+    },
+    "MONGODB_URI": {
+      "required": true
+    },
+    "NEW_RELIC_LICENSE_KEY": {
+      "required": true
+    },
+    "NEW_RELIC_LOG": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "REDIS_PROVIDER": {
+      "required": true
+    },
+    "REDISTOGO_URL": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "TZ": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "codeship",
+    "loaderio",
+    "mongolab",
+    "newrelic",
+    "papertrail",
+    "redistogo"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}
