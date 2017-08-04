@@ -47,5 +47,8 @@ bower.json
 # Ignore VSCode configuratioms
 .vscode/
 
-#ignore Redis Dump file
+# ignore Redis Dump file
 dump.rdb
+
+# ignore coverage folder
+coverage

@@ -32,6 +32,7 @@ group :development, :test do
   gem 'mongoid-rspec', github: 'mongoid-rspec/mongoid-rspec'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.5'
+  gem 'simplecov', require: false
 end
 
 group :development do
