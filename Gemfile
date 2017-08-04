@@ -24,6 +24,7 @@ gem 'versionist'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'codacy-coverage', require: false
   gem 'cucumber-api-steps', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'

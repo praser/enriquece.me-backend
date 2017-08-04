@@ -70,6 +70,8 @@ GEM
       xpath (~> 2.0)
     case_transform (0.2)
       activesupport
+    codacy-coverage (1.1.6)
+      simplecov
     coderay (1.1.1)
     colorize (0.7.7)
     concurrent-ruby (1.0.5)
@@ -300,6 +302,7 @@ DEPENDENCIES
   awesome_print
   bcrypt (~> 3.1.7)
   byebug
+  codacy-coverage
   cucumber-api-steps
   cucumber-rails
   cucumber_lint
