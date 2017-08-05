@@ -1,3 +1,5 @@
+[ ![Codeship Status for praser/enriquece.me-backend](https://app.codeship.com/projects/054d4810-5b6a-0135-8957-42a2e2f833d7/status?branch=master)](https://app.codeship.com/projects/237541) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f44e65b477b04b309d24557759ac7366)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=praser/enriquece.me-backend&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/f44e65b477b04b309d24557759ac7366)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=praser/enriquece.me-backend&utm_campaign=Badge_Coverage)
+
 # enriqueca.me (Backend)
 
 Api contendo as lógicas de negócio do gerenciador financeiro que pretende transformar os usuários em poupadores e aplicadores.
