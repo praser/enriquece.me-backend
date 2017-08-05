@@ -14,7 +14,7 @@ RSpec.describe 'V1::Categories', type: :request do
         post(
           v1_authenticate_path,
           params: credentials.to_json,
-          headers: { 'Content-Type': 'application/vnd.api+json' }
+          headers: { 'Content-Type' => 'application/vnd.api+json' }
         )
         token = JSON.parse(response.body)['data']['attributes']['token']
 

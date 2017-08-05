@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'V1::Authentications', type: :request do
   within_subdomain :api do
-    before(:all) { @headers = { 'Content-Type': 'application/vnd.api+json' } }
+    before(:all) { @headers = { 'Content-Type' => 'application/vnd.api+json' } }
     before(:each) { @user = FactoryGirl.create(:user) }
 
     let :valid_credentials do
