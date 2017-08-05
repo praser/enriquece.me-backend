@@ -3,9 +3,10 @@
 require 'sidekiq'
 require 'sidekiq/web'
 
-Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
-  %w[enriqueceme 3nr1qu3cem3] == [user, password]
-end
+# TODO: Add real authentication to access sidekiq panel
+# Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
+#   %w[enriqueceme 3nr1qu3cem3] == [user, password]
+# end
 
 Sidekiq.configure_client do |config|
   config.redis = { size: 2 }
