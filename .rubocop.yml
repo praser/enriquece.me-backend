@@ -1,7 +1,3 @@
-AllCops:
-  Exclude:
-    - 'lib/**/*'
-
 Lint/Void:
   Exclude:
     - 'features/**/*'
@@ -17,6 +13,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - 'config/routes.rb'
+    - 'lib/tasks/cucumber.rake'
 
 Metrics/LineLength:
   Max: 80
@@ -35,7 +32,6 @@ Metrics/MethodLength:
 
 Style/Documentation:
   Exclude:
-    - 'spec/**/*'
     - 'features/**/*'
 
 Style/FrozenStringLiteralComment:

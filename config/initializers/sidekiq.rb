@@ -4,7 +4,7 @@ require 'sidekiq'
 require 'sidekiq/web'
 
 Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
-  [user, password] == %w[enriquecame 3nr1qu3c4m3]
+  %w[enriqueceme 3nr1qu3cem3] == [user, password]
 end
 
 Sidekiq.configure_client do |config|

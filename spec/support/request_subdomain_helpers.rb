@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-# frozen_string_litral: true
-
+# Sets host to use a given subdomain.
 module RequestSubdomainHelpers
-  # Sets host to use a given subdomain.
   def within_subdomain(subdomain)
     before { host! "#{subdomain}.example.com" }
     after  { host! 'www.example.com' }
