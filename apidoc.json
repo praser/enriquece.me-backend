@@ -1,0 +1,22 @@
+{
+  "name": "enriquece.me",
+  "description": "enriquece.me api documentation",
+  "title": "enriquece.me api doc",
+  "url": "https://api.enriquece.me",
+  "version": "1.0.0",
+  "template": {
+    "forceLanguage": "en",
+    "withCompare": false,
+    "withGenerator": false
+  },
+  "order": [
+    "Users",
+    "Authentication",
+    "AccountTypes",
+    "Banks",
+    "Accounts",
+    "Categories",
+    "Subcategories",
+    "Transaction"
+  ]
+}

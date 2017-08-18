@@ -15,6 +15,10 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'lib/tasks/cucumber.rake'
 
+Metrics/ClassLength:
+  Exclude:
+    - app/controllers/**/*
+
 Metrics/LineLength:
   Max: 80
   Exclude:
@@ -29,6 +33,10 @@ Metrics/MethodLength:
   Max: 15
   Exclude:
     - 'features/**/*'
+
+Style/BlockComments:
+  Exclude:
+    - app/controllers/**/*
 
 Style/Documentation:
   Exclude:

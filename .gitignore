@@ -47,8 +47,22 @@ bower.json
 # Ignore VSCode configuratioms
 .vscode/
 
-# ignore Redis Dump file
+# Ignore Redis Dump file
 dump.rdb
 
-# ignore coverage folder
+# Ignore coverage folder
 coverage
+
+# ignore api doc files
+public/api_data.js
+public/api_data.json
+public/api_project.js
+public/api_project.json
+public/css/
+public/fonts/
+public/img/
+public/index.html
+public/locales/
+public/main.js
+public/utils/
+public/vendor/
