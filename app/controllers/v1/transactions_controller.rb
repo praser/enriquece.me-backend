@@ -55,8 +55,8 @@ module V1
     Subcategory id of transfer
   @apiSuccess {String} account_id data.attributes.account_id
     Account id of transfer
-  @apiSuccess {String} destination_account_id data.attributes.destination_account_id
-    Destination account id of transfer
+  @apiSuccess {String} destination_account_id
+    data.attributes.destination_account_id Destination account id of transfer
 =end
 
 =begin
@@ -71,7 +71,7 @@ module V1
     Period when recurrence occurs
   @apiParam {String="1..31", "first", "second", "third", "fourth", "fifth"} [on]
     Day when recurrences occurs
-  @apiParam {String="1..31", "monthly", "bimonthly", "quarterly", "semesterly"} [inteval] Interval when recurrences occurs
+  @apiParam {String="monthly","semesterly"} [inteval] When recurrences occurs
   @apiParam {Number} [repeat] Amount of times a recurrence should occurs
   @apiParam {String} category_id Category id of transaction
   @apiParam {String} [subcategory_id] Subcategory id of transaction
@@ -108,7 +108,7 @@ module V1
     Period when recurrence occurs
   @apiParam {String="1..31", "first", "second", "third", "fourth", "fifth"} [on]
     Day when recurrences occurs
-  @apiParam {String="1..31", "monthly", "bimonthly", "quarterly", "semesterly"} [inteval] Interval when recurrences occurs
+  @apiParam {String="monthly", "semesterly"} [inteval] hen recurrences occurs
   @apiParam {Number} [repeat] Amount of times a recurrence should occurs
   @apiParam {String} category_id Category id of Transfer
   @apiParam {String} [subcategory_id] Subcategory id of Transfer
