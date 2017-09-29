@@ -26,17 +26,20 @@ class CreateRecurrencesJob < ApplicationJob
   end
 
   def clone_transaction(transaction, date)
-    Transaction.create(
+    dest = transaction.transfer_destination.account_id if transaction.transfer?
+    clone = Transaction.new(
       description: transaction.description,
       price: transaction.price,
       date: date,
       note: transaction.note,
       account: transaction.account,
+      destination_account_id: dest,
       category: transaction.category,
       subcategory: transaction.subcategory,
       recurrence: transaction.recurrence,
       user: transaction.user
     )
+    clone.save
   end
 
   def transaction_recurrence_attr(obj_class, obj_id)

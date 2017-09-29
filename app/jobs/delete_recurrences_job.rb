@@ -5,7 +5,7 @@ class DeleteRecurrencesJob < ApplicationJob
   queue_as :default
 
   def perform(obj_class, obj_id, modifier, date = nil)
-    get_transactions(obj_class, obj_id, modifier, date).each(&:delete)
+    get_transactions(obj_class, obj_id, modifier, date).each(&:destroy)
   end
 
   private

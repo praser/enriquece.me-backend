@@ -32,6 +32,34 @@ module V1
 =end
 
 =begin
+  @apiDefine TransferAttributes
+  @apiSuccess {String} description data.attributes.description
+    Transaction description
+  @apiSuccess {Number} price data.attributes.price Price Transfer price
+  @apiSuccess {String} date data.attributes.date Date Transfer date
+  @apiSuccess {Boolean} paid data.attributes.paid Paid
+    Transaction status: true = paid, false = not paid
+  @apiSuccess {String} note data.attributes.note Note transfer notes
+  @apiSuccess {Object} recurrence data.attributes.recurrence
+  @apiSuccess {String} every data.attributes.recurrence.every
+    Period when recurrence occurs
+  @apiSuccess {String} on data.attributes.recurrence.on
+    Day when recurrences occurs
+  @apiSuccess {String} inteval data.attributes.recurrence.interval
+    Interval when recurrences occurs
+  @apiSuccess {Number} repeat data.attributes.recurrence.repeat
+    Amount of times a recurrence should occurs
+  @apiSuccess {String} category_id data.attributes.category_id
+    Category id of transfer
+  @apiSuccess {String} subcategory_id data.attributes.subcategory_id
+    Subcategory id of transfer
+  @apiSuccess {String} account_id data.attributes.account_id
+    Account id of transfer
+  @apiSuccess {String} destination_account_id data.attributes.destination_account_id
+    Destination account id of transfer
+=end
+
+=begin
   @apiDefine TransactionParams
   @apiParam {String} description Transaction description
   @apiParam {Number} price Transaction price
@@ -65,6 +93,45 @@ module V1
     "category_id": "5984e907562a20000468442d",
     "subcategory_id": "5984e907562a20000468442h",
     "account_id": "5984ea9f562a20000468442f"
+  }
+=end
+
+=begin
+  @apiDefine TransferParams
+  @apiParam {String} description Transfer description
+  @apiParam {Number} price Transfer price
+  @apiParam {String} date Date Transfer date
+  @apiParam {Boolean} [paid]=false Transfer status
+  @apiParam {String} [note] Transfer notes
+  @apiParam {Object} [recurrence]
+  @apiParam {String="day", "week", "month", "year"} every
+    Period when recurrence occurs
+  @apiParam {String="1..31", "first", "second", "third", "fourth", "fifth"} [on]
+    Day when recurrences occurs
+  @apiParam {String="1..31", "monthly", "bimonthly", "quarterly", "semesterly"} [inteval] Interval when recurrences occurs
+  @apiParam {Number} [repeat] Amount of times a recurrence should occurs
+  @apiParam {String} category_id Category id of Transfer
+  @apiParam {String} [subcategory_id] Subcategory id of Transfer
+  @apiParam {String} account_id Account id of transfer
+  @apiParam {String} destination_account_id Destination account id of transfer
+
+  @apiParamExample {json} Request body example
+  {
+    "description": "Compras na quitanda",
+    "price": -100.00,
+    "date": "2017-07-27",
+    "paid": true,
+    "note": "Abastecimento da dispensa"
+    "recurrence": {
+      "every": "month",
+      "on": 27,
+      "interval": "monthly",
+      "repeat": 100
+    },
+    "category_id": "5984e907562a20000468442d",
+    "subcategory_id": "5984e907562a20000468442h",
+    "account_id": "5984ea9f562a20000468442f"
+    "destination_account_id": "5984ea9f562a20000468432f"
   }
 =end
 
@@ -294,6 +361,32 @@ module V1
   @apiUse UnauthorizedError
   @apiUse UnprocessableEntity
 =end
+
+=begin
+  @apiVersion 1.0.0
+  @api {post} /v1/transactions Create transfer
+  @apiName CreateTransfer
+  @apiGroup Transactions
+  @apiPermission authenticated users only
+
+  @apiExample {curl} Example usage:
+  curl -i
+  -X POST
+  -d '{<json data>}'
+  -H 'CONTENT-TYPE: application/json'
+  -H 'AUTHORIZATION: Bearer <token>'
+  https://api.enriquece.me/transactions
+
+  @apiUse TransferParams
+  @apiUse AuthenticatedHeader
+  @apiUse JsonApiObject
+  @apiUse JsonApiObjectAttributes
+  @apiUse JsonApiObjectRelationships
+  @apiUse TransferAttributes
+  @apiUse TransactionObjectExample
+  @apiUse UnauthorizedError
+  @apiUse UnprocessableEntity
+=end
     def create
       @transaction = Transaction.new(transaction_params)
       attach_user
@@ -411,6 +504,7 @@ module V1
         :paid,
         :note,
         :account_id,
+        :destination_account_id,
         :category_id,
         :subcategory_id,
         :recurrence,

@@ -26,6 +26,16 @@ RSpec.describe CreateRecurrencesJob, type: :job do
     expect { job }.to change { Transaction.all.count }.by(registers)
   end
 
+  it 'creates n transfers' do
+    transaction = FactoryGirl.create(
+      :transaction,
+      destination_account_id: FactoryGirl.create(:account).id.to_s,
+      recurrence: FactoryGirl.create(:recurrence)
+    )
+    registers = transaction.recurrence.repeat - 1
+    expect { job }.to change { Transaction.all.count }.by(registers * 2)
+  end
+
   after do
     clear_enqueued_jobs
     clear_performed_jobs

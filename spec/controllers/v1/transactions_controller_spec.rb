@@ -122,6 +122,14 @@ RSpec.describe V1::TransactionsController, type: :controller do
         end.to change(Transaction, :count).by(1)
       end
 
+      it 'creates a new Transfer' do
+        expect do
+          valid[:destination_account_id] = FactoryGirl.create(:account).id.to_s
+          post :create, params: valid
+        end.to change(Transaction, :count).by(2)
+        expect(assigns(:transaction).transfer?).to be_truthy
+      end
+
       it 'assigns a newly financial transaction as @fin_trans' do
         post :create, params: valid
         expect(assigns(:transaction)).to be_a(Transaction)
@@ -175,9 +183,28 @@ RSpec.describe V1::TransactionsController, type: :controller do
       end
 
       it 'updates the requested financial transaction' do
-        put :update, params: update_params
-        transaction.reload
-        expect(transaction.description).to eq(transaction.description)
+        expect do
+          put :update, params: update_params
+          transaction.reload
+        end.to change(transaction, :attributes)
+      end
+
+      it 'updates the requested transfer' do
+        transfer = FactoryGirl.create(
+          :transaction,
+          destination_account_id: FactoryGirl.create(:account).id.to_s
+        )
+
+        update_params = FactoryGirl.attributes_for(
+          :transaction,
+          id: transfer.id,
+          recurrence: :foward
+        )
+
+        expect do
+          put :update, params: update_params
+          transfer.transfer_destination.reload
+        end.to change(transfer.transfer_destination, :attributes)
       end
 
       it 'renders a JSON response with the financial transaction' do
@@ -234,6 +261,18 @@ RSpec.describe V1::TransactionsController, type: :controller do
       expect do
         delete :destroy, params: { id: transaction.id.to_s }
       end.to change(Transaction, :count).by(-1)
+    end
+
+    it 'destroys the requested Transfer' do
+      transfer = FactoryGirl.create(
+        :transaction,
+        destination_account_id: FactoryGirl.create(:account).id.to_s,
+        user: user
+      )
+
+      expect do
+        delete :destroy, params: { id: transfer.id.to_s }
+      end.to change(Transaction, :count).by(-2)
     end
 
     it 'calls delete_recurrences when recurrence param all is provided' do
