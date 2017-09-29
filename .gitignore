@@ -52,3 +52,6 @@ dump.rdb
 
 # Ignore coverage folder
 coverage
+
+# Ignore .DS_Store file
+.DS_Store
