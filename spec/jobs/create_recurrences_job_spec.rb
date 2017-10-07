@@ -32,6 +32,9 @@ RSpec.describe CreateRecurrencesJob, type: :job do
       destination_account_id: FactoryGirl.create(:account).id.to_s,
       recurrence: FactoryGirl.create(:recurrence)
     )
+
+    args[1] = transaction.id.to_s
+
     registers = transaction.recurrence.repeat - 1
     expect { job }.to change { Transaction.all.count }.by(registers * 2)
   end

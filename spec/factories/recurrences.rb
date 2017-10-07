@@ -5,7 +5,6 @@ FactoryGirl.define do
     every 'month'
     on 15
     interval 'monthly'
-    # repeat { Faker::Number.between(1, 60) }
-    repeat 2
+    repeat { Faker::Number.between(1, 60) }
   end
 end

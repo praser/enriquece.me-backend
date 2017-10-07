@@ -17,7 +17,7 @@ class Transaction
   field :paid, type: Boolean, default: false
   field :note, type: String
 
-  belongs_to :account
+  belongs_to :account, inverse_of: :transactions
   belongs_to :category
   belongs_to :subcategory, optional: true
   belongs_to :recurrence, optional: true

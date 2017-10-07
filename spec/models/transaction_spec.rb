@@ -62,12 +62,11 @@ RSpec.describe Transaction, type: :model do
     end
 
     it 'creates the destination transaction' do
-      expect do
-        FactoryGirl.create(
-          :transaction,
-          destination_account_id: FactoryGirl.create(:account).id.to_s
-        )
-      end.to change { Transaction.all.count }.by 2
+      transaction = FactoryGirl.create(
+        :transaction,
+        destination_account_id: FactoryGirl.create(:account).id.to_s 
+      )
+      expect(transaction.transfer_destination).to be_a(Transaction)
     end
 
     it 'updates the destination when origin changes' do

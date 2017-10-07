@@ -117,14 +117,15 @@ RSpec.describe V1::TransactionsController, type: :controller do
 
     context 'with valid params' do
       it 'creates a new Transaction' do
+        valid
         expect do
           post :create, params: valid
         end.to change(Transaction, :count).by(1)
       end
 
       it 'creates a new Transfer' do
+        valid[:destination_account_id] = FactoryGirl.create(:account).id.to_s
         expect do
-          valid[:destination_account_id] = FactoryGirl.create(:account).id.to_s
           post :create, params: valid
         end.to change(Transaction, :count).by(2)
         expect(assigns(:transaction).transfer?).to be_truthy
