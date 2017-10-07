@@ -4,11 +4,9 @@ require 'rails_helper'
 
 RSpec.describe V1::SubcategoriesController, type: :routing do
   describe 'routing' do
-    let(:default_version) { 'v1' }
-
     it 'routes to #create' do
-      expect(post: 'http://api.example.com/subcategories').to route_to(
-        controller: "#{default_version}/subcategories",
+      expect(post: 'http://api.example.com/v1/subcategories').to route_to(
+        controller: "v1/subcategories",
         action: 'create',
         subdomain: 'api',
         format: 'json'
@@ -16,8 +14,8 @@ RSpec.describe V1::SubcategoriesController, type: :routing do
     end
 
     it 'routes to #update via PUT' do
-      expect(put: 'http://api.example.com/subcategories/1').to route_to(
-        controller: "#{default_version}/subcategories",
+      expect(put: 'http://api.example.com/v1/subcategories/1').to route_to(
+        controller: "v1/subcategories",
         action: 'update',
         subdomain: 'api',
         format: 'json',
@@ -26,8 +24,8 @@ RSpec.describe V1::SubcategoriesController, type: :routing do
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: 'http://api.example.com/subcategories/1').to route_to(
-        controller: "#{default_version}/subcategories",
+      expect(patch: 'http://api.example.com/v1/subcategories/1').to route_to(
+        controller: "v1/subcategories",
         action: 'update',
         subdomain: 'api',
         format: 'json',
@@ -36,8 +34,8 @@ RSpec.describe V1::SubcategoriesController, type: :routing do
     end
 
     it 'routes to #destroy' do
-      expect(delete: 'http://api.example.com/subcategories/1').to route_to(
-        controller: "#{default_version}/subcategories",
+      expect(delete: 'http://api.example.com/v1/subcategories/1').to route_to(
+        controller: "v1/subcategories",
         action: 'destroy',
         subdomain: 'api',
         format: 'json',
