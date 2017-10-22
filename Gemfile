@@ -37,10 +37,8 @@ group :development, :test do
 end
 
 group :development do
-  gem 'guard-rspec', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rubocop', '~> 0.49.1', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'terminal-notifier-guard'
 end
