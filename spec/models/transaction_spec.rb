@@ -16,7 +16,7 @@ RSpec.describe Transaction, type: :model do
     ).with_default_value_of(false)
   end
 
-  it { is_expected.to have_field(:date).of_type(Date) }
+  it { is_expected.to have_field(:date).of_type(Time) }
   it { is_expected.to validate_presence_of(:date) }
 
   it { is_expected.to have_field(:note).of_type(String) }
@@ -64,7 +64,7 @@ RSpec.describe Transaction, type: :model do
     it 'creates the destination transaction' do
       transaction = FactoryGirl.create(
         :transaction,
-        destination_account_id: FactoryGirl.create(:account).id.to_s 
+        destination_account_id: FactoryGirl.create(:account).id.to_s
       )
       expect(transaction.transfer_destination).to be_a(Transaction)
     end

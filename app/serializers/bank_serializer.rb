@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# BankSerializer
+# Bank serializer
 class BankSerializer < ActiveModel::Serializer
   type :bank
   attributes :id, :name, :code

@@ -29,8 +29,8 @@ RSpec.describe V1::TransactionsController, type: :controller do
       get :index
       transaction = Transaction.where(
         date: {
-          :$gte => Time.zone.today.at_beginning_of_month,
-          :$lte => Time.zone.today.at_end_of_month
+          :$gte => Time.current.at_beginning_of_month,
+          :$lte => Time.current.at_end_of_month
         },
         user_id: {
           :$eq => user.id.to_s
@@ -47,7 +47,7 @@ RSpec.describe V1::TransactionsController, type: :controller do
       transaction = Transaction.where(
         date: {
           :$gte => start_date,
-          :$lte => Time.zone.today.at_end_of_month
+          :$lte => Time.current.at_end_of_month
         },
         user_id: {
           :$eq => user.id.to_s

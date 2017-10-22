@@ -3,6 +3,7 @@
 module V1
   # Defines actions that involve financial transactions management
   class TransactionsController < V1::BaseController
+    include DateIntervalParams
     before_action :set_transaction, only: %i[show update destroy]
 
 =begin
@@ -538,18 +539,6 @@ module V1
         modifier,
         date
       )
-    end
-
-    # Set start date to be used in index action.
-    def start_date
-      return Date.parse(params[:start]) unless params[:start].nil?
-      Time.zone.today.at_beginning_of_month
-    end
-
-    # Set end date to be used in index action.
-    def end_date
-      return Date.parse(params[:end]) unless params[:end].nil?
-      Time.zone.today.at_end_of_month
     end
   end
 end

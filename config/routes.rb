@@ -35,6 +35,26 @@ Rails.application.routes.draw do
         as: :transactions_since_until
       )
 
+      get '/balances', to: 'balances#index'
+
+      get(
+        '/balances/since/:start/until/:end',
+        to: 'balances#index',
+        as: :balance_since_until
+      )
+
+      get(
+        '/balances/account/:account',
+        to: 'balances#index',
+        as: :balance_account
+      )
+
+      get(
+        '/balances/account/:account/since/:start/until/:end',
+        to: 'balances#index',
+        as: :balance_account_since_until
+      )
+
       delete(
         '/transactions/:id/:recurrence',
         to: 'transactions#destroy'

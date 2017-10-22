@@ -23,6 +23,7 @@ gem 'simple_command'
 gem 'versionist'
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'byebug', platform: :mri
   gem 'codacy-coverage', require: false
   gem 'cucumber-api-steps', require: false
@@ -38,7 +39,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'awesome_print'
   gem 'cucumber_lint'
   gem 'guard-rspec', require: false
   gem 'listen', '~> 3.1.5'

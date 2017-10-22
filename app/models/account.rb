@@ -32,33 +32,34 @@ class Account
   validates :account_type_id, presence: true
   validates :user_id, presence: true
 
-  private 
+  private
 
   def create_initial_transaction
     # The inital_transaction is created through Model.collection.insert_one to
     # skip validation because the initial balance does not have a category
     Transaction.collection.insert_one(
       description: 'Initial Balance',
-      price: self.initial_balance,
+      price: initial_balance,
       paid: true,
-      date: Date.parse('1900-01-01'),
-      account_id: self.id,
-      user_id: self.user.id
+      date: Time.zone.parse('1900-01-01').utc,
+      account_id: id,
+      user_id: user.id
     )
 
-    self.initial_transaction = Transaction.find_by(account_id: self.id)
-    self.save
+    self.initial_transaction = Transaction.find_by(account_id: id)
+    save
   end
 
   def update_initial_transaction
     # The inital_transaction is updated through Model.collection.update_one to
     # skip validation because the initial balance does not have a category
     Transaction.collection.update_one(
-      { "_id": BSON::ObjectId("59d8c4133c21e5ab3bfe8518") },
-      { "$set": { price: 300 } })
+      { "_id": BSON::ObjectId('59d8c4133c21e5ab3bfe8518') },
+      "$set": { price: 300 }
+    )
   end
 
   def delete_initial_transaction
-    self.initial_transaction.delete
+    initial_transaction.delete
   end
 end

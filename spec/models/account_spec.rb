@@ -56,7 +56,9 @@ RSpec.describe Account, type: :model do
     end
 
     it 'date is 1900-01-01' do
-      expect(account.initial_transaction.date).to eq(Date.parse('1900-01-01'))
+      expect(account.initial_transaction.date).to eq(
+        Time.zone.strptime('1900-01-01 Brasília', '%Y-%m-%d %Z')
+      )
     end
 
     it 'belongs this account' do
@@ -74,5 +76,5 @@ RSpec.describe Account, type: :model do
     it 'has no category' do
       expect(account.initial_transaction.category).to be_nil
     end
-  end 
+  end
 end

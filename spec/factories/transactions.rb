@@ -6,8 +6,8 @@ FactoryGirl.define do
     price { Faker::Number.decimal(2) }
     date do
       Faker::Date.between(
-        30.days.ago,
-        Time.zone.today.at_end_of_month.next_month
+        1.month.before,
+        1.month.after
       )
     end
     paid { [true, false].sample }

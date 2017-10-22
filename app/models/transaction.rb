@@ -13,7 +13,7 @@ class Transaction
 
   field :description, type: String
   field :price, type: Float
-  field :date, type: Date
+  field :date, type: Time
   field :paid, type: Boolean, default: false
   field :note, type: String
 

@@ -21,7 +21,7 @@ module TransactionHelper
     Transaction.create(
       description: data['descricao'],
       price: data['preco'],
-      date: Date.parse(data['data']),
+      date: Time.zone.parse(data['data']),
       paid: data['pago'],
       subcategory: find_subcategory(name: data['subcategoria']),
       category: find_category(name: data['categoria']),

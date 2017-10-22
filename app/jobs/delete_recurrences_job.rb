@@ -16,7 +16,7 @@ class DeleteRecurrencesJob < ApplicationJob
 
   def get_transactions(obj_class, obj_id, modifier, date)
     transactions = find_recurrence(obj_class, obj_id).transactions
-    date = Date.parse(date) unless date.nil?
+    date = Time.zone.parse(date) unless date.nil?
 
     case modifier.downcase.to_sym
     when :all then transactions
