@@ -23,10 +23,6 @@ module V1
 
     def authenticate(credentials)
       AuthenticateUser.call(credentials)
-    rescue => error
-      resource = User.new
-      resource.errors.add(:credentials, error.message)
-      render_json_api_error(resource, :unauthorized)
     end
 
     def result_to_json(result)
