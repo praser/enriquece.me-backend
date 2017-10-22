@@ -3,7 +3,7 @@
 module V1
   # Defines actions that involve subcategories management
   class SubcategoriesController < V1::BaseController
-    before_action :set_subcategory, only: %i[show update destroy]
+    before_action :set_subcategory, only: %i[update destroy]
 
     def create
       @subcategory = Subcategory.new(subcategory_params)
@@ -27,7 +27,7 @@ module V1
 
     def set_subcategory
       @subcategory = Subcategory.find(params[:id])
-      @subcategory = nil if @subcategory.category.user != current_user
+      @subcategory = nil unless @subcategory.category.user == current_user
 
       return unless @subcategory.nil?
       current_user.errors.add :authorization, 'Not Authorized'
