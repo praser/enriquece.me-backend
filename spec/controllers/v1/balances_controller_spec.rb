@@ -28,10 +28,13 @@ RSpec.describe V1::BalancesController, type: :controller do
     end
 
     it 'calculates period balance' do
-      balance = calculate_balance(date: {
-                                    '$gte': Time.current.beginning_of_month,
-                                    '$lte': Time.current.end_of_month
-                                  })
+      balance = calculate_balance(
+        date: {
+          '$gte': Time.current.beginning_of_month,
+          '$lte': Time.current.end_of_month
+        }
+      )
+
       get :index
       expect(assigns(:period_balance)).to eq(balance)
     end

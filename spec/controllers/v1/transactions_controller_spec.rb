@@ -41,7 +41,7 @@ RSpec.describe V1::TransactionsController, type: :controller do
     end
 
     it 'lists transactions since a date when start param is provided' do
-      start_date = Faker::Date.backward(30)
+      start_date = Time.zone.parse(Faker::Date.backward(30).to_s)
       get :index, params: { start: start_date }
 
       transaction = Transaction.where(
@@ -58,8 +58,8 @@ RSpec.describe V1::TransactionsController, type: :controller do
     end
 
     it 'lists transactions interval when start and end params are provided' do
-      start_date = Faker::Date.backward(30)
-      end_date = Faker::Date.forward(30)
+      start_date = Time.zone.parse(Faker::Date.backward(30).to_s)
+      end_date = Time.zone.parse(Faker::Date.forward(30).to_s)
 
       get :index, params: { start: start_date, end: end_date }
 
