@@ -1,3 +1,6 @@
+AllCops:
+  TargetRubyVersion: 2.4.2
+
 Metrics/AbcSize:
   Max: 16
 
