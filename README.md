@@ -1,6 +1,6 @@
 [ ![Codeship Status for praser/enriquece.me-backend](https://app.codeship.com/projects/054d4810-5b6a-0135-8957-42a2e2f833d7/status?branch=master)](https://app.codeship.com/projects/237541) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f44e65b477b04b309d24557759ac7366)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=praser/enriquece.me-backend&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/f44e65b477b04b309d24557759ac7366)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=praser/enriquece.me-backend&utm_campaign=Badge_Coverage)
 
-# enriqueca.me (Backend)
+# enriquece.me (Backend)
 
 Api contendo as lógicas de negócio do gerenciador financeiro que pretende transformar os usuários em poupadores e aplicadores.
 
@@ -30,7 +30,7 @@ Estando todos os pré requisitos instalados e configurados passaremos para a ins
 
 Faça o clone do repositório do projeto:
 ```
-git clone https://github.com/praser/enriqueca.me-backend
+git clone https://github.com/praser/enriquece.me-backend
 ```
 
 Instale a Gem Bundler para baixar as dependências do projeto
@@ -40,7 +40,7 @@ gem install bundler
 
 Acesse a pasta onde o repositório foi clonado
 ```
-cd enriqueca.me-backend/
+cd enriquece.me-backend/
 ```
 
 Instale as dependências
@@ -70,15 +70,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"name": "John Doe", email"
 
 ## Rodando os testes
 
-Este sistema é construído seguindo a técnica do BDD (Behavior Drivern Development) ou desenvolvimento guiado por comportamento. Para tal utilizamos Cucumber e RSpec para testes de aceitação e testes funcionais respectivamente.
-
-
-### Testes de aceitacão
-
-Para executar a suíte de testes de aceitação, execute o comando abaixo no console:
-```
-rake cucumber
-```
+Este sistema é construído seguindo a técnica do TDD (Test Driven Development) ou desenvolvimento guiado por testes. Para tal utilizamos o RSpec para automatização de testes.
 
 ### Testes funcionais
 
@@ -89,7 +81,7 @@ rake spec
 
 ## Deployment
 
-Atualmente o backend ainda não está em produção. A versão de desenvolvimento está hospedada no Heroku e pode ser acessada através do endereço [http://www.enriqueca.me](http://www.enriqueca.me)
+Atualmente o backend ainda não está em produção. A versão de desenvolvimento está hospedada no Heroku e pode ser acessada através do endereço [http://api.enriquece.me](http://www.enriquece.me)
 
 ## Construído com:
 
@@ -104,7 +96,7 @@ Por favor leia [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b2467940295
 
 ## Versionamento
 
-Nós utilizamos [SemVer](http://semver.org/) para versionamneto. Para listar as versões disponíveis veja as [tags deste repositório](https://github.com/praser/enriqueca.me-backend/tags). 
+Nós utilizamos [SemVer](http://semver.org/) para versionamneto. Para listar as versões disponíveis veja as [tags deste repositório](https://github.com/praser/enriquece.me-backend/tags). 
 
 ## Autores
 
@@ -112,7 +104,7 @@ Nós utilizamos [SemVer](http://semver.org/) para versionamneto. Para listar as 
 * **Eduardo Almeida** - *Programação* - [eduardo-almeida-II](https://github.com/eduardo-almeida-II)
 * **Rubens Praser Júnior** - *Programação* - [praser](https://github.com/praser)
 
-Veja também a lista de [contribuidores](https://github.com/praser/enriqueca.me-backend/graphs/contributors) que participam deste projeto.
+Veja também a lista de [contribuidores](https://github.com/praser/enriquece.me-backend/graphs/contributors) que participam deste projeto.
 
 ## Licença
 

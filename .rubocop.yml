@@ -13,7 +13,6 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - 'config/routes.rb'
-    - 'lib/tasks/cucumber.rake'
 
 Metrics/ClassLength:
   Exclude:

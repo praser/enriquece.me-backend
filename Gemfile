@@ -26,8 +26,6 @@ group :development, :test do
   gem 'awesome_print'
   gem 'byebug', platform: :mri
   gem 'codacy-coverage', require: false
-  gem 'cucumber-api-steps', require: false
-  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'
@@ -39,7 +37,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'cucumber_lint'
   gem 'guard-rspec', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rubocop', '~> 0.49.1', require: false
