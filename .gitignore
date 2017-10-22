@@ -42,7 +42,6 @@ bower.json
 
 #Ignore RVM default enviroment files.
 .ruby-gemset
-.ruby-version
 
 # Ignore VSCode configuratioms
 .vscode/
