@@ -1,9 +1,8 @@
-Lint/Void:
-  Exclude:
-    - 'features/**/*'
-
 Metrics/AbcSize:
   Max: 16
+
+Metrics/MethodLength:
+  Max: 15
   Exclude:
     - 'features/**/*'
 
@@ -18,28 +17,9 @@ Metrics/ClassLength:
   Exclude:
     - app/controllers/**/*
 
-Metrics/LineLength:
-  Max: 80
-  Exclude:
-    - 'features/**/*'
-
-Metrics/CyclomaticComplexity:
-  Max: 10
-  Exclude:
-    - 'features/**/*'
-
-Metrics/MethodLength:
-  Max: 15
-  Exclude:
-    - 'features/**/*'
-
 Style/BlockComments:
   Exclude:
     - app/controllers/**/*
-
-Style/Documentation:
-  Exclude:
-    - 'features/**/*'
 
 Style/FrozenStringLiteralComment:
   Enabled: true
@@ -47,7 +27,3 @@ Style/FrozenStringLiteralComment:
 Style/SymbolArray:
   EnforcedStyle: percent
   MinSize: 2
-
-Style/ClassVars:
-  Exclude:
-    - 'features/**/*'
